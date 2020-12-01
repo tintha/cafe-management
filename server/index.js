@@ -5,9 +5,7 @@ const PORT = 9999;
 
 var app = express();
 
-app.use(express.json());
-app.use(morgan("dev"));
-app.use(require("./routes"));
+app.use(express.json()).use(morgan("dev")).use(require("./routes"));
 
 const server = app.listen(PORT, function () {
   console.info("🌍 Listening on port " + server.address().port);
