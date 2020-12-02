@@ -12,23 +12,23 @@ const options = {
 };
 
 const APP_DB = "cb-final";
-const PRODUCTS_COLLECTION = "products";
+const ITEMS_COLLECTION = "items";
 
-const getProducts = async (req, res) => {
+const getItems = async (req, res) => {
   try {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
-    const products = await db.collection(PRODUCTS_COLLECTION).find().toArray();
-    if (products.length === 0) {
+    const items = await db.collection(ITEMS_COLLECTION).find().toArray();
+    if (items.length === 0) {
       res.status(404).json({
         status: 404,
-        message: "No products found",
+        message: "No items found",
       });
     } else {
       res.status(200).json({
         status: 200,
-        data: products,
+        data: items,
       });
     }
     client.close();
@@ -37,79 +37,76 @@ const getProducts = async (req, res) => {
   }
 };
 
-const getProductsById = async (req, res) => {
-  const productId = req.params.productId;
+const getItemById = async (req, res) => {
+  const itemId = req.params.itemId;
   try {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
-    const product = await db
-      .collection(PRODUCTS_COLLECTION)
-      .findOne({ _id: ObjectID(productId) });
-    assert(1, product.matchedCount);
+    const item = await db
+      .collection(ITEMS_COLLECTION)
+      .findOne({ _id: ObjectID(itemId) });
+    assert(1, item.matchedCount);
     res.status(200).json({
       status: 200,
-      data: product,
+      data: item,
     });
     client.close();
   } catch (e) {
     res.status(400).json({
       status: 400,
-      data: "Unable to retrieve product",
+      data: "Unable to retrieve item",
     });
   }
 };
 
-const getProductsByCategory = async (req, res) => {
+const getItemsByCategory = async (req, res) => {
   const category = req.params.category;
   try {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
-    const products = await db
-      .collection(PRODUCTS_COLLECTION)
+    const items = await db
+      .collection(ITEMS_COLLECTION)
       .find({ category: category })
       .toArray();
-    assert(products.length, products.matchedCount);
+    assert(items.length, items.matchedCount);
     res.status(200).json({
       status: 200,
-      data: products,
+      data: items,
     });
     client.close();
   } catch (e) {
     res.status(404).json({
       status: 404,
-      data: "No products found",
+      data: "No items found",
     });
   }
 };
 
-const addProduct = async (req, res) => {
-  const productId = ObjectID();
+const addItem = async (req, res) => {
+  const itemId = ObjectID();
   try {
-    const productName = req.body.productName;
+    const itemName = req.body.itemName;
     const description = req.body.description;
-    const availableQuantity = req.body.availableQuantity;
     const image = req.body.image;
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
-    const product = await db.collection(PRODUCTS_COLLECTION).insertOne({
-      _id: productId,
-      productName: productName,
+    const item = await db.collection(ITEMS_COLLECTION).insertOne({
+      _id: itemId,
+      itemName: itemName,
       description: description,
-      availableQuantity: availableQuantity,
       image: image,
     });
-    assert(1, product.insertedCount);
+    assert(1, item.insertedCount);
     res.status(200).json({
       status: 200,
       success: true,
       data: {
-        _id: productId,
-        productName: productName,
+        _id: itemId,
+        itemName: itemName,
         description: description,
-        availableQuantity: availableQuantity,
         image: image,
       },
     });
@@ -122,18 +119,16 @@ const addProduct = async (req, res) => {
   }
 };
 
-const updateProduct = async (req, res) => {
-  const productId = req.params.productId;
-  const productName = req.body.productName;
+const updateItem = async (req, res) => {
+  const itemId = req.params.itemId;
+  const itemName = req.body.itemName;
   const description = req.body.description;
-  const availableQuantity = req.body.availableQuantity;
   const image = req.body.image;
   const category = req.body.category;
   const newValues = {
     $set: {
-      productName: productName,
+      itemName: itemName,
       description: description,
-      availableQuantity: availableQuantity,
       image: image,
       category: category,
     },
@@ -142,11 +137,11 @@ const updateProduct = async (req, res) => {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
-    const product = await db
-      .collection(PRODUCTS_COLLECTION)
-      .updateOne({ _id: ObjectID(productId) }, newValues);
-    assert(1, product.matchedCount);
-    assert(1, product.updatedCount);
+    const item = await db
+      .collection(ITEMS_COLLECTION)
+      .updateOne({ _id: ObjectID(itemId) }, newValues);
+    assert(1, item.matchedCount);
+    assert(1, item.updatedCount);
     res.status(200).json({
       status: 200,
       success: true,
@@ -160,16 +155,16 @@ const updateProduct = async (req, res) => {
   }
 };
 
-const deleteProduct = async (req, res) => {
-  const productId = req.params.productId;
+const deleteItem = async (req, res) => {
+  const itemId = req.params.itemId;
   try {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
-    const product = await db
-      .collection(PRODUCTS_COLLECTION)
-      .deleteOne({ _id: ObjectID(productId) });
-    assert(1, product.deletedCount);
+    const item = await db
+      .collection(ITEMS_COLLECTION)
+      .deleteOne({ _id: ObjectID(itemId) });
+    assert(1, item.deletedCount);
     res.status(204).json({
       status: 204,
     });
@@ -183,10 +178,10 @@ const deleteProduct = async (req, res) => {
 };
 
 module.exports = {
-  getProducts,
-  getProductsById,
-  getProductsByCategory,
-  addProduct,
-  updateProduct,
-  deleteProduct,
+  getItems,
+  getItemById,
+  getItemsByCategory,
+  addItem,
+  updateItem,
+  deleteItem,
 };
