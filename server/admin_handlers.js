@@ -38,7 +38,6 @@ const registerAdmin = async (req, res) => {
     });
     assert(1, newUser.insertedCount);
     req.session.user_sid = username;
-    console.log(req.session);
     res.status(200).json({
       status: 200,
       data: username,
@@ -66,10 +65,10 @@ const authAdmin = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       req.session.user_sid = user._id;
-      console.log(req.session);
       res.status(200).json({
         status: 200,
         data: "Successfully logged in",
+        user_sid: req.session.user_sid,
       });
     } else {
       throw error;
