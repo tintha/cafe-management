@@ -16,7 +16,6 @@ const APP_DB = "cb-final";
 const USERS_COLLECTION = "users";
 
 const getUsers = async (req, res) => {
-  console.log(req.session);
   try {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
@@ -40,8 +39,7 @@ const getUsers = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  console.log(req.session);
-  const userId = req.params.userId;
+  const userId = req.params.userId.toLowerCase();
   try {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
@@ -63,11 +61,9 @@ const getUserById = async (req, res) => {
 
 const registerUser = async (req, res) => {
   try {
-    const username = req.body.username;
+    const username = req.body.username.toLowerCase();
     const password = req.body.password;
-    const fullName = req.body.fullName;
-    const email = req.body.email;
-    if (!username || !password || !fullName || !email) {
+    if (!username || !password) {
       throw new Error("All fields are required!");
     }
     const client = await MongoClient(MONGO_URI, options);
@@ -83,17 +79,13 @@ const registerUser = async (req, res) => {
     const newUser = await db.collection(USERS_COLLECTION).insertOne({
       _id: username,
       password: hashedPassword,
-      fullName: fullName,
-      email: email,
     });
     assert(1, newUser.insertedCount);
     req.session.user_sid = username;
-    console.log(req.session);
     res.status(200).json({
       status: 200,
       data: username,
-      fullName,
-      email,
+      user_sid: req.session.user_sid,
     });
     client.close();
   } catch (e) {
@@ -106,7 +98,7 @@ const registerUser = async (req, res) => {
 
 const authUser = async (req, res) => {
   try {
-    const username = req.body.username;
+    const username = req.body.username.toLowerCase();
     const password = req.body.password;
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
@@ -118,10 +110,10 @@ const authUser = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       req.session.user_sid = user._id;
-      console.log(req.session);
       res.status(200).json({
         status: 200,
         data: "Successfully logged in",
+        user_sid: req.session.user_sid,
       });
     } else {
       throw error;
@@ -136,12 +128,11 @@ const authUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  console.log(req.session);
-  const { username, fullName, email } = req.body;
-  const _id = username;
+  const { username, fullName, email, address } = req.body;
+  const _id = username.toLowerCase();
   const query = { _id };
   const newValues = {
-    $set: { fullName: fullName, email: email },
+    $set: { fullName: fullName, email: email, address: address },
   };
   try {
     const client = await MongoClient(MONGO_URI, options);
@@ -163,8 +154,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  console.log(req.session);
-  const username = req.body.username;
+  const username = req.body.username.toLowerCase();
   try {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
