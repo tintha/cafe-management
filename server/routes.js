@@ -25,13 +25,13 @@ const {
 } = require("./orders_handlers");
 
 const {
-  getProducts,
-  getProductsById,
-  getProductsByCategory,
-  addProduct,
-  updateProduct,
-  deleteProduct,
-} = require("./products_handlers");
+  getItems,
+  getItemById,
+  getItemsByCategory,
+  addItem,
+  updateItem,
+  deleteItem,
+} = require("./items_handlers");
 
 const {
   addCategory,
@@ -65,12 +65,12 @@ router.get("/api/orders/user/:userId", getOrdersByUserId);
 router.post("/api/orders", placeOrder);
 router.put("/api/orders/:orderId", updateOrder);
 router.delete("/api/orders/:orderId", deleteOrder);
-router.get("/api/products", getProducts);
-router.get("/api/products/:productId", getProductsById);
-router.get("/api/products/category/:category", getProductsByCategory);
-router.post("/api/products", addProduct);
-router.put("/api/products/:productId", updateProduct);
-router.delete("/api/products/:productId", deleteProduct);
+router.get("/api/items", getItems);
+router.get("/api/items/:itemId", getItemById);
+router.get("/api/items/category/:category", getItemsByCategory);
+router.post("/api/items", addItem);
+router.put("/api/items/:itemId", updateItem);
+router.delete("/api/items/:itemId", deleteItem);
 router.get("/api/categories", getCategories);
 router.post("/api/categories", addCategory);
 router.put("/api/categories/:catId", updateCategory);
