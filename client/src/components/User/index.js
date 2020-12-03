@@ -9,28 +9,25 @@ import Profile from "./Profile";
 const User = () => {
   const user = useSelector((state) => state.auth.currentUser);
   const userProfile = useSelector((state) => state.auth.userProfile);
-
-  return (
-    <Wrapper>
-      {!user ? (
-        <Redirect to="/" />
-      ) : (
-        <>
-          <p>Hello {userProfile.fullName},</p>
-          <p>As an customer, here you can:</p>
-          <Sidebar />
-          <Switch>
-            <Route path="/user/orders">
-              <Orders />
-            </Route>
-            <Route path="/user/profile">
-              <Profile />
-            </Route>
-          </Switch>
-        </>
-      )}
-    </Wrapper>
-  );
+  if (!user) {
+    return <Redirect to="/" />;
+  } else {
+    return (
+      <Wrapper>
+        <p>Hello {userProfile.fullName},</p>
+        <p>As an customer, here you can:</p>
+        <Sidebar />
+        <Switch>
+          <Route path="/user/orders">
+            <Orders />
+          </Route>
+          <Route path="/user/profile">
+            <Profile />
+          </Route>
+        </Switch>
+      </Wrapper>
+    );
+  }
 };
 
 const Wrapper = styled.div``;

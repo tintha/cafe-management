@@ -37,6 +37,7 @@ const Header = () => {
   return (
     <Wrapper>
       <Logo>Logo</Logo>
+      {user && <span>Welcome, {user}</span>}
 
       <NavMenu>
         <Navlink exact to="/">
