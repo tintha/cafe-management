@@ -1,12 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  requestLogout,
-  logoutSuccess,
-  logoutError,
-  logoutCleanOrders,
-} from "../redux/actions";
+import * as actions from "../redux/actions";
 import styled from "styled-components";
 
 const Header = () => {
@@ -16,7 +11,7 @@ const Header = () => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(requestLogout());
+    dispatch(actions.requestLogout());
     fetch(`/api/users/logout`, {
       method: "POST",
       body: JSON.stringify(),
@@ -28,14 +23,14 @@ const Header = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          dispatch(logoutSuccess(data));
-          dispatch(logoutCleanOrders());
+          dispatch(actions.logoutSuccess(data));
+          dispatch(actions.logoutCleanOrders());
         } else {
-          dispatch(logoutError(data.message));
+          dispatch(actions.logoutError(data.message));
         }
       })
       .catch((error) => {
-        dispatch(logoutError(error));
+        dispatch(actions.logoutError(error));
       });
   };
 

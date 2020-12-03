@@ -7,6 +7,7 @@ const Orders = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
   const orders = useSelector((state) => state.orders.orders);
+  const loadingStatus = useSelector((state) => state.orders.status);
 
   useEffect(() => {
     dispatch(actions.requestUserOrders());
@@ -21,24 +22,31 @@ const Orders = () => {
   return (
     <div>
       <h2>Orders:</h2>
-      {orders &&
-        orders.map((order) => {
-          const items = Object.entries(order.items);
-          return (
-            <div key={order._id}>
-              <p>
-                {order._id} - {order.customer} - {order.total}
-              </p>
-              {items.map((item) => {
-                return (
-                  <p key={item}>
-                    item: {item[0]}, quantity: {item[1]}
+      {loadingStatus === "success" && (
+        <>
+          {orders !== "No orders found" && orders !== null ? (
+            orders.map((order) => {
+              const items = Object.entries(order.items);
+              return (
+                <div key={order._id}>
+                  <p>
+                    {order._id} - {order.customer} - {order.total}
                   </p>
-                );
-              })}
-            </div>
-          );
-        })}
+                  {items.map((item) => {
+                    return (
+                      <p key={item}>
+                        item: {item[0]}, quantity: {item[1]}
+                      </p>
+                    );
+                  })}
+                </div>
+              );
+            })
+          ) : (
+            <p>You currently have no order history.</p>
+          )}
+        </>
+      )}
     </div>
   );
 };
