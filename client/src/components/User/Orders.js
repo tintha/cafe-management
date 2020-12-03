@@ -22,9 +22,11 @@ const Orders = () => {
   return (
     <div>
       <h2>Orders:</h2>
+      {loadingStatus === "loading" && <p>loading...</p>}
+      {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
-          {orders !== "No orders found" && orders !== null ? (
+          {orders !== "No orders found" ? (
             orders.map((order) => {
               const items = Object.entries(order.items);
               return (

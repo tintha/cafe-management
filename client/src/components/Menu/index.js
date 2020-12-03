@@ -5,6 +5,7 @@ import * as actions from "../../redux/actions";
 const Menu = () => {
   const dispatch = useDispatch();
   const menuItems = useSelector((state) => state.items.items);
+  const loadingStatus = useSelector((state) => state.items.status);
 
   useEffect(() => {
     dispatch(actions.requestItems());
@@ -18,14 +19,20 @@ const Menu = () => {
 
   return (
     <div>
-      {menuItems &&
-        menuItems.map((item) => {
-          return (
-            <p key={item._id}>
-              {item.itemName}, {item.description}
-            </p>
-          );
-        })}
+      {loadingStatus === "loading" && <p>loading...</p>}
+      {loadingStatus === "error" && <p>An error occurred...</p>}
+      {loadingStatus === "success" && (
+        <>
+          {menuItems &&
+            menuItems.map((item) => {
+              return (
+                <p key={item._id}>
+                  {item.itemName}, {item.description}
+                </p>
+              );
+            })}
+        </>
+      )}
     </div>
   );
 };
