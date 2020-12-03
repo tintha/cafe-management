@@ -85,6 +85,13 @@ export default function authReducer(state = initialState, action) {
         userProfile: {},
       };
     }
+
+    case "FETCH_USER_INFOS": {
+      return {
+        ...state,
+        userProfile: { ...action.data },
+      };
+    }
     default: {
       return state;
     }

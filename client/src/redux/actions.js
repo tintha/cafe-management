@@ -77,6 +77,21 @@ export const requestUserOrdersError = (error) => ({
   error,
 });
 
+// ******************************** USERS PROFILE ACTIONS
+export const requestProfile = () => ({
+  type: "REQUEST_PROFILE",
+});
+
+export const profileSuccess = (data) => ({
+  type: "PROFILE_SUCCESSFUL",
+  data,
+});
+
+export const profileError = (error) => ({
+  type: "PROFILE_ERROR",
+  error,
+});
+
 // ******************************** ADMIN EDIT ORDERS ACTIONS
 export const requestAdminOrders = () => ({
   type: "REQUEST_ADMIN_ORDERS",

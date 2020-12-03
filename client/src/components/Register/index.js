@@ -12,7 +12,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   const handleRegister = (e) => {
-    e.preventDefault();
     dispatch(actions.requestRegistration());
     fetch(`/api/users/`, {
       method: "POST",
@@ -35,33 +34,31 @@ const Register = () => {
       });
   };
 
-  return (
-    <div>
-      {user ? (
-        <Redirect to="/user" />
-      ) : (
-        <>
-          <p>Register</p>
-          <LoginInput
-            type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <LoginInput
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Submit type="submit" onClick={(e) => handleRegister(e)}>
-            Register
-          </Submit>
-          {error && <p>{error}</p>}
-        </>
-      )}
-    </div>
-  );
+  if (user) {
+    return <Redirect to="/user" />;
+  } else {
+    return (
+      <div>
+        <p>Register</p>
+        <LoginInput
+          type="text"
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <LoginInput
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Submit type="submit" onClick={(e) => handleRegister(e)}>
+          Register
+        </Submit>
+        {error && <p>{error}</p>}
+      </div>
+    );
+  }
 };
 
 const LoginInput = styled.input`
