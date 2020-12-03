@@ -14,8 +14,6 @@ const {
   logoutUser,
 } = require("./users_handlers");
 
-const { authAdmin, registerAdmin } = require("./admin_handlers");
-
 const {
   getOrders,
   getOrderById,
@@ -60,8 +58,6 @@ router.post("/api/users/login", authUser);
 router.post("/api/users/logout", logoutUser);
 router.put("/api/users", updateUser);
 router.delete("/api/users", deleteUser);
-router.post("/api/admin/setup", registerAdmin);
-router.post("/api/admin", authAdmin);
 router.get("/api/orders", getOrders);
 router.get("/api/orders/:orderId", getOrderById);
 router.get("/api/orders/user/:userId", getOrdersByUserId);
