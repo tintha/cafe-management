@@ -23,14 +23,17 @@ const Menu = () => {
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
-          {menuItems &&
+          {menuItems === null || menuItems === undefined ? (
+            <p>No item found.</p>
+          ) : (
             menuItems.map((item) => {
               return (
                 <p key={item._id}>
                   {item.itemName}, {item.description}
                 </p>
               );
-            })}
+            })
+          )}
         </>
       )}
     </div>
