@@ -1,21 +1,20 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 
-const Login = () => {
+const Register = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
-  const userProfile = useSelector((state) => state.auth.userProfile);
-  const error = useSelector((state) => state.auth.loginError);
+  const error = useSelector((state) => state.auth.registerError);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    dispatch(actions.requestLogin());
-    fetch(`/api/users/login`, {
+    dispatch(actions.requestRegistration());
+    fetch(`/api/users/`, {
       method: "POST",
       body: JSON.stringify({ username: username, password: password }),
       headers: {
@@ -25,33 +24,24 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status === 401) {
-          dispatch(actions.loginError(data.message));
+        if (data.status === 500) {
+          dispatch(actions.registrationError(data.message));
         } else {
-          dispatch(actions.loginSuccess(data.data));
+          dispatch(actions.registrationSuccess(data.data));
         }
       })
       .catch((error) => {
-        dispatch(actions.loginError(error));
+        dispatch(actions.registrationError(error));
       });
   };
 
   return (
     <div>
       {user ? (
-        <>
-          {userProfile.isAdmin === true ? (
-            <Redirect to="/admin" />
-          ) : (
-            <Redirect to="/user" />
-          )}
-        </>
+        <Redirect to="/user" />
       ) : (
         <>
-          <p>
-            Don't have an account? You can create one{" "}
-            <Link to="/register">here</Link>.
-          </p>
+          <p>Register</p>
           <LoginInput
             type="text"
             name="username"
@@ -64,8 +54,8 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Submit type="submit" onClick={(e) => handleSubmit(e)}>
-            Login
+          <Submit type="submit" onClick={(e) => handleRegister(e)}>
+            Register
           </Submit>
           {error && <p>{error}</p>}
         </>
@@ -80,4 +70,4 @@ const LoginInput = styled.input`
 
 const Submit = styled.button``;
 
-export default Login;
+export default Register;
