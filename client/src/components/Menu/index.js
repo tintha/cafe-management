@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { requestItems, receivedItems, itemsError } from "../redux/actions";
+import * as actions from "../../redux/actions";
 
 const Menu = () => {
   const dispatch = useDispatch();
   const menuItems = useSelector((state) => state.items.items);
 
   useEffect(() => {
-    dispatch(requestItems());
+    dispatch(actions.requestItems());
     fetch("/api/items")
       .then((res) => res.json())
       .then((data) => {
-        dispatch(receivedItems(data.data));
+        dispatch(actions.receivedItems(data.data));
       })
-      .catch((err) => dispatch(itemsError(err)));
-  }, []);
+      .catch((err) => dispatch(actions.itemsError(err)));
+  }, [dispatch]);
 
   return (
     <div>

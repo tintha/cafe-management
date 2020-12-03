@@ -79,19 +79,28 @@ const registerUser = async (req, res) => {
     const newUser = await db.collection(USERS_COLLECTION).insertOne({
       _id: username,
       password: hashedPassword,
+      fullName: null,
+      email: null,
+      address: null,
+      isAdmin: false,
     });
     assert(1, newUser.insertedCount);
     req.session.user_sid = username;
     res.status(200).json({
       status: 200,
-      data: username,
-      user_sid: req.session.user_sid,
+      data: {
+        fullName: null,
+        email: null,
+        address: null,
+        isAdmin: false,
+        user_sid: req.session.user_sid,
+      },
     });
     client.close();
   } catch (e) {
-    res.status(400).json({
-      status: 400,
-      data: e.message,
+    res.status(500).json({
+      status: 500,
+      message: e.message,
     });
   }
 };
@@ -112,8 +121,14 @@ const authUser = async (req, res) => {
       req.session.user_sid = user._id;
       res.status(200).json({
         status: 200,
-        data: "Successfully logged in",
-        user_sid: req.session.user_sid,
+        message: "Successfully logged in",
+        data: {
+          fullName: user.fullName,
+          address: user.address,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          user_sid: req.session.user_sid,
+        },
       });
     } else {
       throw error;
@@ -122,7 +137,7 @@ const authUser = async (req, res) => {
   } catch (e) {
     res.status(401).json({
       status: 401,
-      data: "Login failed",
+      message: "Login failed",
     });
   }
 };
@@ -173,6 +188,22 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const logoutUser = async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({
+        status: 500,
+        message: "error",
+      });
+    } else {
+      res.status(200).json({
+        status: 200,
+        success: true,
+      });
+    }
+  });
+};
+
 module.exports = {
   getUsers,
   getUserById,
@@ -180,4 +211,5 @@ module.exports = {
   authUser,
   updateUser,
   deleteUser,
+  logoutUser,
 };

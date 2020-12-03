@@ -1,8 +1,44 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  requestLogout,
+  logoutSuccess,
+  logoutError,
+  logoutCleanOrders,
+} from "../redux/actions";
 import styled from "styled-components";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.currentUser);
+  const userProfile = useSelector((state) => state.auth.userProfile);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(requestLogout());
+    fetch(`/api/users/logout`, {
+      method: "POST",
+      body: JSON.stringify(),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          dispatch(logoutSuccess(data));
+          dispatch(logoutCleanOrders());
+        } else {
+          dispatch(logoutError(data.message));
+        }
+      })
+      .catch((error) => {
+        dispatch(logoutError(error));
+      });
+  };
+
   return (
     <Wrapper>
       <Logo>Logo</Logo>
@@ -11,9 +47,27 @@ const Header = () => {
         <Navlink exact to="/">
           Home
         </Navlink>
-        <Navlink exact to="/login">
-          Login
-        </Navlink>
+        {user ? (
+          <>
+            {userProfile.isAdmin ? (
+              <Navlink exact to="/admin">
+                Admin Dashboard
+              </Navlink>
+            ) : (
+              <Navlink exact to="/user">
+                User Dashboard
+              </Navlink>
+            )}
+
+            <Logout onClick={(e) => handleLogout(e)}>Sign Out</Logout>
+          </>
+        ) : (
+          <>
+            <Navlink exact to="/login">
+              Sign in
+            </Navlink>
+          </>
+        )}
       </NavMenu>
     </Wrapper>
   );
@@ -37,5 +91,7 @@ const Navlink = styled(NavLink)`
     text-decoration: underline;
   }
 `;
+
+const Logout = styled.button``;
 
 export default Header;
