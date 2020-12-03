@@ -3,7 +3,7 @@ const initialState = {
   orders: null,
 };
 
-export default function adminOrdersReducer(state = initialState, action) {
+export default function ordersReducer(state = initialState, action) {
   switch (action.type) {
     // ADMIN ACTIONS
     case "REQUEST_ADMIN_ORDERS": {
