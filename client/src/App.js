@@ -18,19 +18,19 @@ function App() {
         <Header />
         <Main>
           <Switch>
-            <Route path="/login">
+            <Route exact path="/login">
               <Login />
             </Route>
-            <Router path="/register">
+            <Router exact path="/register">
               <Register />
             </Router>
-            <Router path="/admin">
+            <Router exact path="/admin">
               <Admin />
             </Router>
-            <Router path="/user">
+            <Router exact path="/user">
               <User />
             </Router>
-            <Route path="/">
+            <Route exact path="/">
               <Home />
             </Route>
           </Switch>
