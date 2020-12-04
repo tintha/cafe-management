@@ -165,8 +165,9 @@ const deleteItem = async (req, res) => {
       .collection(ITEMS_COLLECTION)
       .deleteOne({ _id: ObjectID(itemId) });
     assert(1, item.deletedCount);
-    res.status(204).json({
-      status: 204,
+    res.status(200).json({
+      status: 200,
+      itemId: itemId,
     });
     client.close();
   } catch (e) {

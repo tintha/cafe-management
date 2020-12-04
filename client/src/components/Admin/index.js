@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import OrdersTest from "./OrdersTest";
-import Menu from "./Menu";
+import MenuTest from "./MenuTest";
 
 const Admin = () => {
   const user = useSelector((state) => state.auth.currentUser);
@@ -15,22 +15,34 @@ const Admin = () => {
   } else {
     return (
       <Wrapper>
-        <p>Hello {userProfile.fullName},</p>
-        <p>As an administrator, here you can:</p>
-        <Sidebar />
-        <Switch>
-          <Route exact path="/admin/orders">
-            <OrdersTest />
-          </Route>
-          <Route exact path="/admin/menu">
-            <Menu />
-          </Route>
-        </Switch>
+        <LeftContainer>
+          <p>Hello {userProfile.fullName},</p>
+          <p>As an administrator, here you can:</p>
+          <Sidebar />
+        </LeftContainer>
+        <RightContainer>
+          <Switch>
+            <Route path="/admin/orders">
+              <OrdersTest />
+            </Route>
+            <Route path="/admin/menu">
+              <MenuTest />
+            </Route>
+          </Switch>
+        </RightContainer>
       </Wrapper>
     );
   }
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  padding: 30px;
+`;
+const LeftContainer = styled.div`
+  margin-right: 30px;
+`;
+
+const RightContainer = styled.div``;
 
 export default Admin;

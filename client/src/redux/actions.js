@@ -139,3 +139,20 @@ export const editOrderError = (error) => ({
   type: "EDIT_ORDER_ERROR",
   error,
 });
+
+// ******************************** ADMIN DELETE ITEM STATUS ACTIONS
+export const deleteItemRequest = () => ({
+  type: "REQUEST_DELETE_ITEM",
+});
+
+export const deleteItemSuccess = (itemId) => ({
+  type: "DELETE_ITEM_SUCCESS",
+  payload: {
+    itemId,
+  },
+});
+
+export const deleteItemError = (error) => ({
+  type: "DELETE_ITEM_ERROR",
+  error,
+});
