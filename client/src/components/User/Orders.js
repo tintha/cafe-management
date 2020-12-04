@@ -20,7 +20,7 @@ const Orders = () => {
   }, [dispatch, user]);
 
   return (
-    <div>
+    <Wrapper>
       <h2>Orders:</h2>
       {loadingStatus === "loading" && <p>loading...</p>}
       {loadingStatus === "error" && <p>An error occurred...</p>}
@@ -49,10 +49,10 @@ const Orders = () => {
           )}
         </>
       )}
-    </div>
+    </Wrapper>
   );
 };
 
-const Button = styled.button``;
+const Wrapper = styled.div``;
 
 export default Orders;

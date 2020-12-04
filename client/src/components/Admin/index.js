@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
-import Orders from "./Orders";
+import OrdersTest from "./OrdersTest";
 import Menu from "./Menu";
 
 const Admin = () => {
@@ -20,7 +20,7 @@ const Admin = () => {
         <Sidebar />
         <Switch>
           <Route exact path="/admin/orders">
-            <Orders />
+            <OrdersTest />
           </Route>
           <Route exact path="/admin/menu">
             <Menu />
