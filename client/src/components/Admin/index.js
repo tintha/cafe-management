@@ -19,10 +19,10 @@ const Admin = () => {
         <p>As an administrator, here you can:</p>
         <Sidebar />
         <Switch>
-          <Route path="/admin/orders">
+          <Route exact path="/admin/orders">
             <Orders />
           </Route>
-          <Route path="/admin/menu">
+          <Route exact path="/admin/menu">
             <Menu />
           </Route>
         </Switch>

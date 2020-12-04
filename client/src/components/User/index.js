@@ -18,10 +18,10 @@ const User = () => {
         <p>As an customer, here you can:</p>
         <Sidebar />
         <Switch>
-          <Route path="/user/orders">
+          <Route exact path="/user/orders">
             <Orders />
           </Route>
-          <Route path="/user/profile">
+          <Route exact path="/user/profile">
             <Profile />
           </Route>
         </Switch>
