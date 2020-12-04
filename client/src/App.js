@@ -21,16 +21,16 @@ function App() {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Router exact path="/register">
+            <Route exact path="/register">
               <Register />
-            </Router>
-            <Router exact path="/admin">
+            </Route>
+            <Route path="/admin">
               <Admin />
-            </Router>
-            <Router exact path="/user">
+            </Route>
+            <Route path="/user">
               <User />
-            </Router>
-            <Route exact path="/">
+            </Route>
+            <Route path="/">
               <Home />
             </Route>
           </Switch>
