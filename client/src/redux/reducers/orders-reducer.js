@@ -1,6 +1,6 @@
 const initialState = {
   status: "iddle",
-  orders: null,
+  orders: [],
 };
 
 export default function ordersReducer(state = initialState, action) {
@@ -16,7 +16,7 @@ export default function ordersReducer(state = initialState, action) {
       return {
         ...state,
         status: "success",
-        orders: action.data,
+        orders: [...action.data],
       };
     }
     case "REQUEST_ADMIN_ORDERS_ERROR": {
@@ -26,6 +26,33 @@ export default function ordersReducer(state = initialState, action) {
         error: action.error,
       };
     }
+
+    // ADMIN EDIT ORDER STATUS
+    case "REQUEST_EDIT_ORDER": {
+      return {
+        ...state,
+        status: "loading",
+      };
+    }
+    case "EDIT_ORDER_SUCCESS": {
+      return {
+        ...state,
+        status: "success",
+        orders: state.orders.map((order) =>
+          order._id != action.payload.orderId
+            ? order
+            : { ...order, status: action.payload.orderStatus }
+        ),
+      };
+    }
+    case "EDIT_ORDER_ERROR": {
+      return {
+        ...state,
+        status: "error",
+        error: action.error,
+      };
+    }
+
     // USER ACTIONS
     case "REQUEST_USER_ORDERS": {
       return {

@@ -98,6 +98,7 @@ const placeOrder = async (req, res) => {
       customer: username,
       items: items,
       total: total,
+      status: "new",
     });
     assert(1, order.insertedCount);
     res.status(200).json({
@@ -108,6 +109,7 @@ const placeOrder = async (req, res) => {
         customer: username,
         items: items,
         total: total,
+        status: "new",
       },
     });
     client.close();
@@ -121,9 +123,9 @@ const placeOrder = async (req, res) => {
 
 const updateOrder = async (req, res) => {
   const orderId = req.params.orderId;
-  const items = req.body.items;
+  const status = req.body.status;
   const newValues = {
-    $set: { items: { ...items }, total: req.body.total },
+    $set: { status: status },
   };
   try {
     const client = await MongoClient(MONGO_URI, options);
@@ -137,6 +139,7 @@ const updateOrder = async (req, res) => {
     res.status(200).json({
       status: 200,
       success: true,
+      data: { orderId, status: status },
     });
     client.close();
   } catch (e) {

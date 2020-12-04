@@ -121,3 +121,21 @@ export const editMenuError = (error) => ({
   type: "EDIT_MENU_ERROR",
   error,
 });
+
+// ******************************** ADMIN EDIT ORDER STATUS ACTIONS
+export const editOrderRequest = () => ({
+  type: "REQUEST_EDIT_ORDER",
+});
+
+export const editOrderSuccess = (orderId, orderStatus) => ({
+  type: "EDIT_ORDER_SUCCESS",
+  payload: {
+    orderId,
+    orderStatus,
+  },
+});
+
+export const editOrderError = (error) => ({
+  type: "EDIT_ORDER_ERROR",
+  error,
+});
