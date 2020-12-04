@@ -3,6 +3,7 @@ import { NavLink, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import MenuItems from "./MenuItems";
 import MenuCategories from "./MenuCategories";
+import EditItem from "./EditItem";
 
 const Menu = () => {
   return (
@@ -22,7 +23,10 @@ const Menu = () => {
           <Route exact path="/admin/menu/categories">
             <MenuCategories />
           </Route>
-          <Route exact path="/admin/menu/items">
+          <Route path="/admin/menu/items/:id">
+            <EditItem />
+          </Route>
+          <Route path="/admin/menu/items">
             <MenuItems />
           </Route>
         </Switch>

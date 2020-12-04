@@ -32,7 +32,6 @@ const Orders = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.status === 200) {
-          console.log(json.data.orderId);
           dispatch(
             actions.editOrderSuccess(json.data.orderId, json.data.status)
           );
@@ -65,7 +64,7 @@ const Orders = () => {
                     );
                   })}
                   <Button onClick={(e) => handleChangeOrder(e, order._id)}>
-                    Update status
+                    Mark completed
                   </Button>
                 </div>
               );

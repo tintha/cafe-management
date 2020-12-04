@@ -27,12 +27,6 @@ export default function itemsReducer(state = initialState, action) {
     }
 
     // ADMIN DELETE ITEM
-    case "REQUEST_DELETE_ITEM": {
-      return {
-        ...state,
-        status: "loading",
-      };
-    }
     case "DELETE_ITEM_SUCCESS": {
       return {
         ...state,
@@ -40,6 +34,20 @@ export default function itemsReducer(state = initialState, action) {
       };
     }
     case "DELETE_ITEM_ERROR": {
+      return {
+        ...state,
+        status: "error",
+        error: action.error,
+      };
+    }
+
+    // ADMIN EDIT ITEM
+    case "EDIT_MENU_ITEM_SUCCESS": {
+      return {
+        ...state,
+      };
+    }
+    case "EDIT_MENU_ITEM_ERROR": {
       return {
         ...state,
         status: "error",

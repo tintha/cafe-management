@@ -107,26 +107,18 @@ export const requestAdminOrdersError = (error) => ({
   error,
 });
 
-// ******************************** ADMIN EDIT MENU ACTIONS
-export const editMenuRequest = () => ({
-  type: "REQUEST_EDIT_MENU",
-});
-
-export const editMenuSuccess = (data) => ({
-  type: "EDIT_MENU_SUCCESS",
+// ******************************** ADMIN EDIT MENU ITEM ACTIONS
+export const editMenuItemSuccess = (data) => ({
+  type: "EDIT_MENU_ITEM_SUCCESS",
   data,
 });
 
-export const editMenuError = (error) => ({
-  type: "EDIT_MENU_ERROR",
+export const editMenuItemError = (error) => ({
+  type: "EDIT_MENU_ITEM_ERROR",
   error,
 });
 
 // ******************************** ADMIN EDIT ORDER STATUS ACTIONS
-export const editOrderRequest = () => ({
-  type: "REQUEST_EDIT_ORDER",
-});
-
 export const editOrderSuccess = (orderId, orderStatus) => ({
   type: "EDIT_ORDER_SUCCESS",
   payload: {
@@ -141,10 +133,6 @@ export const editOrderError = (error) => ({
 });
 
 // ******************************** ADMIN DELETE ITEM STATUS ACTIONS
-export const deleteItemRequest = () => ({
-  type: "REQUEST_DELETE_ITEM",
-});
-
 export const deleteItemSuccess = (itemId) => ({
   type: "DELETE_ITEM_SUCCESS",
   payload: {
