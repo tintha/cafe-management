@@ -124,13 +124,11 @@ const updateItem = async (req, res) => {
   const itemName = req.body.itemName;
   const description = req.body.description;
   const image = req.body.image;
-  const category = req.body.category;
   const newValues = {
     $set: {
       itemName: itemName,
       description: description,
       image: image,
-      category: category,
     },
   };
   try {

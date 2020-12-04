@@ -28,12 +28,6 @@ export default function ordersReducer(state = initialState, action) {
     }
 
     // ADMIN EDIT ORDER STATUS
-    case "REQUEST_EDIT_ORDER": {
-      return {
-        ...state,
-        status: "loading",
-      };
-    }
     case "EDIT_ORDER_SUCCESS": {
       return {
         ...state,
