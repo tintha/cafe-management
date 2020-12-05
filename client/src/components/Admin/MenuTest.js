@@ -4,6 +4,7 @@ import styled from "styled-components";
 import MenuItems from "./MenuItems";
 import MenuCategories from "./MenuCategories";
 import EditItem from "./EditItem";
+import AddItem from "./AddItem";
 
 const Menu = () => {
   return (
@@ -16,12 +17,18 @@ const Menu = () => {
           <li>
             <Navlink to="/admin/menu/items">Edit items</Navlink>
           </li>
+          <li>
+            <Navlink to="/admin/menu/items/add">Add an item</Navlink>
+          </li>
         </ul>
       </MenuSidebar>
       <MenuContent>
         <Switch>
           <Route exact path="/admin/menu/categories">
             <MenuCategories />
+          </Route>
+          <Route path="/admin/menu/items/add">
+            <AddItem />
           </Route>
           <Route path="/admin/menu/items/:id">
             <EditItem />
