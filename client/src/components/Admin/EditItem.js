@@ -10,6 +10,7 @@ const EditItem = () => {
     description: "",
     image: "",
   });
+  const [baseImage, setBaseImage] = useState("");
 
   useEffect(() => {
     fetch(`/api/items/${id}`)
@@ -55,6 +56,28 @@ const EditItem = () => {
       .catch((err) => console.log(err));
   };
 
+  const uploadImage = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setBaseImage(base64);
+    setUpdateData({ ...updateData, image: base64 });
+  };
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  console.log(updateData);
   return (
     <Wrapper>
       Edit item here
@@ -75,11 +98,16 @@ const EditItem = () => {
             onChange={handleChange}
           />
           <p>Image:</p>
-          {itemData.image === null ? (
-            <Button>Upload image</Button>
-          ) : (
-            <p>{/*display image*/}</p>
-          )}
+
+          <input
+            type="file"
+            onChange={(e) => {
+              uploadImage(e);
+            }}
+          />
+          <br></br>
+          <img src={baseImage} height="200px" alt="" />
+
           <Button onClick={(e) => handleUpdateItem(e, id)}>Save changes</Button>
         </>
       )}
