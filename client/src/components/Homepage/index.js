@@ -1,16 +1,24 @@
 import React from "react";
-import Menu from "../Menu";
 import styled from "styled-components";
+import Menu from "../Menu";
+import Cart from "../Cart";
 
 const Home = () => {
   return (
     <Wrapper>
-      Home - <Menu />
+      Home -
+      <div>
+        <Menu />
+      </div>
+      <div>
+        <Cart />
+      </div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  display: flex;
   height: 100%;
 `;
 

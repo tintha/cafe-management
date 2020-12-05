@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Sidebar = () => {
   return (
-    <div>
+    <Wrapper>
       <ul>
         <li>
           <Navlink to="/admin/orders">
@@ -15,9 +15,13 @@ const Sidebar = () => {
           <Navlink to="/admin/menu">edit the menu</Navlink>
         </li>
       </ul>
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  width: 250px;
+`;
 
 const Navlink = styled(NavLink)`
   text-decoration: none;

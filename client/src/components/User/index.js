@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import Orders from "./Orders";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
+import Cart from "../Cart";
 
 const User = () => {
   const user = useSelector((state) => state.auth.currentUser);
@@ -24,6 +25,9 @@ const User = () => {
           <Switch>
             <Route path="/user/orders">
               <Orders />
+            </Route>
+            <Route path="/user/cart">
+              <Cart />
             </Route>
             <Route exact path="/user/profile/edit">
               <EditProfile />

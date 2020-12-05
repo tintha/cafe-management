@@ -87,9 +87,7 @@ const getItemsByCategory = async (req, res) => {
 const addItem = async (req, res) => {
   const itemId = ObjectID();
   try {
-    const itemName = req.body.itemName;
-    const description = req.body.description;
-    const image = req.body.image;
+    const { itemName, description, price, image } = req.body;
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
@@ -97,6 +95,7 @@ const addItem = async (req, res) => {
       _id: itemId,
       itemName: itemName,
       description: description,
+      price: price,
       image: image,
     });
     assert(1, item.insertedCount);
@@ -107,6 +106,7 @@ const addItem = async (req, res) => {
         _id: itemId,
         itemName: itemName,
         description: description,
+        price: price,
         image: image,
       },
     });
@@ -121,13 +121,12 @@ const addItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   const itemId = req.params.itemId;
-  const itemName = req.body.itemName;
-  const description = req.body.description;
-  const image = req.body.image;
+  const { itemName, description, price, image } = req.body;
   const newValues = {
     $set: {
       itemName: itemName,
       description: description,
+      price: price,
       image: image,
     },
   };

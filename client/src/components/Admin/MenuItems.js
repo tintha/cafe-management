@@ -11,14 +11,14 @@ const MenuItems = () => {
   const loadingStatus = useSelector((state) => state.items.status);
 
   useEffect(() => {
-    dispatch(actions.requestItems());
+    // dispatch(actions.requestItems());
     fetch("/api/items")
       .then((res) => res.json())
       .then((data) => {
         dispatch(actions.receivedItems(data.data));
       })
       .catch((err) => dispatch(actions.itemsError(err)));
-  }, []);
+  }, [dispatch]);
 
   const handleDeleteItem = (e, itemId) => {
     e.preventDefault();
@@ -39,12 +39,12 @@ const MenuItems = () => {
   };
 
   return (
-    <div>
-      Menu items
+    <Wrapper>
+      <p>Menu items</p>
       {loadingStatus === "loading" && <p>loading...</p>}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
-        <>
+        <DisplayItemContainer>
           {menuItems === null || menuItems === undefined ? (
             <p>No item found.</p>
           ) : (
@@ -56,6 +56,9 @@ const MenuItems = () => {
                   </p>
                   <p>
                     <Bold>Description</Bold>: {item.description}
+                  </p>
+                  <p>
+                    <Bold>Price</Bold>: {item.price}
                   </p>
                   <p>
                     <Bold>Image</Bold>:{" "}
@@ -79,11 +82,19 @@ const MenuItems = () => {
               );
             })
           )}
-        </>
+        </DisplayItemContainer>
       )}
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div``;
+
+const DisplayItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
 
 const Button = styled.button``;
 
@@ -94,6 +105,7 @@ const ItemBox = styled.div`
   border-radius: 10px;
   padding: 20px;
   margin: 10px;
+  width: 230px;
 `;
 
 const Bold = styled.span`

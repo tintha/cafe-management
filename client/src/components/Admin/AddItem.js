@@ -7,6 +7,7 @@ const AddItem = () => {
   const [updateData, setUpdateData] = useState({
     itemName: "",
     description: "",
+    price: "",
     image: "",
   });
   const [currentImage, setCurrentImage] = useState();
@@ -73,6 +74,13 @@ const AddItem = () => {
         type="text"
         name="description"
         value={updateData.description}
+        onChange={handleChange}
+      />
+      <p>Price:</p>
+      <Input
+        type="text"
+        name="price"
+        value={updateData.price}
         onChange={handleChange}
       />
       <p>Image:</p>
