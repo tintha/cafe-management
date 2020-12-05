@@ -27,7 +27,7 @@ const Menu = () => {
           <Route exact path="/admin/menu/categories">
             <MenuCategories />
           </Route>
-          <Route path="/admin/menu/items/add">
+          <Route exact path="/admin/menu/items/add">
             <AddItem />
           </Route>
           <Route path="/admin/menu/items/:id">
@@ -48,6 +48,7 @@ const Wrapper = styled.div`
 
 const MenuSidebar = styled.div`
   margin-right: 20px;
+  width: 150px;
 `;
 
 const MenuContent = styled.div``;

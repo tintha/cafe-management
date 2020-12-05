@@ -9,7 +9,7 @@ const Orders = () => {
   const loadingStatus = useSelector((state) => state.orders.status);
 
   useEffect(() => {
-    dispatch(actions.requestAdminOrders());
+    // dispatch(actions.requestAdminOrders());
     fetch("/api/orders")
       .then((res) => res.json())
       .then((data) => {

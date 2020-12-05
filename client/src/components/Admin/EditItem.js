@@ -82,7 +82,7 @@ const EditItem = () => {
 
   return (
     <Wrapper>
-      Edit item here
+      Edit single item here
       {itemData.itemName && itemData.description && (
         <>
           <p>Item Name:</p>

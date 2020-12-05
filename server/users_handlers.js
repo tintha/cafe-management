@@ -153,13 +153,13 @@ const authUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { firstName, lastName, email, address } = req.body;
+  const { firstName, lastName, email, address, isAdmin } = req.body;
   const _id = req.params.userId.toLowerCase();
   const query = { _id };
   const newValues = {
     $set: {
       firstName: firstName,
-      lastname: lastName,
+      lastName: lastName,
       email: email,
       address: address,
     },

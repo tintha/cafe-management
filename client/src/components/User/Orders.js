@@ -10,7 +10,7 @@ const Orders = () => {
   const loadingStatus = useSelector((state) => state.orders.status);
 
   useEffect(() => {
-    dispatch(actions.requestUserOrders());
+    // dispatch(actions.requestUserOrders());
     fetch(`/api/orders/user/${user}`)
       .then((res) => res.json())
       .then((data) => {

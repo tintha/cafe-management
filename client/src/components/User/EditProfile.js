@@ -18,7 +18,7 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
-    dispatch(actions.requestProfile());
+    // dispatch(actions.requestProfile());
     fetch(`/api/users/${user}`)
       .then((res) => res.json())
       .then((data) => {
@@ -35,7 +35,6 @@ const EditProfile = () => {
 
   const handleUpdateProfile = (e) => {
     const id = user;
-    console.log(id);
     e.preventDefault();
     fetch(`/api/users/${id}`, {
       method: "PUT",

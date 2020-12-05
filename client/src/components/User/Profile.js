@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
+import testimage from "./testimage.jpg";
 
 const Profile = () => {
   const history = useHistory();
@@ -12,7 +13,7 @@ const Profile = () => {
   const loadingStatus = useSelector((state) => state.profile.status);
 
   useEffect(() => {
-    dispatch(actions.requestProfile());
+    // dispatch(actions.requestProfile());
     fetch(`/api/users/${user}`)
       .then((res) => res.json())
       .then((data) => {

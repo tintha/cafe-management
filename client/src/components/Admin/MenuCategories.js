@@ -9,7 +9,7 @@ const MenuCategories = () => {
   const loadingStatus = useSelector((state) => state.items.status);
 
   useEffect(() => {
-    dispatch(actions.requestItems());
+    // dispatch(actions.requestItems());
     fetch("/api/items")
       .then((res) => res.json())
       .then((data) => {
