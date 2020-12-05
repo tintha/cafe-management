@@ -28,20 +28,22 @@ const Orders = () => {
         <>
           {orders !== "No orders found" ? (
             orders.map((order) => {
-              const items = Object.entries(order.items);
               return (
                 <div key={order._id}>
                   <p>
-                    {order._id} - {order.customer} - {order.total} -{" "}
-                    {order.status}
+                    ID: {order._id}, Total: {order.total}, Status:
+                    {order.status}, Date: {order.date}
                   </p>
-                  {items.map((item) => {
-                    return (
-                      <p key={item}>
-                        item: {item[0]}, quantity: {item[1]}
-                      </p>
-                    );
-                  })}
+                  <div>
+                    <p>Items ordered:</p>
+                    {order.items.map((item) => {
+                      return (
+                        <p key={item._id}>
+                          item: {item.itemName}, quantity: {item.quantity}
+                        </p>
+                      );
+                    })}
+                  </div>
                 </div>
               );
             })

@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import User from "./components/User";
 import Admin from "./components/Admin";
+import ThankYou from "./components/ThankYou";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route path="/user">
               <User />
+            </Route>
+            <Route path="/thankyou">
+              <ThankYou />
             </Route>
             <Route path="/">
               <Home />
