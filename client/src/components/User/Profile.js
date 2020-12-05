@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
-import testimage from "./testimage.jpg";
 
 const Profile = () => {
   const history = useHistory();
@@ -51,8 +50,6 @@ const H2 = styled.h2`
   font-size: 1rem;
   font-weight: bold;
 `;
-
-const Input = styled.input``;
 
 const FieldBox = styled.div``;
 

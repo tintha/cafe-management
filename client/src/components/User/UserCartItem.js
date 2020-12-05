@@ -29,6 +29,10 @@ const CartItem = ({ _id, itemName, description, price, quantity, image }) => {
           <Icon icon={cancelCircle} size={32} />
         </RemoveBtn>
       </ItemNameContainer>
+      <ItemDescription>{description}</ItemDescription>
+      <ItemImage>
+        <img src={image} width="50" alt="" />
+      </ItemImage>
       <QuantityContainer>
         <label htmlFor="quantity">Quantity:</label>
         <QuantityNum
@@ -53,6 +57,14 @@ const ItemNameContainer = styled.div`
   justify-content: space-between;
   padding: 10px;
   font-size: 1.3rem;
+`;
+const ItemImage = styled.div``;
+
+const ItemDescription = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 1rem;
 `;
 
 const QuantityContainer = styled.div`
