@@ -7,10 +7,10 @@ const Sidebar = () => {
     <div>
       <ul>
         <li>
-          <Navlink to="/user/orders">view your orders history</Navlink>
+          <Navlink to="/user/orders">View your order history</Navlink>
         </li>
         <li>
-          <Navlink to="/user/profile">edit your profile</Navlink>
+          <Navlink to="/user/profile">View and edit your profile</Navlink>
         </li>
       </ul>
     </div>
