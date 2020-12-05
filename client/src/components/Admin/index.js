@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
-import OrdersTest from "./OrdersTest";
-import MenuTest from "./MenuTest";
+import Orders from "./Orders";
+import Menu from "./Menu";
 
 const Admin = () => {
   const user = useSelector((state) => state.auth.currentUser);
@@ -23,10 +23,10 @@ const Admin = () => {
         <RightContainer>
           <Switch>
             <Route path="/admin/orders">
-              <OrdersTest />
+              <Orders />
             </Route>
             <Route path="/admin/menu">
-              <MenuTest />
+              <Menu />
             </Route>
           </Switch>
         </RightContainer>
@@ -39,6 +39,7 @@ const Wrapper = styled.div`
   display: flex;
   padding: 30px;
 `;
+
 const LeftContainer = styled.div`
   margin-right: 30px;
 `;

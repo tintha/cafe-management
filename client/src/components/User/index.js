@@ -14,22 +14,35 @@ const User = () => {
   } else {
     return (
       <Wrapper>
-        <p>Hello {userProfile.fullName},</p>
-        <p>As an customer, here you can:</p>
-        <Sidebar />
-        <Switch>
-          <Route exact path="/user/orders">
-            <Orders />
-          </Route>
-          <Route exact path="/user/profile">
-            <Profile />
-          </Route>
-        </Switch>
+        <LeftContainer>
+          <p>Hello {userProfile.fullName},</p>
+          <p>As an customer, here you can:</p>
+          <Sidebar />
+        </LeftContainer>
+        <RightContainer>
+          <Switch>
+            <Route path="/user/orders">
+              <Orders />
+            </Route>
+            <Route path="/user/profile">
+              <Profile />
+            </Route>
+          </Switch>
+        </RightContainer>
       </Wrapper>
     );
   }
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  padding: 30px;
+`;
+
+const LeftContainer = styled.div`
+  margin-right: 30px;
+`;
+
+const RightContainer = styled.div``;
 
 export default User;

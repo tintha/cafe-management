@@ -27,6 +27,10 @@ export const logoutCleanOrders = () => ({
   type: "CLEANUP_ORDERS",
 });
 
+export const logoutCleanProfile = () => ({
+  type: "CLEANUP_PROFILE",
+});
+
 export const logoutError = (error) => ({
   type: "LOGOUT_ERROR",
   error,

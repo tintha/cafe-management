@@ -26,8 +26,11 @@ const Profile = () => {
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
-          <p>Name: {profile.fullName && profile.fullName}</p>
-          <p>Email: {profile.email && profile.email}</p>
+          <p>
+            Name: {profile.firstName && profile.firstName}{" "}
+            {profile.lastName && profile.lastName}
+          </p>
+          <p>Email: {profile.email}</p>
           <p>Address: {profile.address && profile.address}</p>
         </>
       )}

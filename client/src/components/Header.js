@@ -25,6 +25,7 @@ const Header = () => {
         if (data.status === 200) {
           dispatch(actions.logoutSuccess(data));
           dispatch(actions.logoutCleanOrders());
+          dispatch(actions.logoutCleanProfile());
         } else {
           dispatch(actions.logoutError(data.message));
         }
@@ -37,7 +38,7 @@ const Header = () => {
   return (
     <Wrapper>
       <Logo>Logo</Logo>
-      {user && <span>Welcome, {user}</span>}
+      {user && <span>Welcome, {userProfile.firstName}!</span>}
 
       <NavMenu>
         <Navlink exact to="/">
