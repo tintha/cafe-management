@@ -64,7 +64,12 @@ const MenuItems = () => {
                     <Bold>Description</Bold>: {item.description}
                   </p>
                   <p>
-                    <Bold>Image</Bold>: {item.image ? item.image : "No image"}
+                    <Bold>Image</Bold>:{" "}
+                    {item.image ? (
+                      <img src={item.image} alt="" width="200" />
+                    ) : (
+                      "No image"
+                    )}
                   </p>
                   <Button
                     onClick={() =>
