@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import Orders from "./Orders";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
-import Cart from "../Cart";
+import UserCart from "./UserCart";
 
 const User = () => {
   const user = useSelector((state) => state.auth.currentUser);
@@ -17,8 +17,7 @@ const User = () => {
     return (
       <Wrapper>
         <LeftContainer>
-          <p>Hello {userProfile.fullName},</p>
-          <p>As an customer, here you can:</p>
+          <p>{userProfile.firstName}</p>
           <Sidebar />
         </LeftContainer>
         <RightContainer>
@@ -26,14 +25,14 @@ const User = () => {
             <Route path="/user/orders">
               <Orders />
             </Route>
-            <Route path="/user/cart">
-              <Cart />
-            </Route>
             <Route exact path="/user/profile/edit">
               <EditProfile />
             </Route>
             <Route path="/user/profile">
               <Profile />
+            </Route>
+            <Route path="/user">
+              <UserCart />
             </Route>
           </Switch>
         </RightContainer>

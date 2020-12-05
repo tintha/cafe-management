@@ -28,7 +28,7 @@ const Menu = () => {
             <p>No item found.</p>
           ) : (
             menuItems.map((item) => {
-              const { _id, itemName, description, price } = item;
+              const { _id, itemName, description, price, image } = item;
               const formattedPrice = new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
@@ -44,7 +44,13 @@ const Menu = () => {
                   <AddToCartBtn
                     onClick={() =>
                       dispatch(
-                        actions.addItem({ _id, itemName, description, price })
+                        actions.addItem({
+                          _id,
+                          itemName,
+                          description,
+                          price,
+                          image,
+                        })
                       )
                     }
                   >

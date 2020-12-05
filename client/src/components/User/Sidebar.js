@@ -7,9 +7,6 @@ const Sidebar = () => {
     <div>
       <ul>
         <li>
-          <Navlink to="/user/cart">View cart</Navlink>
-        </li>
-        <li>
           <Navlink to="/user/orders">View your order history</Navlink>
         </li>
         <li>

@@ -1,14 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import CartItem from "./CartItem";
+import UserCartItem from "./UserCartItem";
 
 const Cart = () => {
-  const history = useHistory();
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
-  const user = useSelector((state) => state.auth.currentUser);
 
   let { totalItems, totalPrice } = cartItems.reduce(
     (acc, cur) => {
@@ -20,20 +17,16 @@ const Cart = () => {
     { totalItems: 0, totalPrice: 0 }
   );
 
-  const handlePurchase = (e) => {
-    user ? history.push("/user/cart") : history.push("/login");
-  };
-
   return (
     <Wrapper>
       <TopContainer>
-        <Title>Your Cart</Title>
+        <Title>Detailed Cart</Title>
         <NumItems>
           {totalItems} {totalItems <= 1 ? "item" : "items"}
         </NumItems>
         {cartItems.map((item) => {
           return (
-            <CartItem
+            <UserCartItem
               key={item.itemName}
               id={item._id}
               itemName={item.itemName}
@@ -49,7 +42,7 @@ const Cart = () => {
         <TotalPrice>
           Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
         </TotalPrice>
-        <Button onClick={(e) => handlePurchase(e)}>Purchase</Button>
+        <Button>Purchase</Button>
       </TotalContainer>
     </Wrapper>
   );
