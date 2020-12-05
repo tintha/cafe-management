@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -9,7 +9,6 @@ const MenuItems = () => {
   const dispatch = useDispatch();
   const menuItems = useSelector((state) => state.items.items);
   const loadingStatus = useSelector((state) => state.items.status);
-  const [itemName, setItemName] = useState("");
 
   useEffect(() => {
     dispatch(actions.requestItems());
@@ -19,7 +18,7 @@ const MenuItems = () => {
         dispatch(actions.receivedItems(data.data));
       })
       .catch((err) => dispatch(actions.itemsError(err)));
-  }, [dispatch]);
+  }, []);
 
   const handleDeleteItem = (e, itemId) => {
     e.preventDefault();
@@ -37,11 +36,6 @@ const MenuItems = () => {
         }
       })
       .catch((err) => dispatch(actions.deleteItemError()));
-  };
-
-  const handleChange = (e) => {
-    const data = e.target.value;
-    setItemName(data);
   };
 
   return (

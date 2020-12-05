@@ -33,7 +33,7 @@ export default function ordersReducer(state = initialState, action) {
         ...state,
         status: "success",
         orders: state.orders.map((order) =>
-          order._id != action.payload.orderId
+          order._id !== action.payload.orderId
             ? order
             : { ...order, status: action.payload.orderStatus }
         ),

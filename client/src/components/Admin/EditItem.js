@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 const EditItem = () => {
   let { id } = useParams();
+  const history = useHistory();
   const [itemData, setItemData] = useState({});
   const [updateData, setUpdateData] = useState({
     itemName: "",
     description: "",
     image: "",
   });
-  const [baseImage, setBaseImage] = useState("");
+  const [currentImage, setCurrentImage] = useState();
 
   useEffect(() => {
     fetch(`/api/items/${id}`)
@@ -28,6 +29,7 @@ const EditItem = () => {
     }
     if (itemData.image) {
       setUpdateData({ ...itemData, image: itemData.image });
+      setCurrentImage(itemData.image);
     }
   }, [itemData]);
 
@@ -50,7 +52,7 @@ const EditItem = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.status === 200) {
-          console.log("success");
+          history.push("/admin/menu/items");
         }
       })
       .catch((err) => console.log(err));
@@ -59,7 +61,7 @@ const EditItem = () => {
   const uploadImage = async (e) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
-    setBaseImage(base64);
+    setCurrentImage(base64);
     setUpdateData({ ...updateData, image: base64 });
   };
 
@@ -77,7 +79,7 @@ const EditItem = () => {
       };
     });
   };
-  console.log(updateData);
+
   return (
     <Wrapper>
       Edit item here
@@ -98,7 +100,6 @@ const EditItem = () => {
             onChange={handleChange}
           />
           <p>Image:</p>
-
           <input
             type="file"
             onChange={(e) => {
@@ -106,7 +107,7 @@ const EditItem = () => {
             }}
           />
           <br></br>
-          <img src={baseImage} height="200px" alt="" />
+          {currentImage && <img src={currentImage} height="200px" alt="" />}
 
           <Button onClick={(e) => handleUpdateItem(e, id)}>Save changes</Button>
         </>
