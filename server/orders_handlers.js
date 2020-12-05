@@ -68,7 +68,7 @@ const getOrdersByUserId = async (req, res) => {
     const db = client.db(APP_DB);
     const orders = await db
       .collection(ORDERS_COLLECTION)
-      .find({ customer: userId })
+      .find({ username: userId })
       .toArray();
     assert(orders.length, orders.matchedCount);
     res.status(200).json({
@@ -87,30 +87,22 @@ const getOrdersByUserId = async (req, res) => {
 const placeOrder = async (req, res) => {
   const orderId = ObjectID();
   try {
-    const username = req.body.username;
-    const items = req.body.items;
-    const total = req.body.total;
+    const { username, items, total, date } = req.body;
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
     const order = await db.collection(ORDERS_COLLECTION).insertOne({
       _id: orderId,
-      customer: username,
+      username: username,
       items: items,
       total: total,
+      date: date,
       status: "new",
     });
     assert(1, order.insertedCount);
     res.status(200).json({
       status: 200,
       success: true,
-      data: {
-        orderId: orderId,
-        customer: username,
-        items: items,
-        total: total,
-        status: "new",
-      },
     });
     client.close();
   } catch (e) {

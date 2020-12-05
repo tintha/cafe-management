@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import UserCartItem from "./UserCartItem";
 
 const Cart = () => {
+  const history = useHistory();
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
-
+  const user = useSelector((state) => state.auth.currentUser);
   let { totalItems, totalPrice } = cartItems.reduce(
     (acc, cur) => {
       const { quantity, price } = cur;
@@ -16,6 +18,40 @@ const Cart = () => {
     },
     { totalItems: 0, totalPrice: 0 }
   );
+  const [newOrder, setNewOrder] = useState({
+    username: user,
+    items: cartItems,
+    creditCard: "",
+    cvc: "",
+    exp: "",
+    total: totalPrice,
+    date: new Date(),
+  });
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setNewOrder({ ...newOrder, [name]: value });
+  };
+
+  const handlePlaceOrder = (e) => {
+    e.preventDefault();
+    fetch("/api/orders", {
+      method: "POST",
+      body: JSON.stringify({ ...newOrder }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status === 200) {
+          history.push("/thankyou");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Wrapper>
@@ -38,11 +74,42 @@ const Cart = () => {
           );
         })}
       </TopContainer>
+      <FieldBox>
+        <label>
+          Credit card
+          <Input
+            type="text"
+            name="creditCard"
+            value={newOrder.creditCard}
+            onChange={(e) => handleChange(e)}
+          />
+        </label>
+        <br></br>
+        <label>
+          CVC
+          <Input
+            type="text"
+            name="cvc"
+            value={newOrder.cvc}
+            onChange={(e) => handleChange(e)}
+          />
+        </label>
+        <br></br>
+        <label>
+          Expiration date
+          <Input
+            type="text"
+            name="exp"
+            value={newOrder.exp}
+            onChange={(e) => handleChange(e)}
+          />
+        </label>
+      </FieldBox>
       <TotalContainer>
         <TotalPrice>
           Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
         </TotalPrice>
-        <Button>Purchase</Button>
+        <Button onClick={(e) => handlePlaceOrder(e)}>Confirm</Button>
       </TotalContainer>
     </Wrapper>
   );
@@ -66,6 +133,8 @@ const NumItems = styled.div`
   margin-bottom: 20px;
 `;
 
+const FieldBox = styled.div``;
+
 const TotalContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -75,6 +144,8 @@ const TotalContainer = styled.div`
 const BoldText = styled.span`
   font-weight: bold;
 `;
+
+const Input = styled.input``;
 
 const TotalPrice = styled.div``;
 

@@ -43,7 +43,7 @@ const Login = () => {
           {userProfile.isAdmin === true ? (
             <Redirect to="/admin" />
           ) : (
-            <Redirect to="/user" />
+            <Redirect to="/user/cart" />
           )}
         </>
       ) : (

@@ -26,6 +26,7 @@ const Header = () => {
           dispatch(actions.logoutSuccess(data));
           dispatch(actions.logoutCleanOrders());
           dispatch(actions.logoutCleanProfile());
+          dispatch(actions.logoutCleanCart());
         } else {
           dispatch(actions.logoutError(data.message));
         }
@@ -39,7 +40,6 @@ const Header = () => {
     <Wrapper>
       <Logo>Logo</Logo>
       {user && <span>Welcome, {userProfile.firstName}!</span>}
-
       <NavMenu>
         <Navlink exact to="/">
           Home
@@ -51,9 +51,17 @@ const Header = () => {
                 Admin Dashboard
               </Navlink>
             ) : (
-              <Navlink exact to="/user">
-                User Dashboard
-              </Navlink>
+              <>
+                <Navlink exact to="/user/cart">
+                  Cart
+                </Navlink>
+                <Navlink exact to="/user/profile">
+                  Account
+                </Navlink>
+                <Navlink exact to="/user/orders">
+                  Order history
+                </Navlink>
+              </>
             )}
 
             <Logout onClick={(e) => handleLogout(e)}>Sign Out</Logout>

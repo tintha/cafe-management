@@ -16,7 +16,6 @@ export default function cartReducer(state = initialState, action) {
           quantity: quantity,
         },
       };
-
     case "UPDATE_QUANTITY":
       return {
         ...state,
@@ -25,11 +24,12 @@ export default function cartReducer(state = initialState, action) {
           quantity: action.item.quantity,
         },
       };
-
     case "REMOVE_ITEM":
       const stateCopy = { ...state };
       delete stateCopy[action.item.itemName];
       return { ...stateCopy };
+    case "CLEANUP_CART":
+      return {};
     default:
       return state;
   }
