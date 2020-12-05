@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Orders from "./Orders";
 import Profile from "./Profile";
+import EditProfile from "./EditProfile";
 
 const User = () => {
   const user = useSelector((state) => state.auth.currentUser);
@@ -23,6 +24,9 @@ const User = () => {
           <Switch>
             <Route path="/user/orders">
               <Orders />
+            </Route>
+            <Route exact path="/user/profile/edit">
+              <EditProfile />
             </Route>
             <Route path="/user/profile">
               <Profile />

@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 
 const Profile = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
   const profile = useSelector((state) => state.profile.profile);
@@ -21,17 +23,21 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      <h2>Profile</h2>
+      <H2>Profile</H2>
       {loadingStatus === "loading" && <p>loading...</p>}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
-          <p>
-            Name: {profile.firstName && profile.firstName}{" "}
-            {profile.lastName && profile.lastName}
-          </p>
-          <p>Email: {profile.email}</p>
-          <p>Address: {profile.address && profile.address}</p>
+          <p>Username: {user}</p>
+          <FieldBox>First Name: {profile.firstName}</FieldBox>
+          <FieldBox>Last Name: {profile.lastName}</FieldBox>
+          <FieldBox></FieldBox>
+          <FieldBox>Address: {profile.address}</FieldBox>
+          <FieldBox>
+            <Button onClick={() => history.push("/user/profile/edit")}>
+              Edit
+            </Button>
+          </FieldBox>
         </>
       )}
     </Wrapper>
@@ -39,5 +45,16 @@ const Profile = () => {
 };
 
 const Wrapper = styled.div``;
+
+const H2 = styled.h2`
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+const Input = styled.input``;
+
+const FieldBox = styled.div``;
+
+const Button = styled.button``;
 
 export default Profile;

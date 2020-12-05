@@ -89,7 +89,7 @@ const registerUser = async (req, res) => {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      address: null,
+      address: "",
       isAdmin: false,
     });
     assert(1, newUser.insertedCount);
@@ -100,7 +100,7 @@ const registerUser = async (req, res) => {
         firstName: firstName,
         lastName: lastName,
         email: email,
-        address: null,
+        address: "",
         isAdmin: false,
         user_sid: req.session.user_sid,
       },
@@ -153,8 +153,8 @@ const authUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { username, firstName, lastName, email, address } = req.body;
-  const _id = username.toLowerCase();
+  const { firstName, lastName, email, address } = req.body;
+  const _id = req.params.userId.toLowerCase();
   const query = { _id };
   const newValues = {
     $set: {
