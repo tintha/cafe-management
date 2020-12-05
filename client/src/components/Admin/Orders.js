@@ -18,6 +18,28 @@ const Orders = () => {
       .catch((err) => dispatch(actions.requestAdminOrdersError(err)));
   }, [dispatch]);
 
+  const handleChangeOrder = (e, orderId) => {
+    e.preventDefault();
+
+    fetch(`/api/orders/${orderId}`, {
+      method: "PUT",
+      body: JSON.stringify({ status: "completed" }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status === 200) {
+          dispatch(
+            actions.editOrderSuccess(json.data.orderId, json.data.status)
+          );
+        }
+      })
+      .catch((err) => dispatch(actions.editOrderError()));
+  };
+
   return (
     <div>
       <h2>Orders:</h2>
@@ -41,7 +63,9 @@ const Orders = () => {
                       </p>
                     );
                   })}
-                  <Button>Update Status</Button>
+                  <Button onClick={(e) => handleChangeOrder(e, order._id)}>
+                    Mark completed
+                  </Button>
                 </div>
               );
             })

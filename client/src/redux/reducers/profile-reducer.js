@@ -28,7 +28,12 @@ export default function profileReducer(state = initialState, action) {
         profile: {},
       };
     }
-
+    case "CLEANUP_PROFILE": {
+      return {
+        status: "iddle",
+        profile: {},
+      };
+    }
     default: {
       return state;
     }

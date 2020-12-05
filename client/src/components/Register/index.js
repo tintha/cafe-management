@@ -8,14 +8,19 @@ const Register = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
   const error = useSelector((state) => state.auth.registerError);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [newUser, setNewUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    username: "",
+    password: "",
+  });
 
   const handleRegister = (e) => {
     dispatch(actions.requestRegistration());
     fetch(`/api/users/`, {
       method: "POST",
-      body: JSON.stringify({ username: username, password: password }),
+      body: JSON.stringify({ ...newUser }),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -34,32 +39,87 @@ const Register = () => {
       });
   };
 
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setNewUser({ ...newUser, [name]: value });
+  };
+
   if (user) {
     return <Redirect to="/user" />;
   } else {
     return (
-      <div>
+      <Wrapper>
         <p>Register</p>
-        <LoginInput
-          type="text"
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <LoginInput
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Submit type="submit" onClick={(e) => handleRegister(e)}>
-          Register
-        </Submit>
-        {error && <p>{error}</p>}
-      </div>
+        <FieldBox>
+          <label>
+            First Name
+            <LoginInput
+              type="text"
+              name="firstName"
+              value={newUser.firstName}
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+        </FieldBox>
+        <FieldBox>
+          <label>
+            Last Name
+            <LoginInput
+              type="text"
+              name="lastName"
+              value={newUser.lastName}
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+        </FieldBox>
+        <FieldBox>
+          <label>
+            Email
+            <LoginInput
+              type="text"
+              name="email"
+              value={newUser.email}
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+        </FieldBox>
+        <FieldBox>
+          <label>
+            Username
+            <LoginInput
+              type="text"
+              name="username"
+              value={newUser.username}
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+        </FieldBox>
+        <FieldBox>
+          <label>
+            Password
+            <LoginInput
+              type="password"
+              name="password"
+              value={newUser.password}
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+        </FieldBox>
+        <FieldBox>
+          <Submit type="submit" onClick={(e) => handleRegister(e)}>
+            Register
+          </Submit>
+          {error && <p>{error}</p>}
+        </FieldBox>
+      </Wrapper>
     );
   }
 };
+
+const Wrapper = styled.div``;
+
+const FieldBox = styled.div``;
 
 const LoginInput = styled.input`
   margin: 20px;

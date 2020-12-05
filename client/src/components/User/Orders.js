@@ -32,7 +32,8 @@ const Orders = () => {
               return (
                 <div key={order._id}>
                   <p>
-                    {order._id} - {order.customer} - {order.total}
+                    {order._id} - {order.customer} - {order.total} -{" "}
+                    {order.status}
                   </p>
                   {items.map((item) => {
                     return (

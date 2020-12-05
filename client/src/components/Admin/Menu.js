@@ -1,49 +1,61 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { NavLink, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
-import * as actions from "../../redux/actions";
+import MenuItems from "./MenuItems";
+import MenuCategories from "./MenuCategories";
+import EditItem from "./EditItem";
+import AddItem from "./AddItem";
 
 const Menu = () => {
-  const dispatch = useDispatch();
-  const menuItems = useSelector((state) => state.items.items);
-  const loadingStatus = useSelector((state) => state.items.status);
-
-  useEffect(() => {
-    dispatch(actions.requestItems());
-    fetch("/api/items")
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(actions.receivedItems(data.data));
-      })
-      .catch((err) => dispatch(actions.itemsError(err)));
-  }, [dispatch]);
-
   return (
-    <div>
-      {loadingStatus === "loading" && <p>loading...</p>}
-      {loadingStatus === "error" && <p>An error occurred...</p>}
-      {loadingStatus === "success" && (
-        <>
-          {menuItems === null || menuItems === undefined ? (
-            <p>No item found.</p>
-          ) : (
-            menuItems.map((item) => {
-              return (
-                <>
-                  <p key={item._id}>
-                    {item.itemName}, {item.description}
-                  </p>
-                  <Button>Edit</Button>
-                </>
-              );
-            })
-          )}
-        </>
-      )}
-    </div>
+    <Wrapper>
+      <MenuSidebar>
+        <ul>
+          <li>
+            <Navlink to="/admin/menu/categories">Edit categories</Navlink>
+          </li>
+          <li>
+            <Navlink to="/admin/menu/items">Edit items</Navlink>
+          </li>
+          <li>
+            <Navlink to="/admin/menu/items/add">Add an item</Navlink>
+          </li>
+        </ul>
+      </MenuSidebar>
+      <MenuContent>
+        <Switch>
+          <Route exact path="/admin/menu/categories">
+            <MenuCategories />
+          </Route>
+          <Route path="/admin/menu/items/add">
+            <AddItem />
+          </Route>
+          <Route path="/admin/menu/items/:id">
+            <EditItem />
+          </Route>
+          <Route path="/admin/menu/items">
+            <MenuItems />
+          </Route>
+        </Switch>
+      </MenuContent>
+    </Wrapper>
   );
 };
 
-const Button = styled.button``;
+const Wrapper = styled.div`
+  display: flex;
+`;
+
+const MenuSidebar = styled.div`
+  margin-right: 20px;
+`;
+
+const MenuContent = styled.div``;
+
+const Navlink = styled(NavLink)`
+  &.active {
+    color: red;
+  }
+`;
 
 export default Menu;

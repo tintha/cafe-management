@@ -48,7 +48,14 @@ const getUserById = async (req, res) => {
     assert(1, user.matchedCount);
     res.status(200).json({
       status: 200,
-      data: user,
+      data: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        address: user.address,
+        isAdmin: user.isAdmin,
+      },
     });
     client.close();
   } catch (e) {
@@ -62,8 +69,8 @@ const getUserById = async (req, res) => {
 const registerUser = async (req, res) => {
   try {
     const username = req.body.username.toLowerCase();
-    const password = req.body.password;
-    if (!username || !password) {
+    const { password, firstName, lastName, email } = req.body;
+    if (!username || !password || !firstName || !lastName || !email) {
       throw new Error("All fields are required!");
     }
     const client = await MongoClient(MONGO_URI, options);
@@ -79,8 +86,9 @@ const registerUser = async (req, res) => {
     const newUser = await db.collection(USERS_COLLECTION).insertOne({
       _id: username,
       password: hashedPassword,
-      fullName: null,
-      email: null,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
       address: null,
       isAdmin: false,
     });
@@ -89,8 +97,9 @@ const registerUser = async (req, res) => {
     res.status(200).json({
       status: 200,
       data: {
-        fullName: null,
-        email: null,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
         address: null,
         isAdmin: false,
         user_sid: req.session.user_sid,
@@ -123,10 +132,11 @@ const authUser = async (req, res) => {
         status: 200,
         message: "Successfully logged in",
         data: {
-          fullName: user.fullName,
-          address: user.address,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           isAdmin: user.isAdmin,
+          address: user.address,
           user_sid: req.session.user_sid,
         },
       });
@@ -143,11 +153,16 @@ const authUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { username, fullName, email, address } = req.body;
+  const { username, firstName, lastName, email, address } = req.body;
   const _id = username.toLowerCase();
   const query = { _id };
   const newValues = {
-    $set: { fullName: fullName, email: email, address: address },
+    $set: {
+      firstName: firstName,
+      lastname: lastName,
+      email: email,
+      address: address,
+    },
   };
   try {
     const client = await MongoClient(MONGO_URI, options);
