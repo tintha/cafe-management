@@ -19,7 +19,11 @@ const getOrders = async (req, res) => {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
-    const orders = await db.collection(ORDERS_COLLECTION).find().toArray();
+    const orders = await db
+      .collection(ORDERS_COLLECTION)
+      .find()
+      .sort({ date: -1 })
+      .toArray();
     if (orders.length === 0) {
       res.status(404).json({
         status: 404,
@@ -69,6 +73,7 @@ const getOrdersByUserId = async (req, res) => {
     const orders = await db
       .collection(ORDERS_COLLECTION)
       .find({ username: userId })
+      .sort({ date: -1 })
       .toArray();
     assert(orders.length, orders.matchedCount);
     res.status(200).json({

@@ -41,6 +41,7 @@ const Menu = () => {
                     <img src={item.image} alt={item.itemName} width="200" />
                   )}
                   <br></br>
+                  {formattedPrice}
                   <AddToCartBtn
                     onClick={() =>
                       dispatch(
@@ -54,7 +55,7 @@ const Menu = () => {
                       )
                     }
                   >
-                    Add to Cart — {formattedPrice}
+                    Add to cart
                   </AddToCartBtn>
                 </ItemBox>
               );

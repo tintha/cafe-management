@@ -49,6 +49,10 @@ const MenuItems = () => {
             <p>No item found.</p>
           ) : (
             menuItems.map((item) => {
+              const formattedPrice = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(item.price / 100);
               return (
                 <ItemBox key={item._id}>
                   <p>
@@ -58,7 +62,7 @@ const MenuItems = () => {
                     <Bold>Description</Bold>: {item.description}
                   </p>
                   <p>
-                    <Bold>Price</Bold>: {item.price}
+                    <Bold>Price</Bold>: {formattedPrice}
                   </p>
                   <p>
                     <Bold>Image</Bold>:{" "}
@@ -97,8 +101,6 @@ const DisplayItemContainer = styled.div`
 `;
 
 const Button = styled.button``;
-
-const Input = styled.input``;
 
 const ItemBox = styled.div`
   border: 1px solid gray;

@@ -31,7 +31,7 @@ export const logoutCleanProfile = () => ({
   type: "CLEANUP_PROFILE",
 });
 
-export const logoutCleanCart = () => ({
+export const cleanCart = () => ({
   type: "CLEANUP_CART",
 });
 

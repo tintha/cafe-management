@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 
@@ -52,8 +53,9 @@ const Orders = () => {
               return (
                 <div key={order._id}>
                   <p>
-                    ID: {order._id}, Customer: {order.username}, Total:{" "}
-                    {order.total}, Status:
+                    Received: {moment(order.date).format("ll")} @{" "}
+                    {moment(order.date).format("LT")}, ID: {order._id},
+                    Customer: {order.username}, Total: {order.total}, Status:
                     {order.status}
                   </p>
                   {order.items.map((item) => {
