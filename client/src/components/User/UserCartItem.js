@@ -5,7 +5,15 @@ import { cancelCircle } from "react-icons-kit/icomoon";
 import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
 
-const CartItem = ({ _id, itemName, description, price, quantity, image }) => {
+const CartItem = ({
+  _id,
+  itemName,
+  description,
+  category,
+  price,
+  quantity,
+  image,
+}) => {
   const dispatch = useDispatch();
 
   const handleChangeQuantity = (e) => {
@@ -14,6 +22,7 @@ const CartItem = ({ _id, itemName, description, price, quantity, image }) => {
         actions.updateQuantity({
           itemName,
           description,
+          category,
           price,
           image,
           quantity: Number(e.target.value),
@@ -29,7 +38,9 @@ const CartItem = ({ _id, itemName, description, price, quantity, image }) => {
           <Icon icon={cancelCircle} size={32} />
         </RemoveBtn>
       </ItemNameContainer>
-      <ItemDescription>{description}</ItemDescription>
+      <ItemDescription>
+        {description}, Category: {category}
+      </ItemDescription>
       <ItemImage>
         <img src={image} width="50" alt="" />
       </ItemImage>

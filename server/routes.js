@@ -32,13 +32,6 @@ const {
   deleteItem,
 } = require("./items_handlers");
 
-const {
-  addCategory,
-  getCategories,
-  updateCategory,
-  deleteCategory,
-} = require("./categories_handlers");
-
 router.use(
   session({
     secret: SESSION_SECRET,
@@ -70,9 +63,5 @@ router.get("/api/items/category/:category", getItemsByCategory);
 router.post("/api/items", addItem);
 router.put("/api/items/:itemId", updateItem);
 router.delete("/api/items/:itemId", deleteItem);
-router.get("/api/categories", getCategories);
-router.post("/api/categories", addCategory);
-router.put("/api/categories/:catId", updateCategory);
-router.delete("/api/categories/:catId", deleteCategory);
 
 module.exports = router;

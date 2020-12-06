@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { options } from "./Categories";
 
 const EditItem = () => {
   let { id } = useParams();
@@ -9,6 +10,7 @@ const EditItem = () => {
   const [updateData, setUpdateData] = useState({
     itemName: "",
     description: "",
+    category: "Beverages",
     price: "",
     image: "",
   });
@@ -27,6 +29,9 @@ const EditItem = () => {
     }
     if (itemData.description) {
       setUpdateData({ ...itemData, description: itemData.description });
+    }
+    if (itemData.category) {
+      setUpdateData({ ...itemData, description: itemData.category });
     }
     if (itemData.price) {
       setUpdateData({ ...itemData, price: itemData.price });
@@ -103,6 +108,17 @@ const EditItem = () => {
             value={updateData.description}
             onChange={handleChange}
           />
+          <select
+            value={updateData.category}
+            onChange={(e) => handleChange(e)}
+            name="category"
+          >
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
           <p>Price:</p>
           <Textarea
             type="text"

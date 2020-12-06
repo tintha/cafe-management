@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { options } from "./Categories";
 
 const AddItem = () => {
   const history = useHistory();
   const [updateData, setUpdateData] = useState({
     itemName: "",
     description: "",
+    category: "Beverages",
     price: "",
     image: "",
   });
@@ -67,21 +69,40 @@ const AddItem = () => {
         type="text"
         name="itemName"
         value={updateData.itemName}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e)}
       />
       <p>Item description:</p>
       <Textarea
         type="text"
         name="description"
         value={updateData.description}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e)}
       />
+      {/* <p>Category:</p>
+      <Input
+        type="text"
+        name="category"
+        value={updateData.category}
+        onChange={handleChange}
+      /> */}
+      <label htmlFor="categories">Choose a category:</label>
+      <select
+        value={updateData.category}
+        onChange={(e) => handleChange(e)}
+        name="category"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
       <p>Price:</p>
       <Input
         type="text"
         name="price"
         value={updateData.price}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e)}
       />
       <p>Image:</p>
       <input

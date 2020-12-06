@@ -75,6 +75,7 @@ const Cart = () => {
                   id={item._id}
                   itemName={item.itemName}
                   description={item.description}
+                  category={item.category}
                   price={item.price}
                   quantity={item.quantity}
                   image={item.image}
