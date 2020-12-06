@@ -26,7 +26,7 @@ const Header = () => {
           dispatch(actions.logoutSuccess(data));
           dispatch(actions.logoutCleanOrders());
           dispatch(actions.logoutCleanProfile());
-          dispatch(actions.logoutCleanCart());
+          dispatch(actions.cleanCart());
         } else {
           dispatch(actions.logoutError(data.message));
         }
@@ -53,13 +53,13 @@ const Header = () => {
             ) : (
               <>
                 <Navlink exact to="/user/cart">
-                  Cart
+                  Your Order
                 </Navlink>
                 <Navlink exact to="/user/profile">
-                  Account
+                  Profile
                 </Navlink>
                 <Navlink exact to="/user/orders">
-                  Order history
+                  History
                 </Navlink>
               </>
             )}

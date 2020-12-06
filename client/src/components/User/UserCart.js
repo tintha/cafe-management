@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import UserCartItem from "./UserCartItem";
+import * as actions from "../../redux/actions";
 
 const Cart = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
   const user = useSelector((state) => state.auth.currentUser);
@@ -48,6 +50,7 @@ const Cart = () => {
       .then((json) => {
         if (json.status === 200) {
           history.push("/thankyou");
+          dispatch(actions.cleanCart());
         }
       })
       .catch((err) => console.log(err));
@@ -55,62 +58,70 @@ const Cart = () => {
 
   return (
     <Wrapper>
-      <TopContainer>
-        <Title>Detailed Cart</Title>
-        <NumItems>
-          {totalItems} {totalItems <= 1 ? "item" : "items"}
-        </NumItems>
-        {cartItems.map((item) => {
-          return (
-            <UserCartItem
-              key={item.itemName}
-              id={item._id}
-              itemName={item.itemName}
-              description={item.description}
-              price={item.price}
-              quantity={item.quantity}
-              image={item.image}
-            />
-          );
-        })}
-      </TopContainer>
-      <FieldBox>
-        <label>
-          Credit card
-          <Input
-            type="text"
-            name="creditCard"
-            value={newOrder.creditCard}
-            onChange={(e) => handleChange(e)}
-          />
-        </label>
-        <br></br>
-        <label>
-          CVC
-          <Input
-            type="text"
-            name="cvc"
-            value={newOrder.cvc}
-            onChange={(e) => handleChange(e)}
-          />
-        </label>
-        <br></br>
-        <label>
-          Expiration date
-          <Input
-            type="text"
-            name="exp"
-            value={newOrder.exp}
-            onChange={(e) => handleChange(e)}
-          />
-        </label>
-      </FieldBox>
-      <TotalContainer>
-        <TotalPrice>
-          Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
-        </TotalPrice>
-        <Button onClick={(e) => handlePlaceOrder(e)}>Confirm</Button>
-      </TotalContainer>
+      <Title>Cart</Title>
+
+      {totalItems === 0 ? (
+        <p>Your cart is empty</p>
+      ) : (
+        <>
+          <TopContainer>
+            <NumItems>
+              {totalItems} {totalItems <= 1 ? "item" : "items"}
+            </NumItems>
+            {cartItems.map((item) => {
+              return (
+                <UserCartItem
+                  key={item.itemName}
+                  id={item._id}
+                  itemName={item.itemName}
+                  description={item.description}
+                  price={item.price}
+                  quantity={item.quantity}
+                  image={item.image}
+                />
+              );
+            })}
+          </TopContainer>
+          <FieldBox>
+            <label>
+              Credit card
+              <Input
+                type="text"
+                name="creditCard"
+                value={newOrder.creditCard}
+                onChange={(e) => handleChange(e)}
+              />
+            </label>
+            <br></br>
+            <label>
+              CVC
+              <Input
+                type="text"
+                name="cvc"
+                value={newOrder.cvc}
+                onChange={(e) => handleChange(e)}
+              />
+            </label>
+            <br></br>
+            <label>
+              Expiration date
+              <Input
+                type="text"
+                name="exp"
+                value={newOrder.exp}
+                onChange={(e) => handleChange(e)}
+              />
+            </label>
+          </FieldBox>
+          <TotalContainer>
+            <TotalPrice>
+              Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
+            </TotalPrice>
+            <Button onClick={() => history.push("/")}>Keep shopping</Button>
+            <Button onClick={(e) => handlePlaceOrder(e)}>Confirm</Button>
+          </TotalContainer>
+        </>
+      )}
     </Wrapper>
   );
 };

@@ -9,6 +9,7 @@ const EditItem = () => {
   const [updateData, setUpdateData] = useState({
     itemName: "",
     description: "",
+    price: "",
     image: "",
   });
   const [currentImage, setCurrentImage] = useState();
@@ -26,6 +27,9 @@ const EditItem = () => {
     }
     if (itemData.description) {
       setUpdateData({ ...itemData, description: itemData.description });
+    }
+    if (itemData.price) {
+      setUpdateData({ ...itemData, price: itemData.price });
     }
     if (itemData.image) {
       setUpdateData({ ...itemData, image: itemData.image });
@@ -97,6 +101,13 @@ const EditItem = () => {
             type="text"
             name="description"
             value={updateData.description}
+            onChange={handleChange}
+          />
+          <p>Price:</p>
+          <Textarea
+            type="text"
+            name="price"
+            value={updateData.price}
             onChange={handleChange}
           />
           <p>Image:</p>
