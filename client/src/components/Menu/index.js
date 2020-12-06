@@ -28,7 +28,14 @@ const Menu = () => {
             <p>No item found.</p>
           ) : (
             menuItems.map((item) => {
-              const { _id, itemName, description, price, image } = item;
+              const {
+                _id,
+                itemName,
+                description,
+                category,
+                price,
+                image,
+              } = item;
               const formattedPrice = new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
@@ -37,6 +44,7 @@ const Menu = () => {
                 <ItemBox key={item._id}>
                   <ItemTitle>{item.itemName}</ItemTitle>
                   <p>{item.description}</p>
+                  <p>Category: {item.category}</p>
                   {item.image && (
                     <img src={item.image} alt={item.itemName} width="200" />
                   )}
@@ -49,6 +57,7 @@ const Menu = () => {
                           _id,
                           itemName,
                           description,
+                          category,
                           price,
                           image,
                         })

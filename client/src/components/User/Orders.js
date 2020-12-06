@@ -41,7 +41,7 @@ const Orders = () => {
                     {order.items.map((item) => {
                       return (
                         <p key={item._id}>
-                          item: {item.itemName}, quantity: {item.quantity}
+                          {item.category}: {item.itemName} x {item.quantity}
                         </p>
                       );
                     })}

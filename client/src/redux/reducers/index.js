@@ -6,4 +6,10 @@ import orders from "./orders-reducer";
 import profile from "./profile-reducer";
 import cart from "./cart-reducer";
 
-export default combineReducers({ auth, items, orders, profile, cart });
+export default combineReducers({
+  auth,
+  items,
+  orders,
+  profile,
+  cart,
+});

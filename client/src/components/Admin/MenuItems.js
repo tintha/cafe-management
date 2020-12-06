@@ -62,6 +62,9 @@ const MenuItems = () => {
                     <Bold>Description</Bold>: {item.description}
                   </p>
                   <p>
+                    <Bold>Category</Bold>: {item.category}
+                  </p>
+                  <p>
                     <Bold>Price</Bold>: {formattedPrice}
                   </p>
                   <p>
