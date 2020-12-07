@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import UserCartItem from "./UserCartItem";
 import * as actions from "../../redux/actions";
+import { COLORS } from "../../contants";
 
 const Cart = () => {
   const history = useHistory();
@@ -56,12 +57,26 @@ const Cart = () => {
       .catch((err) => console.log(err));
   };
 
+  const handleShopNow = (e) => {
+    e.preventDefault();
+    history.push("/");
+  };
+
   return (
     <Wrapper>
       <Title>Cart</Title>
 
       {totalItems === 0 ? (
-        <p>Your cart is empty</p>
+        <>
+          <p>Your cart is empty</p>
+          <Button
+            onClick={(e) => {
+              handleShopNow(e);
+            }}
+          >
+            Shop now
+          </Button>
+        </>
       ) : (
         <>
           <TopContainer>
@@ -118,9 +133,11 @@ const Cart = () => {
             <TotalPrice>
               Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
             </TotalPrice>
+          </TotalContainer>
+          <ButtonsBox>
             <Button onClick={() => history.push("/")}>Keep shopping</Button>
             <Button onClick={(e) => handlePlaceOrder(e)}>Confirm</Button>
-          </TotalContainer>
+          </ButtonsBox>
         </>
       )}
     </Wrapper>
@@ -157,21 +174,35 @@ const BoldText = styled.span`
   font-weight: bold;
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
 
 const TotalPrice = styled.div``;
+
+const ButtonsBox = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+`;
 
 const Button = styled.button`
   position: relative;
   display: block;
   width: 100%;
-  border-radius: 12px;
-  background: #ff406e;
+  border-radius: 4px;
+  background: ${COLORS.secondary};
   color: white;
   border: none;
   padding: 8px;
   font-size: 16px;
   font-weight: 600;
+  margin: 1px;
   cursor: pointer;
 `;
 

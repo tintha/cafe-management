@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
+import { COLORS } from "../../contants";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -117,14 +118,41 @@ const Register = () => {
   }
 };
 
-const Wrapper = styled.div``;
-
-const FieldBox = styled.div``;
-
-const LoginInput = styled.input`
-  margin: 20px;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto Condensed", sans-serif;
+  align-items: center;
+  & > p {
+    margin: 20px;
+  }
 `;
 
-const Submit = styled.button``;
+const FieldBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+`;
+
+const LoginInput = styled.input`
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+const Submit = styled.button`
+  width: 100%;
+  background-color: ${COLORS.secondary};
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 export default Register;

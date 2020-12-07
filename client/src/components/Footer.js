@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Footer = () => {
-  return <Wrapper>Footer</Wrapper>;
+  return <Wrapper></Wrapper>;
 };
 
 const Wrapper = styled.footer`
-  border: 1px solid black;
+  font-family: "Roboto Condensed", sans-serif;
   padding: 20px;
 `;
 

@@ -1,5 +1,5 @@
 const initialState = {
-  status: "iddle",
+  status: "loading",
   orders: [],
 };
 
@@ -58,20 +58,21 @@ export default function ordersReducer(state = initialState, action) {
       return {
         ...state,
         status: "success",
-        orders: action.data,
+        orders: action.payload.data,
       };
     }
     case "REQUEST_USER_ORDERS_ERROR": {
       return {
         ...state,
         status: "error",
-        error: action.error,
+        orders: [],
+        error: action.payload.error,
       };
     }
     case "CLEANUP_ORDERS": {
       return {
-        status: "iddle",
-        orders: null,
+        status: "loading",
+        orders: [],
       };
     }
     default: {

@@ -62,12 +62,12 @@ export const requestItems = () => ({
 
 export const receivedItems = (data) => ({
   type: "RECEIVED_ITEMS",
-  data,
+  payload: { data },
 });
 
 export const itemsError = (error) => ({
   type: "ITEMS_ERROR",
-  error,
+  payload: { error },
 });
 
 // ******************************** USERS ORDERS ACTIONS
@@ -77,12 +77,12 @@ export const requestUserOrders = () => ({
 
 export const receivedUserOrders = (data) => ({
   type: "RECEIVED_USER_ORDERS",
-  data,
+  payload: { data },
 });
 
 export const requestUserOrdersError = (error) => ({
   type: "REQUEST_USER_ORDERS_ERROR",
-  error,
+  payload: { error },
 });
 
 // ******************************** USERS PROFILE ACTIONS
@@ -116,14 +116,17 @@ export const requestAdminOrdersError = (error) => ({
 });
 
 // ******************************** ADMIN EDIT MENU ITEM ACTIONS
-export const editMenuItemSuccess = (data) => ({
+export const editMenuItemSuccess = (id, updatedData) => ({
   type: "EDIT_MENU_ITEM_SUCCESS",
-  data,
+  payload: {
+    id,
+    updatedData,
+  },
 });
 
 export const editMenuItemError = (error) => ({
   type: "EDIT_MENU_ITEM_ERROR",
-  error,
+  payload: { error },
 });
 
 // ******************************** ADMIN EDIT ORDER STATUS ACTIONS
@@ -150,7 +153,7 @@ export const deleteItemSuccess = (itemId) => ({
 
 export const deleteItemError = (error) => ({
   type: "DELETE_ITEM_ERROR",
-  error,
+  payload: { error },
 });
 
 // ******************************** CART ACTIONS

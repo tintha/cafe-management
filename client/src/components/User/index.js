@@ -36,6 +36,7 @@ const User = () => {
 };
 
 const Wrapper = styled.div`
+  font-family: "Roboto Condensed", sans-serif;
   display: flex;
   padding: 30px;
 `;

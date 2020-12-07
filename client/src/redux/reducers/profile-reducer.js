@@ -1,5 +1,5 @@
 const initialState = {
-  status: "iddle",
+  status: "loading",
   profile: {},
   error: null,
 };
