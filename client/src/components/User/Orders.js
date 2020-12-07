@@ -7,7 +7,7 @@ import * as actions from "../../redux/actions";
 const Orders = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
-  const orders = useSelector((state) => state.orders.orders);
+  const userOrders = useSelector((state) => state.orders.orders);
   const loadingStatus = useSelector((state) => state.orders.status);
 
   useEffect(() => {
@@ -31,8 +31,8 @@ const Orders = () => {
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
-          {orders !== "No orders found" ? (
-            orders.map((order) => {
+          {userOrders !== "No orders found" ? (
+            userOrders.map((order) => {
               return (
                 <div key={order._id}>
                   <p>

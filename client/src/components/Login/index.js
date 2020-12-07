@@ -13,28 +13,27 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(actions.requestLogin());
-    fetch(`/api/users/login`, {
-      method: "POST",
-      body: JSON.stringify({ username: username, password: password }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 401) {
-          dispatch(actions.loginError(data.message));
-        } else {
-          dispatch(actions.loginSuccess(data.data));
-        }
-      })
-      .catch((error) => {
-        dispatch(actions.loginError(error));
+    try {
+      dispatch(actions.requestLogin());
+      const response = await fetch(`/api/users/login`, {
+        method: "POST",
+        body: JSON.stringify({ username: username, password: password }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
+      const data = await response.json();
+      if (data.status === 401) {
+        dispatch(actions.loginError(data.message));
+      } else {
+        dispatch(actions.loginSuccess(data.data));
+      }
+    } catch (err) {
+      dispatch(actions.loginError(err));
+    }
   };
 
   return (

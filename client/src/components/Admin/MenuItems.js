@@ -10,16 +10,6 @@ const MenuItems = () => {
   const menuItems = useSelector((state) => state.items.items);
   const loadingStatus = useSelector((state) => state.items.status);
 
-  // useEffect(() => {
-  //   // dispatch(actions.requestItems());
-  //   fetch("/api/items")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       dispatch(actions.receivedItems(data.data));
-  //     })
-  //     .catch((err) => dispatch(actions.itemsError(err)));
-  // }, [dispatch]);
-
   useEffect(() => {
     loadData();
   }, []);
@@ -34,22 +24,23 @@ const MenuItems = () => {
     }
   };
 
-  const handleDeleteItem = (e, itemId) => {
+  const handleDeleteItem = async (e, itemId) => {
     e.preventDefault();
-    fetch(`/api/items/${itemId}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.status === 200) {
-          dispatch(actions.deleteItemSuccess(json.itemId));
-        }
-      })
-      .catch((err) => dispatch(actions.deleteItemError()));
+    try {
+      const response = await fetch(`/api/items/${itemId}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+        dispatch(actions.deleteItemSuccess(data.itemId));
+      }
+    } catch (err) {
+      dispatch(actions.deleteItemError(err));
+    }
   };
 
   return (

@@ -20,11 +20,18 @@ const EditItem = () => {
   const [currentImage, setCurrentImage] = useState();
 
   useEffect(() => {
-    fetch(`/api/items/${id}`)
-      .then((res) => res.json())
-      .then((data) => setItemData({ ...data.data }))
-      .catch((err) => console.log(err));
+    loadData();
   }, [id]);
+
+  const loadData = async () => {
+    try {
+      const response = await fetch(`/api/items/${id}`);
+      const data = await response.json();
+      setItemData({ ...data.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     if (itemData.itemName) {
@@ -51,24 +58,26 @@ const EditItem = () => {
     setUpdateData({ ...updateData, [name]: value });
   };
 
-  const handleUpdateItem = (e, id) => {
+  const handleUpdateItem = async (e, id) => {
     e.preventDefault();
-    fetch(`/api/items/${id}`, {
-      method: "PUT",
-      body: JSON.stringify({ ...updateData }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.status === 200) {
-          history.push("/admin/menu/items");
-          dispatch(actions.editMenuItemSuccess(id, updateData));
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const response = await fetch(`/api/items/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({ ...updateData }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+
+      if (data.status === 200) {
+        history.push("/admin/menu/items");
+        dispatch(actions.editMenuItemSuccess(id, updateData));
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const uploadImage = async (e) => {

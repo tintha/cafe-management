@@ -13,14 +13,19 @@ const Profile = () => {
   const loadingStatus = useSelector((state) => state.profile.status);
 
   useEffect(() => {
-    dispatch(actions.requestProfile());
-    fetch(`/api/users/${user}`)
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(actions.profileSuccess(data.data));
-      })
-      .catch((err) => dispatch(actions.profileError(err)));
-  }, [dispatch, user]);
+    loadData();
+  }, [user]);
+
+  const loadData = async () => {
+    try {
+      dispatch(actions.requestProfile());
+      const response = await fetch(`/api/users/${user}`);
+      const data = await response.json();
+      dispatch(actions.profileSuccess(data.data));
+    } catch (err) {
+      dispatch(actions.profileError(err));
+    }
+  };
 
   return (
     <Wrapper>

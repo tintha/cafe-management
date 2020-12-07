@@ -17,7 +17,6 @@ const Admin = () => {
       <Wrapper>
         <LeftContainer>
           <p>Hello {userProfile.fullName},</p>
-          <p>As an administrator, here you can:</p>
           <Sidebar />
         </LeftContainer>
         <RightContainer>

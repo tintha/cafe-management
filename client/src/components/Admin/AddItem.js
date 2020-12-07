@@ -20,23 +20,24 @@ const AddItem = () => {
     setUpdateData({ ...updateData, [name]: value });
   };
 
-  const handleAddItem = (e) => {
+  const handleAddItem = async (e) => {
     e.preventDefault();
-    fetch("/api/items/", {
-      method: "POST",
-      body: JSON.stringify({ ...updateData }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.status === 200) {
-          history.push("/admin/menu/items");
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const response = await fetch("/api/items/", {
+        method: "POST",
+        body: JSON.stringify({ ...updateData }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+        history.push("/admin/menu/items");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const uploadImage = async (e) => {
@@ -78,13 +79,6 @@ const AddItem = () => {
         value={updateData.description}
         onChange={(e) => handleChange(e)}
       />
-      {/* <p>Category:</p>
-      <Input
-        type="text"
-        name="category"
-        value={updateData.category}
-        onChange={handleChange}
-      /> */}
       <label htmlFor="categories">Choose a category:</label>
       <select
         value={updateData.category}

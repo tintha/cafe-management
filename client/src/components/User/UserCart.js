@@ -37,24 +37,25 @@ const Cart = () => {
     setNewOrder({ ...newOrder, [name]: value });
   };
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
-    fetch("/api/orders", {
-      method: "POST",
-      body: JSON.stringify({ ...newOrder }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.status === 200) {
-          history.push("/thankyou");
-          dispatch(actions.cleanCart());
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        body: JSON.stringify({ ...newOrder }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+        history.push("/thankyou");
+        dispatch(actions.cleanCart());
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleShopNow = (e) => {

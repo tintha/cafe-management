@@ -17,27 +17,26 @@ const Register = () => {
     password: "",
   });
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     dispatch(actions.requestRegistration());
-    fetch(`/api/users/`, {
-      method: "POST",
-      body: JSON.stringify({ ...newUser }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 500) {
-          dispatch(actions.registrationError(data.message));
-        } else {
-          dispatch(actions.registrationSuccess(data.data));
-        }
-      })
-      .catch((error) => {
-        dispatch(actions.registrationError(error));
+    try {
+      const response = await fetch(`/api/users/`, {
+        method: "POST",
+        body: JSON.stringify({ ...newUser }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
+      const data = await response.json();
+      if (data.status === 500) {
+        dispatch(actions.registrationError(data.message));
+      } else {
+        dispatch(actions.registrationSuccess(data.data));
+      }
+    } catch (err) {
+      dispatch(actions.registrationError(err));
+    }
   };
 
   const handleChange = (e) => {
@@ -47,7 +46,7 @@ const Register = () => {
   };
 
   if (user) {
-    return <Redirect to="/user" />;
+    return <Redirect to="/user/profile" />;
   } else {
     return (
       <Wrapper>
