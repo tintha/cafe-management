@@ -14,31 +14,30 @@ const Header = () => {
   const user = useSelector((state) => state.auth.currentUser);
   const userProfile = useSelector((state) => state.auth.userProfile);
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    dispatch(actions.requestLogout());
-    fetch(`/api/users/logout`, {
-      method: "POST",
-      body: JSON.stringify(),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 200) {
-          dispatch(actions.logoutSuccess(data));
-          dispatch(actions.logoutCleanOrders());
-          dispatch(actions.logoutCleanProfile());
-          dispatch(actions.cleanCart());
-        } else {
-          dispatch(actions.logoutError(data.message));
-        }
-      })
-      .catch((error) => {
-        dispatch(actions.logoutError(error));
+    try {
+      dispatch(actions.requestLogout());
+      const response = await fetch(`/api/users/logout`, {
+        method: "POST",
+        body: JSON.stringify(),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
+      const data = await response.json();
+      if (data.status === 200) {
+        dispatch(actions.logoutSuccess(data));
+        dispatch(actions.logoutCleanOrders());
+        dispatch(actions.logoutCleanProfile());
+        dispatch(actions.cleanCart());
+      } else {
+        dispatch(actions.logoutError(data.message));
+      }
+    } catch (error) {
+      dispatch(actions.logoutError(error));
+    }
   };
 
   return (
@@ -46,7 +45,6 @@ const Header = () => {
       <Logo>
         <GiCupcake style={{ color: `${COLORS.logo}` }} size="50" />
       </Logo>
-
       <NavMenu>
         <Navlink exact to="/">
           Home
@@ -62,7 +60,7 @@ const Header = () => {
                 <Navlink exact to="/user/cart">
                   Cart
                 </Navlink>
-                <Navlink exact to="/user/profile">
+                <Navlink strict to="/user/profile">
                   Profile
                 </Navlink>
                 <Navlink exact to="/user/orders">

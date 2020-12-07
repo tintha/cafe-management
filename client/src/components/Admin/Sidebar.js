@@ -7,12 +7,15 @@ const Sidebar = () => {
     <Wrapper>
       <ul>
         <li>
-          <Navlink to="/admin/orders">
-            view all orders, change their status
+          <Navlink to="/admin/orders">Manage Orders</Navlink>
+        </li>
+        <li>
+          <Navlink exact to="/admin/menu/items">
+            Edit/Delete items
           </Navlink>
         </li>
         <li>
-          <Navlink to="/admin/menu">edit the menu</Navlink>
+          <Navlink to="/admin/menu/items/add">Add an item</Navlink>
         </li>
       </ul>
     </Wrapper>

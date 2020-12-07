@@ -19,14 +19,18 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
-    // dispatch(actions.requestProfile());
-    fetch(`/api/users/${user}`)
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(actions.profileSuccess(data.data));
-      })
-      .catch((err) => dispatch(actions.profileError(err)));
-  }, [dispatch, user]);
+    loadData();
+  }, [user]);
+
+  const loadData = async () => {
+    try {
+      const response = await fetch(`/api/users/${user}`);
+      const data = await response.json();
+      dispatch(actions.profileSuccess(data.data));
+    } catch (err) {
+      dispatch(actions.profileError(err));
+    }
+  };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -34,24 +38,30 @@ const EditProfile = () => {
     setUpdatedProfile({ ...updatedProfile, [name]: value });
   };
 
-  const handleUpdateProfile = (e) => {
+  const handleUpdateProfile = async (e) => {
     const id = user;
     e.preventDefault();
-    fetch(`/api/users/${id}`, {
-      method: "PUT",
-      body: JSON.stringify({ ...updatedProfile }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.status === 200) {
-          history.push("/user/profile");
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const response = await fetch(`/api/users/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({ ...updatedProfile }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+        history.push("/user/profile");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    history.push("/user/profile");
   };
 
   return (
@@ -107,9 +117,12 @@ const EditProfile = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <Button onClick={(e) => handleUpdateProfile(e)}>
-              Save changes
-            </Button>
+            <Buttons>
+              <Button onClick={(e) => handleCancel(e)}>Cancel</Button>
+              <Button onClick={(e) => handleUpdateProfile(e)}>
+                Save changes
+              </Button>
+            </Buttons>
           </FieldBox>
         </>
       )}
@@ -148,12 +161,17 @@ const FieldBox = styled.div`
   width: 90%;
 `;
 
+const Buttons = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+`;
+
 const Button = styled.button`
   width: 100%;
   background-color: ${COLORS.secondary};
   color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+  padding: 14px 14px;
+  margin-left: 1px;
   border: none;
   border-radius: 4px;
   cursor: pointer;

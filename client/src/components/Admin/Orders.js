@@ -10,35 +10,37 @@ const Orders = () => {
   const loadingStatus = useSelector((state) => state.orders.status);
 
   useEffect(() => {
-    // dispatch(actions.requestAdminOrders());
-    fetch("/api/orders")
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(actions.receivedAdminOrders(data.data));
-      })
-      .catch((err) => dispatch(actions.requestAdminOrdersError(err)));
-  }, [dispatch]);
+    loadData();
+  }, []);
 
-  const handleChangeOrder = (e, orderId) => {
+  const loadData = async () => {
+    try {
+      const response = await fetch("/api/orders");
+      const data = await response.json();
+      dispatch(actions.receivedAdminOrders(data.data));
+    } catch (err) {
+      dispatch(actions.requestAdminOrdersError(err));
+    }
+  };
+
+  const handleChangeOrder = async (e, orderId) => {
     e.preventDefault();
-
-    fetch(`/api/orders/${orderId}`, {
-      method: "PUT",
-      body: JSON.stringify({ status: "completed" }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.status === 200) {
-          dispatch(
-            actions.editOrderSuccess(json.data.orderId, json.data.status)
-          );
-        }
-      })
-      .catch((err) => dispatch(actions.editOrderError()));
+    try {
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: "PUT",
+        body: JSON.stringify({ status: "completed" }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+        dispatch(actions.editOrderSuccess(data.data.orderId, data.data.status));
+      }
+    } catch (err) {
+      dispatch(actions.editOrderError(err));
+    }
   };
 
   return (
@@ -60,7 +62,7 @@ const Orders = () => {
                   </p>
                   {order.items.map((item) => {
                     return (
-                      <p key={item._id}>
+                      <p key={item.itemName}>
                         {item.category}: {item.itemName} x {item.quantity}
                       </p>
                     );

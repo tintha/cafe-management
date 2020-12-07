@@ -19,6 +19,7 @@ const CartItem = ({
     !isNaN(e.target.value) &&
       dispatch(
         actions.updateQuantity({
+          _id,
           itemName,
           description,
           category,
