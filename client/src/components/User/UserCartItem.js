@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Icon } from "react-icons-kit";
-import { cancelCircle } from "react-icons-kit/icomoon";
 import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
+import { HiOutlineTrash } from "react-icons/hi";
 
 const CartItem = ({
   _id,
@@ -35,7 +34,7 @@ const CartItem = ({
       <ItemNameContainer>
         {itemName}
         <RemoveBtn onClick={() => dispatch(actions.removeItem({ itemName }))}>
-          <Icon icon={cancelCircle} size={32} />
+          <HiOutlineTrash size="30" />
         </RemoveBtn>
       </ItemNameContainer>
       <ItemDescription>

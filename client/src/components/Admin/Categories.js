@@ -1,7 +1,7 @@
 export const options = [
   {
-    label: "Beverages",
-    value: "Beverages",
+    label: "Coffee & Tea",
+    value: "Coffee & Tea",
   },
   {
     label: "Cupcakes",

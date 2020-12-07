@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
+import { COLORS } from "../../contants";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       {user ? (
         <>
           {userProfile.isAdmin === true ? (
@@ -52,32 +53,75 @@ const Login = () => {
             Don't have an account? You can create one{" "}
             <Link to="/register">here</Link>.
           </p>
-          <LoginInput
-            type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <LoginInput
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Submit type="submit" onClick={(e) => handleSubmit(e)}>
-            Login
-          </Submit>
-          {error && <p>{error}</p>}
+          <FieldBox>
+            <label htmlFor="username">
+              Username<br></br>
+              <LoginInput
+                type="text"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <label htmlFor="password">
+              Password<br></br>
+              <LoginInput
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <Submit type="submit" onClick={(e) => handleSubmit(e)}>
+              Login
+            </Submit>
+          </FieldBox>
+          <FieldBox>{error && <p>{error}</p>}</FieldBox>
         </>
       )}
-    </div>
+    </Wrapper>
   );
 };
 
-const LoginInput = styled.input`
-  margin: 20px;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto Condensed", sans-serif;
+  align-items: center;
+  & > p {
+    margin: 20px;
+  }
 `;
 
-const Submit = styled.button``;
+const LoginInput = styled.input`
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+const FieldBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+`;
+
+const Submit = styled.button`
+  width: 100%;
+  background-color: ${COLORS.secondary};
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 export default Login;

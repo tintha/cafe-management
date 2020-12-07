@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import CartItem from "./CartItem";
+import { COLORS } from "../../contants";
 
 const Cart = () => {
   const history = useHistory();
@@ -61,6 +62,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   max-width: 300px;
+  font-family: "Roboto Condensed", sans-serif;
 `;
 
 const TopContainer = styled.div``;
@@ -90,7 +92,7 @@ const Button = styled.button`
   display: block;
   width: 100%;
   border-radius: 12px;
-  background: #ff406e;
+  background: ${COLORS.secondary};
   color: white;
   border: none;
   padding: 8px;

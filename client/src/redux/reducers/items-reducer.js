@@ -1,6 +1,6 @@
 const initialState = {
-  status: "iddle",
-  items: null,
+  status: "loading",
+  items: [],
 };
 
 export default function itemsReducer(state = initialState, action) {
@@ -15,14 +15,14 @@ export default function itemsReducer(state = initialState, action) {
       return {
         ...state,
         status: "success",
-        items: action.data,
+        items: action.payload.data,
       };
     }
     case "ITEMS_ERROR": {
       return {
         ...state,
         status: "error",
-        error: action.error,
+        error: action.payload.error,
       };
     }
 
@@ -37,7 +37,7 @@ export default function itemsReducer(state = initialState, action) {
       return {
         ...state,
         status: "error",
-        error: action.error,
+        error: action.payload.error,
       };
     }
 
@@ -45,13 +45,18 @@ export default function itemsReducer(state = initialState, action) {
     case "EDIT_MENU_ITEM_SUCCESS": {
       return {
         ...state,
+        items: state.items.map((item) =>
+          item._id !== action.payload.id
+            ? item
+            : { ...action.payload.updatedData }
+        ),
       };
     }
     case "EDIT_MENU_ITEM_ERROR": {
       return {
         ...state,
         status: "error",
-        error: action.error,
+        error: action.payload.error,
       };
     }
     default: {

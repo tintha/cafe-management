@@ -45,13 +45,8 @@ function App() {
   );
 }
 
-const Wrapper = styled.div`
-  border: 1px solid red;
-`;
+const Wrapper = styled.div``;
 
-const Main = styled.div`
-  border: 1px solid blue;
-  padding: 20px;
-`;
+const Main = styled.div``;
 
 export default App;

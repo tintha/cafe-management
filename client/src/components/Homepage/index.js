@@ -1,25 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import Menu from "../Menu";
 import Cart from "../Cart";
 
 const Home = () => {
+  const loadingStatus = useSelector((state) => state.items.status);
+
   return (
     <Wrapper>
-      Home -
       <div>
         <Menu />
       </div>
-      <div>
-        <Cart />
-      </div>
+      <div>{loadingStatus === "success" && <Cart />}</div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  display: flex;
-  height: 100%;
+  font-family: "Roboto Condensed", sans-serif;
 `;
 
 export default Home;

@@ -10,15 +10,29 @@ const MenuItems = () => {
   const menuItems = useSelector((state) => state.items.items);
   const loadingStatus = useSelector((state) => state.items.status);
 
+  // useEffect(() => {
+  //   // dispatch(actions.requestItems());
+  //   fetch("/api/items")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       dispatch(actions.receivedItems(data.data));
+  //     })
+  //     .catch((err) => dispatch(actions.itemsError(err)));
+  // }, [dispatch]);
+
   useEffect(() => {
-    // dispatch(actions.requestItems());
-    fetch("/api/items")
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(actions.receivedItems(data.data));
-      })
-      .catch((err) => dispatch(actions.itemsError(err)));
-  }, [dispatch]);
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const response = await fetch("/api/items");
+      const data = await response.json();
+      dispatch(actions.receivedItems(data.data));
+    } catch (err) {
+      dispatch(actions.itemsError(err));
+    }
+  };
 
   const handleDeleteItem = (e, itemId) => {
     e.preventDefault();

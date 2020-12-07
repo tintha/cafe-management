@@ -9,14 +9,18 @@ const Menu = () => {
   const loadingStatus = useSelector((state) => state.items.status);
 
   useEffect(() => {
-    // dispatch(actions.requestItems());
-    fetch("/api/items")
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(actions.receivedItems(data.data));
-      })
-      .catch((err) => dispatch(actions.itemsError(err)));
-  }, [dispatch]);
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const response = await fetch("/api/items");
+      const data = await response.json();
+      dispatch(actions.receivedItems(data.data));
+    } catch (err) {
+      dispatch(actions.itemsError(err));
+    }
+  };
 
   return (
     <Wrapper>
@@ -24,7 +28,7 @@ const Menu = () => {
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
-          {menuItems === null || menuItems === undefined ? (
+          {menuItems.length === 0 ? (
             <p>No item found.</p>
           ) : (
             menuItems.map((item) => {
@@ -43,13 +47,13 @@ const Menu = () => {
               return (
                 <ItemBox key={item._id}>
                   <ItemTitle>{item.itemName}</ItemTitle>
-                  <p>{item.description}</p>
-                  <p>Category: {item.category}</p>
+                  <ItemDesc>{item.description}</ItemDesc>
+                  <ItemCat>Category: {item.category}</ItemCat>
+
                   {item.image && (
-                    <img src={item.image} alt={item.itemName} width="200" />
+                    <ItemImage src={item.image} alt={item.itemName} />
                   )}
-                  <br></br>
-                  {formattedPrice}
+
                   <AddToCartBtn
                     onClick={() =>
                       dispatch(
@@ -64,7 +68,7 @@ const Menu = () => {
                       )
                     }
                   >
-                    Add to cart
+                    Add to cart - {formattedPrice}
                   </AddToCartBtn>
                 </ItemBox>
               );
@@ -78,19 +82,58 @@ const Menu = () => {
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  font-family: "Roboto Condensed", sans-serif;
+  /* border: 1px solid red; */
 `;
 
 const ItemBox = styled.div`
-  border: 1px solid gray;
-  padding: 10px;
-  margin: 10px;
+  width: 90%;
+  margin-bottom: 10px;
+  margin-top: 20px;
 `;
 
 const ItemTitle = styled.h4`
   font-weight: bold;
   font-size: 1.5rem;
+  margin-bottom: 4px;
 `;
 
-const AddToCartBtn = styled.button``;
+const ItemDesc = styled.h4`
+  font-size: 1rem;
+  margin-bottom: 4px;
+`;
+
+const ItemCat = styled.h4`
+  font-size: 1rem;
+  margin-bottom: 4px;
+  display: none;
+`;
+
+const ItemImage = styled.img`
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  object-fit: cover;
+  margin-bottom: 0px;
+`;
+
+const AddToCartBtn = styled.button`
+  position: relative;
+  display: block;
+  width: 100%;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: #6ec2a1;
+  color: white;
+  border: none;
+  padding: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 0px;
+  cursor: pointer;
+`;
 
 export default Menu;

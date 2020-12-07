@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { options } from "./Categories";
+import { options } from "./categories";
 
 const AddItem = () => {
   const history = useHistory();
   const [updateData, setUpdateData] = useState({
     itemName: "",
     description: "",
-    category: "Beverages",
+    category: "Cupcakes",
     price: "",
     image: "",
   });

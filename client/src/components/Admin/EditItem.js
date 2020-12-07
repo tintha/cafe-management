@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { options } from "./Categories";
+import { options } from "./categories";
+import * as actions from "../../redux/actions";
 
 const EditItem = () => {
   let { id } = useParams();
+  const dispatch = useDispatch();
   const history = useHistory();
   const [itemData, setItemData] = useState({});
   const [updateData, setUpdateData] = useState({
     itemName: "",
     description: "",
-    category: "Beverages",
+    category: "Cupcakes",
     price: "",
     image: "",
   });
@@ -62,6 +65,7 @@ const EditItem = () => {
       .then((json) => {
         if (json.status === 200) {
           history.push("/admin/menu/items");
+          dispatch(actions.editMenuItemSuccess(id, updateData));
         }
       })
       .catch((err) => console.log(err));

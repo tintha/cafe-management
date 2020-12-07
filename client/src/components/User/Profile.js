@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
+import { COLORS } from "../../contants";
 
 const Profile = () => {
   const history = useHistory();
@@ -12,7 +13,7 @@ const Profile = () => {
   const loadingStatus = useSelector((state) => state.profile.status);
 
   useEffect(() => {
-    // dispatch(actions.requestProfile());
+    dispatch(actions.requestProfile());
     fetch(`/api/users/${user}`)
       .then((res) => res.json())
       .then((data) => {
@@ -53,6 +54,15 @@ const H2 = styled.h2`
 
 const FieldBox = styled.div``;
 
-const Button = styled.button``;
+const Button = styled.button`
+  width: 100%;
+  background-color: ${COLORS.secondary};
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 export default Profile;

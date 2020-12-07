@@ -11,14 +11,18 @@ const Orders = () => {
   const loadingStatus = useSelector((state) => state.orders.status);
 
   useEffect(() => {
-    // dispatch(actions.requestUserOrders());
-    fetch(`/api/orders/user/${user}`)
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(actions.receivedUserOrders(data.data));
-      })
-      .catch((err) => dispatch(actions.requestUserOrdersError(err)));
-  }, [dispatch, user]);
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const response = await fetch(`/api/orders/user/${user}`);
+      const data = await response.json();
+      dispatch(actions.receivedUserOrders(data.data));
+    } catch (err) {
+      dispatch(actions.requestUserOrdersError(err));
+    }
+  };
 
   return (
     <Wrapper>

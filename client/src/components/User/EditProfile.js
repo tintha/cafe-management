@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
+import { COLORS } from "../../contants";
 
 const EditProfile = () => {
   const history = useHistory();
@@ -116,17 +117,46 @@ const EditProfile = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto Condensed", sans-serif;
+  align-items: center;
+  & > p {
+    margin: 20px;
+  }
+`;
 
 const H2 = styled.h2`
   font-size: 1rem;
   font-weight: bold;
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
 
-const FieldBox = styled.div``;
+const FieldBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+`;
 
-const Button = styled.button``;
+const Button = styled.button`
+  width: 100%;
+  background-color: ${COLORS.secondary};
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 export default EditProfile;
