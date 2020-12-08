@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { options } from "./categories";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import Loading from "../Loading";
 
 const EditItem = () => {
   let { id } = useParams();
@@ -19,6 +20,7 @@ const EditItem = () => {
     image: "",
   });
   const [currentImage, setCurrentImage] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     loadData();
@@ -30,6 +32,7 @@ const EditItem = () => {
       const response = await fetch(`/api/items/${id}`);
       const data = await response.json();
       setItemData({ ...data.data });
+      setIsLoading(!isLoading);
     } catch (err) {
       console.log(err);
     }
@@ -107,6 +110,11 @@ const EditItem = () => {
   return (
     <Wrapper>
       <h2>Edit item</h2>
+      {isLoading && (
+        <LoadingCentered>
+          <Loading />
+        </LoadingCentered>
+      )}
       {itemData.itemName && itemData.description && (
         <>
           <p>Item Name:</p>
@@ -167,6 +175,12 @@ const Wrapper = styled.div`
     font-size: 1.5rem;
     padding-bottom: 10px;
   }
+`;
+
+const LoadingCentered = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 const Input = styled.input`
