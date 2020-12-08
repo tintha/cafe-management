@@ -1,6 +1,7 @@
 import React from "react";
 import { ImSpinner9 } from "react-icons/im";
 import styled, { keyframes } from "styled-components";
+import { COLORS } from "../contants";
 
 const Loading = () => {
   return <Wrapper size={30} />;
@@ -20,6 +21,7 @@ const Wrapper = styled(ImSpinner9)`
   margin-right: auto;
   margin-top: 100px;
   animation: ${rotate} 1s linear infinite;
+  color: ${COLORS.primary};
 `;
 
 export default Loading;

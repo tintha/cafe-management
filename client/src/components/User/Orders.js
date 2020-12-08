@@ -87,6 +87,12 @@ const Wrapper = styled.div`
     font-weight: bold;
     margin-bottom: 20px;
   }
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    max-width: 500px;
+    margin: auto;
+  }
 `;
 
 const LoadingCentered = styled.div`

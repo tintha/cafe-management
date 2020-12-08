@@ -109,21 +109,17 @@ const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
   width: 100%;
-  & > h2 {
-    font-weight: bold;
-    font-size: 1.5rem;
-    padding-bottom: 10px;
-    @media only screen and (min-width: 768px) {
-      /* tablet */
-      display: none;
-    }
-  }
 `;
 
 const DisplayItemContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    justify-content: space-around;
+  }
 `;
 
 const Buttons = styled.div`

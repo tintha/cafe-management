@@ -46,51 +46,55 @@ const Orders = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <h2>Orders:</h2>
-      {loadingStatus === "loading" && <Loading />}
-      {loadingStatus === "error" && <p>An error occurred...</p>}
-      {loadingStatus === "success" && (
-        <>
-          {orders !== "No orders found" ? (
-            orders.map((order) => {
-              return (
-                <SingleOrderBox key={order._id}>
-                  {order.status === "new" ? (
-                    <p className="new">{order.status}</p>
-                  ) : (
-                    <p className="completed">{order.status}</p>
-                  )}
-                  <p>
-                    DATE: {moment(order.date).format("ll")} @{" "}
-                    {moment(order.date).format("LT")}
-                  </p>
-                  <p>ORDER ID: {order._id}</p>
-                  <p>CUSTOMER ID: {order.username}</p>
-                  <p>TOTAL: {order.total}</p>
-                  <Items>
-                    <ItemsList>
-                      {order.items.map((item) => {
-                        return (
-                          <li key={item.itemName}>
-                            {item.itemName} x {item.quantity}
-                          </li>
-                        );
-                      })}
-                    </ItemsList>
-                  </Items>
-                  <Button onClick={(e) => handleChangeOrder(e, order._id)}>
-                    Mark completed
-                  </Button>
-                </SingleOrderBox>
-              );
-            })
-          ) : (
-            <p>There are no order history.</p>
-          )}
-        </>
-      )}
-    </Wrapper>
+      <Wrapper>
+        {loadingStatus === "loading" && <Loading />}
+        {loadingStatus === "error" && <p>An error occurred...</p>}
+        {loadingStatus === "success" && (
+          <>
+            {orders !== "No orders found" ? (
+              orders.map((order) => {
+                return (
+                  <SingleOrderBox key={order._id}>
+                    <OrderDetails>
+                      {order.status === "new" ? (
+                        <p className="new">{order.status}</p>
+                      ) : (
+                        <p className="completed">{order.status}</p>
+                      )}
+                      <p>
+                        DATE: {moment(order.date).format("ll")} @{" "}
+                        {moment(order.date).format("LT")}
+                      </p>
+                      <p>ORDER ID: {order._id}</p>
+                      <p>CUSTOMER ID: {order.username}</p>
+                      <p>TOTAL: {order.total}</p>
+                      <Items>
+                        <ItemsList>
+                          {order.items.map((item) => {
+                            return (
+                              <li key={item.itemName}>
+                                {item.itemName} x {item.quantity}
+                              </li>
+                            );
+                          })}
+                        </ItemsList>
+                      </Items>
+                    </OrderDetails>
+                    <Button onClick={(e) => handleChangeOrder(e, order._id)}>
+                      Mark completed
+                    </Button>
+                  </SingleOrderBox>
+                );
+              })
+            ) : (
+              <p>There are no order history.</p>
+            )}
+          </>
+        )}
+      </Wrapper>
+    </>
   );
 };
 
@@ -106,6 +110,15 @@ const Wrapper = styled.div`
     font-weight: bold;
     font-size: 1.5rem;
     padding-bottom: 10px;
+  }
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
   }
 `;
 
@@ -124,6 +137,21 @@ const SingleOrderBox = styled.div`
   .completed {
     font-weight: bold;
     text-transform: uppercase;
+  }
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 30%;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+`;
+
+const OrderDetails = styled.div`
+  & > p {
+    margin-bottom: 10px;
   }
 `;
 

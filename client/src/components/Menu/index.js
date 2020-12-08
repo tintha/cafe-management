@@ -105,6 +105,12 @@ const Wrapper = styled.div`
     justify-content: flex-start;
     min-height: initial;
   }
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    justify-content: space-between;
+    max-width: 1000px;
+  }
 `;
 
 const ItemBox = styled.div`
@@ -120,10 +126,22 @@ const ItemBox = styled.div`
     /* tablet */
     width: 45%;
   }
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 300px;
+    flex-direction: column;
+  }
 `;
 
 const ItemImageBox = styled.div`
   width: 100px;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: initial;
+    text-align: center;
+  }
 `;
 
 const ItemInfoDiv = styled.div`
@@ -132,6 +150,13 @@ const ItemInfoDiv = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    padding-left: initial;
+    padding-top: 10px;
+    height: 120px;
+  }
 `;
 
 const ItemTextBox = styled.div``;
@@ -160,6 +185,12 @@ const ItemImage = styled.img`
   overflow: hidden;
   object-fit: cover;
   margin-bottom: 0px;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 294px;
+    height: 294px;
+  }
 `;
 
 const PriceDiv = styled.div`

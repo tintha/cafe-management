@@ -132,6 +132,11 @@ const Wrapper = styled.div`
     font-size: 1.5rem;
     padding-bottom: 10px;
   }
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 400px;
+    margin: auto;
+  }
 `;
 
 const FieldBox = styled.div``;

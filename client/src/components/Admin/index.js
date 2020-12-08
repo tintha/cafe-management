@@ -37,6 +37,12 @@ const Wrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    max-width: 1000px;
+    margin: auto;
+  }
 `;
 
 const LeftContainer = styled.div``;

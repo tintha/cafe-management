@@ -69,8 +69,6 @@ const Cart = () => {
 
   return (
     <Wrapper>
-      <Title>Cart</Title>
-
       {totalItems === 0 ? (
         <Empty>
           <p className="empty">Your cart is empty!</p>
@@ -104,53 +102,58 @@ const Cart = () => {
             })}
           </TopContainer>
           {user ? (
-            <>
+            <PaymentForm>
               <FieldBox>
                 <label>
-                  Credit card
+                  <p>Credit card</p>
                   <Input
                     type="text"
                     name="creditCard"
+                    placeholder="1234 5678 9101 1213"
                     value={newOrder.creditCard}
                     onChange={(e) => handleChange(e)}
                   />
                 </label>
-                <br></br>
-                <label>
-                  CVC
-                  <Input
-                    type="text"
-                    name="cvc"
-                    value={newOrder.cvc}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </label>
-                <br></br>
-                <label>
-                  Expiration date
-                  <Input
-                    type="text"
-                    name="exp"
-                    value={newOrder.exp}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </label>
               </FieldBox>
-              <TotalContainer>
-                <TotalPrice>
-                  Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
-                </TotalPrice>
-              </TotalContainer>
 
+              <CreditCartSmall>
+                <FieldBox>
+                  <label>
+                    <p>CVC</p>
+                    <SmallInput
+                      type="text"
+                      name="cvc"
+                      placeholder="123"
+                      value={newOrder.cvc}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </label>
+                </FieldBox>
+                <FieldBox>
+                  <label>
+                    <p>Expires</p>
+                    <SmallInput
+                      type="text"
+                      name="exp"
+                      placeholder="mm/yy"
+                      value={newOrder.exp}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </label>
+                </FieldBox>
+              </CreditCartSmall>
+              <TotalPrice>
+                Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
+              </TotalPrice>
               <ButtonsBox>
                 <Button onClick={() => history.push("/")}>Keep shopping</Button>
                 <Button onClick={(e) => handlePlaceOrder(e)}>
                   Place your order
                 </Button>
               </ButtonsBox>
-            </>
+            </PaymentForm>
           ) : (
-            <Button onClick={(e) => handleLogin(e)}>Sign in to continue</Button>
+            <Button onClick={(e) => handleLogin(e)}>Sign in to checkout</Button>
           )}
         </>
       )}
@@ -165,16 +168,33 @@ const Wrapper = styled.div`
   width: 90%;
   color: ${COLORS.darkest};
   min-height: 100vh;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    max-width: 1000px;
+    margin: auto;
+    flex-direction: row;
+  }
 `;
 
-const TopContainer = styled.div``;
+const TopContainer = styled.div`
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 450px;
+    margin-right: 100px;
+    margin-left: 50px;
+  }
+`;
 
 const Title = styled.h2`
   font-weight: bold;
   margin-bottom: 2px;
+  text-align: center;
 `;
 
 const Empty = styled.div`
+  margin-left: auto;
+  margin-right: auto;
   .empty {
     padding: 30px;
     text-align: center;
@@ -185,13 +205,14 @@ const NumItems = styled.div`
   margin-bottom: 20px;
 `;
 
-const FieldBox = styled.div``;
-
-const TotalContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
+const PaymentForm = styled.div`
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 300px;
+  }
 `;
+
+const FieldBox = styled.div``;
 
 const BoldText = styled.span`
   font-weight: bold;
@@ -207,11 +228,41 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const TotalPrice = styled.div``;
+const SmallInput = styled.input`
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 80px;
+    margin-right: 20px;
+  }
+`;
+
+const CreditCartSmall = styled.div`
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    display: flex;
+  }
+`;
+
+const TotalPrice = styled.div`
+  font-size: 1.5rem;
+  padding: 10px;
+`;
 
 const ButtonsBox = styled.div`
   display: flex;
   flex-wrap: nowrap;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    flex-wrap: wrap;
+  }
 `;
 
 const Button = styled.button`
@@ -227,6 +278,12 @@ const Button = styled.button`
   font-weight: 600;
   margin: 1px;
   cursor: pointer;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 300px;
+    height: 40px;
+  }
 `;
 
 export default Cart;
