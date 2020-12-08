@@ -43,7 +43,6 @@ const CartItem = ({
             <HiOutlineTrash size="30" style={{ color: `${COLORS.darkest}` }} />
           </RemoveBtn>
         </ItemNameContainer>
-
         <QuantityContainer>
           <label htmlFor="quantity">Quantity:</label>
           <QuantityNum
@@ -74,9 +73,15 @@ const ItemNameContainer = styled.div`
   font-size: 1rem;
   font-weight: bold;
 `;
+
 const ItemImageDiv = styled.div`
   overflow: hidden;
   width: 30%;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 200px;
+  }
 `;
 
 const Image = styled.img`
@@ -84,6 +89,12 @@ const Image = styled.img`
   object-fit: contain;
   width: 100%;
   height: auto;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    width: 150px;
+    height: auto;
+  }
 `;
 
 const RightDiv = styled.div`

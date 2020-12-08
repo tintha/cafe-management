@@ -66,6 +66,12 @@ const Profile = () => {
 const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    max-width: 400px;
+    margin: auto;
+  }
 `;
 
 const LoadingCentered = styled.div`

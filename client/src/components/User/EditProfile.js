@@ -142,6 +142,12 @@ const Wrapper = styled.div`
   & > p {
     margin: 20px;
   }
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    max-width: 400px;
+    margin: auto;
+  }
 `;
 
 const H2 = styled.h2`

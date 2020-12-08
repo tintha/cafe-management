@@ -100,6 +100,12 @@ const Wrapper = styled.header`
   width: 100%;
   background-color: #fff;
   z-index: 10;
+
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    max-width: 1000px;
+    margin: auto;
+  }
 `;
 
 const SecondDiv = styled.div`
