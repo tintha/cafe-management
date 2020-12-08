@@ -22,6 +22,7 @@ const EditItem = () => {
 
   useEffect(() => {
     loadData();
+    window.scrollTo(0, 0);
   }, [id]);
 
   const loadData = async () => {
@@ -160,6 +161,7 @@ const EditItem = () => {
 const Wrapper = styled.div`
   width: 100%;
   font-family: "Roboto Condensed", sans-serif;
+  color: ${COLORS.darkest};
   & > h2 {
     font-weight: bold;
     font-size: 1.5rem;
@@ -194,7 +196,7 @@ const Textarea = styled.textarea`
 
 const Button = styled.button`
   width: 100%;
-  background-color: ${COLORS.secondary};
+  background-color: ${COLORS.primary};
   color: white;
   padding: 14px 20px;
   margin: 8px 0;

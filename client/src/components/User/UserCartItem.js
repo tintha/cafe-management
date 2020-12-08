@@ -40,7 +40,7 @@ const CartItem = ({
         <ItemNameContainer>
           {itemName}
           <RemoveBtn onClick={() => dispatch(actions.removeItem({ itemName }))}>
-            <HiOutlineTrash size="30" />
+            <HiOutlineTrash size="30" style={{ color: `${COLORS.darkest}` }} />
           </RemoveBtn>
         </ItemNameContainer>
 
@@ -100,10 +100,11 @@ const QuantityContainer = styled.div`
   align-items: center;
   padding: 10px;
   font-size: 1rem;
+  color: ${COLORS.darkest};
 `;
 
 const QuantityNum = styled.input`
-  color: rgba(0, 0, 0);
+  color: ${COLORS.darkest};
   min-width: 1.5em;
   max-width: 3em;
   text-align: center;

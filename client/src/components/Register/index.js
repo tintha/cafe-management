@@ -122,6 +122,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
   align-items: center;
+  min-height: 100vh;
   & > p {
     margin: 20px;
   }
@@ -146,7 +147,7 @@ const LoginInput = styled.input`
 
 const Submit = styled.button`
   width: 100%;
-  background-color: ${COLORS.secondary};
+  background-color: ${COLORS.primary};
   color: white;
   padding: 14px 20px;
   margin: 8px 0;

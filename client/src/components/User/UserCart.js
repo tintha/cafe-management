@@ -27,7 +27,7 @@ const Cart = () => {
     creditCard: "",
     cvc: "",
     exp: "",
-    total: totalPrice,
+    total: totalPrice.toFixed(2),
     date: new Date(),
   });
 
@@ -72,8 +72,8 @@ const Cart = () => {
       <Title>Cart</Title>
 
       {totalItems === 0 ? (
-        <>
-          <p>Your cart is empty</p>
+        <Empty>
+          <p className="empty">Your cart is empty!</p>
           <Button
             onClick={(e) => {
               handleShopNow(e);
@@ -81,7 +81,7 @@ const Cart = () => {
           >
             Shop now
           </Button>
-        </>
+        </Empty>
       ) : (
         <>
           <TopContainer>
@@ -144,7 +144,9 @@ const Cart = () => {
 
               <ButtonsBox>
                 <Button onClick={() => history.push("/")}>Keep shopping</Button>
-                <Button onClick={(e) => handlePlaceOrder(e)}>Confirm</Button>
+                <Button onClick={(e) => handlePlaceOrder(e)}>
+                  Place your order
+                </Button>
               </ButtonsBox>
             </>
           ) : (
@@ -160,14 +162,23 @@ const Wrapper = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 90%;
+  color: ${COLORS.darkest};
+  min-height: 100vh;
 `;
 
 const TopContainer = styled.div``;
 
 const Title = styled.h2`
+  font-weight: bold;
   margin-bottom: 2px;
+`;
+
+const Empty = styled.div`
+  .empty {
+    padding: 30px;
+    text-align: center;
+  }
 `;
 
 const NumItems = styled.div`
@@ -208,7 +219,7 @@ const Button = styled.button`
   display: block;
   width: 100%;
   border-radius: 4px;
-  background: ${COLORS.secondary};
+  background: ${COLORS.primary};
   color: white;
   border: none;
   padding: 8px;
