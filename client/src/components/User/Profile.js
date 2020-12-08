@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import { RiAccountBoxLine } from "react-icons/ri";
 
 const Profile = () => {
   const history = useHistory();
@@ -29,15 +30,19 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      <H2>Profile</H2>
       {loadingStatus === "loading" && <p>loading...</p>}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
-          <p>Username: {user}</p>
+          <TopDiv>
+            <RiAccountBoxLine size="100" />
+            <h3>
+              {profile.firstName} {profile.lastName}
+            </h3>
+          </TopDiv>
           <FieldBox>First Name: {profile.firstName}</FieldBox>
           <FieldBox>Last Name: {profile.lastName}</FieldBox>
-          <FieldBox></FieldBox>
+          <FieldBox>Username: {user}</FieldBox>
           <FieldBox>Address: {profile.address}</FieldBox>
           <FieldBox>
             <Button onClick={() => history.push("/user/profile/edit")}>
@@ -50,14 +55,29 @@ const Profile = () => {
   );
 };
 
-const Wrapper = styled.div``;
-
-const H2 = styled.h2`
-  font-size: 1rem;
-  font-weight: bold;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  border: 1px solid ${COLORS.lightmint};
+  border-radius: 4px;
 `;
 
-const FieldBox = styled.div``;
+const TopDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px;
+  & > h3 {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+`;
+
+const FieldBox = styled.div`
+  font-size: 1rem;
+`;
 
 const Button = styled.button`
   width: 100%;
@@ -67,6 +87,8 @@ const Button = styled.button`
   margin: 8px 0;
   border: none;
   border-radius: 4px;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
 `;
 

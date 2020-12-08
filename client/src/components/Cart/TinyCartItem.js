@@ -4,7 +4,14 @@ import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
 import { HiOutlineTrash } from "react-icons/hi";
 
-const CartItem = ({ _id, itemName, description, price, quantity, image }) => {
+const TinyCartItem = ({
+  _id,
+  itemName,
+  description,
+  price,
+  quantity,
+  image,
+}) => {
   const dispatch = useDispatch();
 
   const handleChangeQuantity = (e) => {
@@ -81,4 +88,4 @@ const RemoveBtn = styled.button`
   background-color: transparent;
 `;
 
-export default CartItem;
+export default TinyCartItem;

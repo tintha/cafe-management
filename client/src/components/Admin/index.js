@@ -16,7 +16,6 @@ const Admin = () => {
     return (
       <Wrapper>
         <LeftContainer>
-          <p>Hello {userProfile.fullName},</p>
           <Sidebar />
         </LeftContainer>
         <RightContainer>
@@ -36,13 +35,13 @@ const Admin = () => {
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 30px;
+  flex-direction: column;
 `;
 
-const LeftContainer = styled.div`
-  margin-right: 30px;
-`;
+const LeftContainer = styled.div``;
 
-const RightContainer = styled.div``;
+const RightContainer = styled.div`
+  padding: 20px;
+`;
 
 export default Admin;

@@ -63,6 +63,10 @@ const Cart = () => {
     history.push("/");
   };
 
+  const handleLogin = (e) => {
+    history.push("/login");
+  };
+
   return (
     <Wrapper>
       <Title>Cart</Title>
@@ -88,7 +92,7 @@ const Cart = () => {
               return (
                 <UserCartItem
                   key={item.itemName}
-                  id={item._id}
+                  _id={item._id}
                   itemName={item.itemName}
                   description={item.description}
                   category={item.category}
@@ -99,46 +103,53 @@ const Cart = () => {
               );
             })}
           </TopContainer>
-          <FieldBox>
-            <label>
-              Credit card
-              <Input
-                type="text"
-                name="creditCard"
-                value={newOrder.creditCard}
-                onChange={(e) => handleChange(e)}
-              />
-            </label>
-            <br></br>
-            <label>
-              CVC
-              <Input
-                type="text"
-                name="cvc"
-                value={newOrder.cvc}
-                onChange={(e) => handleChange(e)}
-              />
-            </label>
-            <br></br>
-            <label>
-              Expiration date
-              <Input
-                type="text"
-                name="exp"
-                value={newOrder.exp}
-                onChange={(e) => handleChange(e)}
-              />
-            </label>
-          </FieldBox>
-          <TotalContainer>
-            <TotalPrice>
-              Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
-            </TotalPrice>
-          </TotalContainer>
-          <ButtonsBox>
-            <Button onClick={() => history.push("/")}>Keep shopping</Button>
-            <Button onClick={(e) => handlePlaceOrder(e)}>Confirm</Button>
-          </ButtonsBox>
+          {user ? (
+            <>
+              <FieldBox>
+                <label>
+                  Credit card
+                  <Input
+                    type="text"
+                    name="creditCard"
+                    value={newOrder.creditCard}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </label>
+                <br></br>
+                <label>
+                  CVC
+                  <Input
+                    type="text"
+                    name="cvc"
+                    value={newOrder.cvc}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </label>
+                <br></br>
+                <label>
+                  Expiration date
+                  <Input
+                    type="text"
+                    name="exp"
+                    value={newOrder.exp}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </label>
+              </FieldBox>
+              <TotalContainer>
+                <TotalPrice>
+                  Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
+                </TotalPrice>
+              </TotalContainer>
+
+              <ButtonsBox>
+                <Button onClick={() => history.push("/")}>Keep shopping</Button>
+                <Button onClick={(e) => handlePlaceOrder(e)}>Confirm</Button>
+              </ButtonsBox>
+            </>
+          ) : (
+            <Button onClick={(e) => handleLogin(e)}>Sign in to continue</Button>
+          )}
         </>
       )}
     </Wrapper>
@@ -150,7 +161,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 300px;
+  width: 90%;
 `;
 
 const TopContainer = styled.div``;

@@ -10,6 +10,8 @@ import Register from "./components/Register";
 import User from "./components/User";
 import Admin from "./components/Admin";
 import ThankYou from "./components/ThankYou";
+import Cart from "./components/Cart/";
+import UserCart from "./components/User/UserCart";
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
         <Header />
         <Main>
           <Switch>
+            <Route path="/cart">
+              <UserCart />
+            </Route>
             <Route exact path="/login">
               <Login />
             </Route>

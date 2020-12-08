@@ -66,7 +66,7 @@ const EditProfile = () => {
 
   return (
     <Wrapper>
-      <H2>Profile</H2>
+      <H2>Edit Profile</H2>
       {loadingStatus === "loading" && <p>loading...</p>}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
@@ -135,6 +135,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
   align-items: center;
+  width: 100%;
   & > p {
     margin: 20px;
   }
@@ -147,23 +148,25 @@ const H2 = styled.h2`
 
 const Input = styled.input`
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 12px;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  font-size: 1rem;
 `;
 
 const FieldBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
 `;
 
 const Buttons = styled.div`
   display: flex;
   flex-wrap: nowrap;
+  width: 100%;
 `;
 
 const Button = styled.button`
@@ -174,6 +177,8 @@ const Button = styled.button`
   margin-left: 1px;
   border: none;
   border-radius: 4px;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
 `;
 

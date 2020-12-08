@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
 import { HiOutlineTrash } from "react-icons/hi";
+import { COLORS } from "../../contants";
 
 const CartItem = ({
   _id,
@@ -32,61 +33,76 @@ const CartItem = ({
 
   return (
     <Wrapper>
-      <ItemNameContainer>
-        {itemName}
-        <RemoveBtn onClick={() => dispatch(actions.removeItem({ itemName }))}>
-          <HiOutlineTrash size="30" />
-        </RemoveBtn>
-      </ItemNameContainer>
-      <ItemDescription>
-        {description}, Category: {category}
-      </ItemDescription>
-      <ItemImage>
-        <img src={image} width="50" alt="" />
-      </ItemImage>
-      <QuantityContainer>
-        <label htmlFor="quantity">Quantity:</label>
-        <QuantityNum
-          name="quantity"
-          itemName="quantity"
-          type="text"
-          value={quantity}
-          onChange={(e) => handleChangeQuantity(e)}
-        />
-      </QuantityContainer>
+      <ItemImageDiv>
+        <Image src={image} width="50" alt="" />
+      </ItemImageDiv>
+      <RightDiv>
+        <ItemNameContainer>
+          {itemName}
+          <RemoveBtn onClick={() => dispatch(actions.removeItem({ itemName }))}>
+            <HiOutlineTrash size="30" />
+          </RemoveBtn>
+        </ItemNameContainer>
+
+        <QuantityContainer>
+          <label htmlFor="quantity">Quantity:</label>
+          <QuantityNum
+            name="quantity"
+            itemName="quantity"
+            type="text"
+            value={quantity}
+            onChange={(e) => handleChangeQuantity(e)}
+          />
+        </QuantityContainer>
+      </RightDiv>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  border: 1px solid gray;
+  display: flex;
+  flex-wrap: nowrap;
+  border-bottom: 1px solid ${COLORS.grayBorder};
   margin-bottom: 20px;
+  max-height: 150px;
 `;
 
 const ItemNameContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  font-size: 1.3rem;
-`;
-const ItemImage = styled.div``;
-
-const ItemDescription = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
   font-size: 1rem;
+  font-weight: bold;
+`;
+const ItemImageDiv = styled.div`
+  overflow: hidden;
+  width: 30%;
+`;
+
+const Image = styled.img`
+  overflow: hidden;
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+`;
+
+const RightDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2px;
+  font-size: 1rem;
+  width: 100%;
 `;
 
 const QuantityContainer = styled.div`
   display: flex;
-  background-color: rgba(0, 0, 0, 0.25);
+  align-items: center;
   padding: 10px;
   font-size: 1rem;
 `;
 
 const QuantityNum = styled.input`
-  background-color: white;
   color: rgba(0, 0, 0);
   min-width: 1.5em;
   max-width: 3em;
@@ -94,6 +110,7 @@ const QuantityNum = styled.input`
   font-weight: bold;
   margin-left: 5px;
   font-size: 1rem;
+  border: 1px solid ${COLORS.grayBorder};
 `;
 
 const RemoveBtn = styled.button`
