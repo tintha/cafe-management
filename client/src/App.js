@@ -52,6 +52,8 @@ function App() {
 
 const Wrapper = styled.div``;
 
-const Main = styled.div``;
+const Main = styled.div`
+  min-height: 100vh;
+`;
 
 export default App;

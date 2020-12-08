@@ -47,7 +47,6 @@ const MenuItems = () => {
 
   return (
     <Wrapper>
-      <h2>Edit or delete items</h2>
       {loadingStatus === "loading" && <Loading />}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
@@ -104,6 +103,9 @@ const MenuItems = () => {
 };
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
   width: 100%;
@@ -111,6 +113,10 @@ const Wrapper = styled.div`
     font-weight: bold;
     font-size: 1.5rem;
     padding-bottom: 10px;
+    @media only screen and (min-width: 768px) {
+      /* tablet */
+      display: none;
+    }
   }
 `;
 
@@ -142,6 +148,13 @@ const ItemBox = styled.div`
   padding: 10px;
   margin-bottom: 20px;
   width: 100%;
+  @media only screen and (min-width: 768px) {
+    /* tablet */
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 `;
 
 const ImageDiv = styled.div`

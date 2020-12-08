@@ -29,7 +29,11 @@ const Orders = () => {
   return (
     <Wrapper>
       <h2>Order History:</h2>
-      {loadingStatus === "loading" && <Loading />}
+      {loadingStatus === "loading" && (
+        <LoadingCentered>
+          <Loading />
+        </LoadingCentered>
+      )}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
@@ -83,6 +87,12 @@ const Wrapper = styled.div`
     font-weight: bold;
     margin-bottom: 20px;
   }
+`;
+
+const LoadingCentered = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 const OrderBox = styled.div`

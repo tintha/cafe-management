@@ -18,7 +18,7 @@ const rotate = keyframes`
 const Wrapper = styled(ImSpinner9)`
   margin-left: auto;
   margin-right: auto;
-  margin-top: 30px;
+  margin-top: 100px;
   animation: ${rotate} 1s linear infinite;
 `;
 

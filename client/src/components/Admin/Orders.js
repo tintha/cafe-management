@@ -95,8 +95,12 @@ const Orders = () => {
 };
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
+  width: 100%;
   min-height: 100vh;
   & > h2 {
     font-weight: bold;
@@ -107,7 +111,7 @@ const Wrapper = styled.div`
 
 const SingleOrderBox = styled.div`
   border: 1px solid ${COLORS.grayBorder};
-  box-sizing: border-box;
+  width: 100%;
   padding: 10px;
   & > p {
     margin-bottom: 10px;

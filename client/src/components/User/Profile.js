@@ -31,32 +31,34 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      <Content>
-        {loadingStatus === "loading" && <Loading />}
-        {loadingStatus === "error" && <p>An error occurred...</p>}
-        {loadingStatus === "success" && (
-          <>
-            <TopDiv>
-              <RiAccountBoxLine
-                size="100"
-                style={{ color: `${COLORS.darkest}` }}
-              />
-              <h3>
-                {profile.firstName} {profile.lastName}
-              </h3>
-            </TopDiv>
-            <FieldBox>First Name: {profile.firstName}</FieldBox>
-            <FieldBox>Last Name: {profile.lastName}</FieldBox>
-            <FieldBox>Username: {user}</FieldBox>
-            <FieldBox>Address: {profile.address}</FieldBox>
-            <FieldBox>
-              <Button onClick={() => history.push("/user/profile/edit")}>
-                Edit
-              </Button>
-            </FieldBox>
-          </>
-        )}
-      </Content>
+      {loadingStatus === "loading" && (
+        <LoadingCentered>
+          <Loading />
+        </LoadingCentered>
+      )}
+      {loadingStatus === "error" && <p>An error occurred...</p>}
+      {loadingStatus === "success" && (
+        <Content>
+          <TopDiv>
+            <RiAccountBoxLine
+              size="100"
+              style={{ color: `${COLORS.darkest}` }}
+            />
+            <h3>
+              {profile.firstName} {profile.lastName}
+            </h3>
+          </TopDiv>
+          <FieldBox>First Name: {profile.firstName}</FieldBox>
+          <FieldBox>Last Name: {profile.lastName}</FieldBox>
+          <FieldBox>Username: {user}</FieldBox>
+          <FieldBox>Address: {profile.address}</FieldBox>
+          <FieldBox>
+            <Button onClick={() => history.push("/user/profile/edit")}>
+              Edit
+            </Button>
+          </FieldBox>
+        </Content>
+      )}
     </Wrapper>
   );
 };
@@ -64,6 +66,12 @@ const Profile = () => {
 const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
+`;
+
+const LoadingCentered = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 const Content = styled.div`

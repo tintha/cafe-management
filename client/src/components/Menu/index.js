@@ -99,7 +99,12 @@ const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
   min-height: 100vh;
-  /* border: 1px solid red; */
+
+  @media only screen and (min-width: 768px) {
+    /* tablet */
+    justify-content: flex-start;
+    min-height: initial;
+  }
 `;
 
 const ItemBox = styled.div`
@@ -110,6 +115,11 @@ const ItemBox = styled.div`
   margin-top: 20px;
   border: 1px solid ${COLORS.lightpink};
   padding: 10px;
+
+  @media only screen and (min-width: 768px) {
+    /* tablet */
+    width: 45%;
+  }
 `;
 
 const ItemImageBox = styled.div`
