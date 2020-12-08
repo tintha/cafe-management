@@ -107,7 +107,7 @@ const SecondDiv = styled.div`
   flex-wrap: nowrap;
   justify-content: space-around;
   width: 100%;
-  background-color: ${COLORS.logo};
+  background-color: ${COLORS.primary};
 `;
 
 const Logo = styled.div`
@@ -128,7 +128,7 @@ const NavMenu = styled.div`
   display: flex;
   justify-content: center;
   font-family: "Roboto Condensed", sans-serif;
-  background-color: ${COLORS.logo};
+  background-color: ${COLORS.primary};
   color: #fff;
   padding: 20px;
 `;

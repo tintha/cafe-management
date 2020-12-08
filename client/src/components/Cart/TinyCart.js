@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import TinyCartItem from "./TinyCartItem";
 import { COLORS } from "../../contants";
 import { RiCake3Line, RiCupLine } from "react-icons/ri";
+import { GiCoffeeCup, GiCupcake } from "react-icons/gi";
 
 const TinyCart = () => {
   const history = useHistory();
@@ -40,8 +41,17 @@ const TinyCart = () => {
     <Wrapper>
       <TopContainer>
         <NumItems>
-          {totalCupcakes} <RiCake3Line size="20" />, {totalBeverages}{" "}
-          <RiCupLine size="20" /> <BoldText>${totalPrice.toFixed(2)}</BoldText>
+          <TinyItem>
+            <GiCupcake size="20" />
+            {totalCupcakes}
+          </TinyItem>{" "}
+          <TinyItem>
+            <GiCoffeeCup size="20" />
+            {totalBeverages}
+          </TinyItem>
+          <TinyItem>
+            <BoldText>${totalPrice.toFixed(2)}</BoldText>
+          </TinyItem>
         </NumItems>
       </TopContainer>
       {/* <TotalContainer>
@@ -61,6 +71,7 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   background-color: #fff;
+  color: ${COLORS.darkest};
   z-index: 10;
 `;
 
@@ -70,9 +81,17 @@ const Title = styled.h2`
   margin-bottom: 2px;
 `;
 
+const TinyItem = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+`;
+
 const NumItems = styled.div`
   display: flex;
-
   align-items: center;
   padding: 6px;
   margin-bottom: 20px;
@@ -86,6 +105,7 @@ const TotalContainer = styled.div`
 
 const BoldText = styled.span`
   font-weight: bold;
+  font-size: 1rem;
 `;
 
 const TotalPrice = styled.div``;

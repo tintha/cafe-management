@@ -124,7 +124,9 @@ const AddItem = () => {
 
 const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
+  color: ${COLORS.darkest};
   width: 100%;
+  min-height: 100vh;
   & > h2 {
     font-weight: bold;
     font-size: 1.5rem;
@@ -161,7 +163,7 @@ const Textarea = styled.textarea`
 
 const Button = styled.button`
   width: 100%;
-  background-color: ${COLORS.secondary};
+  background-color: ${COLORS.primary};
   color: white;
   padding: 14px 20px;
   margin: 8px 0;

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import Loading from "../Loading";
 
 const EditProfile = () => {
   const history = useHistory();
@@ -67,7 +68,7 @@ const EditProfile = () => {
   return (
     <Wrapper>
       <H2>Edit Profile</H2>
-      {loadingStatus === "loading" && <p>loading...</p>}
+      {loadingStatus === "loading" && <Loading />}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
@@ -136,6 +137,8 @@ const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   align-items: center;
   width: 100%;
+  min-height: 100vh;
+  color: ${COLORS.darkest};
   & > p {
     margin: 20px;
   }
@@ -171,7 +174,7 @@ const Buttons = styled.div`
 
 const Button = styled.button`
   width: 100%;
-  background-color: ${COLORS.secondary};
+  background-color: ${COLORS.primary};
   color: white;
   padding: 14px 14px;
   margin-left: 1px;

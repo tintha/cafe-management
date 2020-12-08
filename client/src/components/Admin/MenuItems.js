@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import Loading from "../Loading";
 
 const MenuItems = () => {
   const history = useHistory();
@@ -47,7 +48,7 @@ const MenuItems = () => {
   return (
     <Wrapper>
       <h2>Edit or delete items</h2>
-      {loadingStatus === "loading" && <p>loading...</p>}
+      {loadingStatus === "loading" && <Loading />}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <DisplayItemContainer>
@@ -104,6 +105,7 @@ const MenuItems = () => {
 
 const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
+  color: ${COLORS.darkest};
   width: 100%;
   & > h2 {
     font-weight: bold;
@@ -124,7 +126,7 @@ const Buttons = styled.div`
 
 const Button = styled.button`
   width: 100%;
-  background-color: ${COLORS.secondary};
+  background-color: ${COLORS.primary};
   color: white;
   padding: 14px 20px;
   margin-left: 1px;

@@ -4,6 +4,7 @@ import moment from "moment";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import Loading from "../Loading";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const Orders = () => {
   return (
     <Wrapper>
       <h2>Orders:</h2>
-      {loadingStatus === "loading" && <p>loading...</p>}
+      {loadingStatus === "loading" && <Loading />}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
@@ -95,6 +96,8 @@ const Orders = () => {
 
 const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
+  color: ${COLORS.darkest};
+  min-height: 100vh;
   & > h2 {
     font-weight: bold;
     font-size: 1.5rem;
@@ -115,7 +118,6 @@ const SingleOrderBox = styled.div`
     text-transform: uppercase;
   }
   .completed {
-    color: green;
     font-weight: bold;
     text-transform: uppercase;
   }
@@ -131,7 +133,7 @@ const ItemsList = styled.ul`
 
 const Button = styled.button`
   width: 100%;
-  background-color: ${COLORS.secondary};
+  background-color: ${COLORS.primary};
   color: white;
   padding: 14px 20px;
   margin: 8px 0;

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import { RiAccountBoxLine } from "react-icons/ri";
+import Loading from "../Loading";
 
 const Profile = () => {
   const history = useHistory();
@@ -30,37 +31,48 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      {loadingStatus === "loading" && <p>loading...</p>}
-      {loadingStatus === "error" && <p>An error occurred...</p>}
-      {loadingStatus === "success" && (
-        <>
-          <TopDiv>
-            <RiAccountBoxLine size="100" />
-            <h3>
-              {profile.firstName} {profile.lastName}
-            </h3>
-          </TopDiv>
-          <FieldBox>First Name: {profile.firstName}</FieldBox>
-          <FieldBox>Last Name: {profile.lastName}</FieldBox>
-          <FieldBox>Username: {user}</FieldBox>
-          <FieldBox>Address: {profile.address}</FieldBox>
-          <FieldBox>
-            <Button onClick={() => history.push("/user/profile/edit")}>
-              Edit
-            </Button>
-          </FieldBox>
-        </>
-      )}
+      <Content>
+        {loadingStatus === "loading" && <Loading />}
+        {loadingStatus === "error" && <p>An error occurred...</p>}
+        {loadingStatus === "success" && (
+          <>
+            <TopDiv>
+              <RiAccountBoxLine
+                size="100"
+                style={{ color: `${COLORS.darkest}` }}
+              />
+              <h3>
+                {profile.firstName} {profile.lastName}
+              </h3>
+            </TopDiv>
+            <FieldBox>First Name: {profile.firstName}</FieldBox>
+            <FieldBox>Last Name: {profile.lastName}</FieldBox>
+            <FieldBox>Username: {user}</FieldBox>
+            <FieldBox>Address: {profile.address}</FieldBox>
+            <FieldBox>
+              <Button onClick={() => history.push("/user/profile/edit")}>
+                Edit
+              </Button>
+            </FieldBox>
+          </>
+        )}
+      </Content>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  width: 100%;
+  min-height: 100vh;
+`;
+
+const Content = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  width: 100%;
+
   border: 1px solid ${COLORS.lightmint};
+  color: ${COLORS.darkest};
   border-radius: 4px;
 `;
 
@@ -81,7 +93,7 @@ const FieldBox = styled.div`
 
 const Button = styled.button`
   width: 100%;
-  background-color: ${COLORS.secondary};
+  background-color: ${COLORS.primary};
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
