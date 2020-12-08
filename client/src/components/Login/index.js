@@ -43,7 +43,7 @@ const Login = () => {
           {userProfile.isAdmin === true ? (
             <Redirect to="/admin" />
           ) : (
-            <Redirect to="/user/cart" />
+            <Redirect to="/cart" />
           )}
         </>
       ) : (
@@ -104,6 +104,7 @@ const LoginInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  font-size: 1rem;
 `;
 
 const FieldBox = styled.div`

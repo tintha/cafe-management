@@ -43,44 +43,52 @@ const Header = () => {
   return (
     <Wrapper>
       <Logo>
-        <GiCupcake style={{ color: `${COLORS.logo}` }} size="50" />
+        <GiCupcake style={{ color: `${COLORS.lightmint}` }} size="50" />
       </Logo>
-      <NavMenu>
-        <Navlink exact to="/">
-          Home
-        </Navlink>
-        {user ? (
-          <>
-            {userProfile.isAdmin ? (
-              <Navlink strict to="/admin">
-                Admin Dashboard
+      <SecondDiv>
+        <NavMenu>
+          <Navlink exact to="/">
+            Home
+          </Navlink>
+          {!user && (
+            <Navlink exact to="/cart">
+              Cart
+            </Navlink>
+          )}
+
+          {user ? (
+            <>
+              {userProfile.isAdmin ? (
+                <>
+                  <Navlink to="/admin/">Admin Dashboad</Navlink>
+                </>
+              ) : (
+                <>
+                  <Navlink exact to="/cart">
+                    Cart
+                  </Navlink>
+                  <Navlink strict to="/user/profile">
+                    Profile
+                  </Navlink>
+                  <Navlink exact to="/user/orders">
+                    History
+                  </Navlink>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <Navlink exact to="/login">
+                Sign in
               </Navlink>
-            ) : (
-              <>
-                <Navlink exact to="/user/cart">
-                  Cart
-                </Navlink>
-                <Navlink strict to="/user/profile">
-                  Profile
-                </Navlink>
-                <Navlink exact to="/user/orders">
-                  History
-                </Navlink>
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            <Navlink exact to="/login">
-              Sign in
-            </Navlink>
-            <Navlink exact to="/register">
-              Register
-            </Navlink>
-          </>
-        )}
-      </NavMenu>
-      {user && <Logout onClick={(e) => handleLogout(e)}>Sign Out</Logout>}
+              <Navlink exact to="/register">
+                Register
+              </Navlink>
+            </>
+          )}
+        </NavMenu>
+        {user && <Logout onClick={(e) => handleLogout(e)}>SIGN OUT</Logout>}
+      </SecondDiv>
     </Wrapper>
   );
 };
@@ -89,6 +97,17 @@ const Wrapper = styled.header`
   display: flex;
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
+  width: 100%;
+  background-color: #fff;
+  z-index: 10;
+`;
+
+const SecondDiv = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 100%;
+  background-color: ${COLORS.logo};
 `;
 
 const Logo = styled.div`
@@ -128,13 +147,14 @@ const Navlink = styled(NavLink)`
 `;
 
 const Logout = styled.button`
-  width: 100%;
   background-color: ${COLORS.secondary};
   color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+  /* padding: 14px 20px;
+  margin: 8px 0; */
   border: none;
   border-radius: 4px;
+  font-weight: bold;
+
   cursor: pointer;
 `;
 

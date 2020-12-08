@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { options } from "./categories";
 import * as actions from "../../redux/actions";
+import { COLORS } from "../../contants";
 
 const EditItem = () => {
   let { id } = useParams();
@@ -104,7 +105,7 @@ const EditItem = () => {
 
   return (
     <Wrapper>
-      Edit single item here
+      <h2>Edit item</h2>
       {itemData.itemName && itemData.description && (
         <>
           <p>Item Name:</p>
@@ -133,7 +134,7 @@ const EditItem = () => {
             ))}
           </select>
           <p>Price:</p>
-          <Textarea
+          <Input
             type="text"
             name="price"
             value={updateData.price}
@@ -156,12 +157,50 @@ const EditItem = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+  font-family: "Roboto Condensed", sans-serif;
+  & > h2 {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+  }
+`;
 
-const Input = styled.input``;
+const Input = styled.input`
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+`;
 
-const Textarea = styled.textarea``;
+const Textarea = styled.textarea`
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  font-size: 1rem;
+  padding: 12px 20px;
+  margin: 8px 0;
+`;
 
-const Button = styled.button``;
+const Button = styled.button`
+  width: 100%;
+  background-color: ${COLORS.secondary};
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 export default EditItem;

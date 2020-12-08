@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
+import { COLORS } from "../../contants";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const Orders = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <h2>Orders:</h2>
       {loadingStatus === "loading" && <p>loading...</p>}
       {loadingStatus === "error" && <p>An error occurred...</p>}
@@ -53,24 +54,34 @@ const Orders = () => {
           {orders !== "No orders found" ? (
             orders.map((order) => {
               return (
-                <div key={order._id}>
+                <SingleOrderBox key={order._id}>
+                  {order.status === "new" ? (
+                    <p className="new">{order.status}</p>
+                  ) : (
+                    <p className="completed">{order.status}</p>
+                  )}
                   <p>
-                    Received: {moment(order.date).format("ll")} @{" "}
-                    {moment(order.date).format("LT")}, ID: {order._id},
-                    Customer: {order.username}, Total: {order.total}, Status:
-                    {order.status}
+                    DATE: {moment(order.date).format("ll")} @{" "}
+                    {moment(order.date).format("LT")}
                   </p>
-                  {order.items.map((item) => {
-                    return (
-                      <p key={item.itemName}>
-                        {item.category}: {item.itemName} x {item.quantity}
-                      </p>
-                    );
-                  })}
+                  <p>ORDER ID: {order._id}</p>
+                  <p>CUSTOMER ID: {order.username}</p>
+                  <p>TOTAL: {order.total}</p>
+                  <Items>
+                    <ItemsList>
+                      {order.items.map((item) => {
+                        return (
+                          <li key={item.itemName}>
+                            {item.itemName} x {item.quantity}
+                          </li>
+                        );
+                      })}
+                    </ItemsList>
+                  </Items>
                   <Button onClick={(e) => handleChangeOrder(e, order._id)}>
                     Mark completed
                   </Button>
-                </div>
+                </SingleOrderBox>
               );
             })
           ) : (
@@ -78,10 +89,55 @@ const Orders = () => {
           )}
         </>
       )}
-    </div>
+    </Wrapper>
   );
 };
 
-const Button = styled.button``;
+const Wrapper = styled.div`
+  font-family: "Roboto Condensed", sans-serif;
+  & > h2 {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+  }
+`;
+
+const SingleOrderBox = styled.div`
+  border: 1px solid ${COLORS.grayBorder};
+  box-sizing: border-box;
+  padding: 10px;
+  & > p {
+    margin-bottom: 10px;
+  }
+  .new {
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .completed {
+    color: green;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+`;
+
+const Items = styled.div`
+  padding: 20px;
+`;
+
+const ItemsList = styled.ul`
+  list-style-type: circle;
+`;
+
+const Button = styled.button`
+  width: 100%;
+  background-color: ${COLORS.secondary};
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 export default Orders;

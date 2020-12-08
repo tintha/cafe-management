@@ -26,7 +26,7 @@ const Orders = () => {
 
   return (
     <Wrapper>
-      <h2>Orders:</h2>
+      <h2>Order History:</h2>
       {loadingStatus === "loading" && <p>loading...</p>}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
@@ -34,23 +34,33 @@ const Orders = () => {
           {userOrders !== "No orders found" ? (
             userOrders.map((order) => {
               return (
-                <div key={order._id}>
+                <OrderBox key={order._id}>
+                  {order.status === "new" ? (
+                    <p className="new">{order.status}</p>
+                  ) : (
+                    <p className="completed">{order.status}</p>
+                  )}
                   <p>
-                    ID: {order._id}, Total: {order.total}, Status:
-                    {order.status}, Date: {moment(order.date).format("ll")} @{" "}
+                    <Bold>Date:</Bold> {moment(order.date).format("ll")} @{" "}
                     {moment(order.date).format("LT")}
                   </p>
-                  <div>
-                    <p>Items ordered:</p>
-                    {order.items.map((item) => {
-                      return (
-                        <p key={item._id}>
-                          {item.category}: {item.itemName} x {item.quantity}
-                        </p>
-                      );
-                    })}
-                  </div>
-                </div>
+                  <p>
+                    <Bold>Order ID:</Bold> {order._id}
+                  </p>
+                  <p>
+                    <Bold>Items ordered:</Bold>
+                  </p>
+                  {order.items.map((item) => {
+                    return (
+                      <p key={item._id}>
+                        {item.itemName} x {item.quantity}
+                      </p>
+                    );
+                  })}
+                  <p>
+                    <Bold>Total:</Bold> ${order.total}
+                  </p>
+                </OrderBox>
               );
             })
           ) : (
@@ -62,6 +72,39 @@ const Orders = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+  & > h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+`;
+
+const OrderBox = styled.div`
+  border: 1px solid gray;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  margin-bottom: 10px;
+  & > p {
+    margin-bottom: 10px;
+  }
+  .new {
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .completed {
+    color: green;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+`;
+
+const Bold = styled.span`
+  font-weight: bold;
+`;
 
 export default Orders;

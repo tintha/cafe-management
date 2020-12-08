@@ -2,68 +2,66 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import CartItem from "./CartItem";
+import TinyCartItem from "./TinyCartItem";
 import { COLORS } from "../../contants";
+import { RiCake3Line, RiCupLine } from "react-icons/ri";
 
-const Cart = () => {
+const TinyCart = () => {
   const history = useHistory();
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
   const user = useSelector((state) => state.auth.currentUser);
 
-  let { totalItems, totalPrice } = cartItems.reduce(
+  let {
+    totalItems,
+    totalPrice,
+    totalCupcakes,
+    totalBeverages,
+  } = cartItems.reduce(
     (acc, cur) => {
-      const { quantity, price } = cur;
+      const { quantity, price, category } = cur;
       acc.totalItems += quantity;
       acc.totalPrice += (price * quantity) / 100;
+      if (category === "Cupcakes") {
+        acc.totalCupcakes += quantity;
+      } else if (category == "Coffee & Tea") {
+        acc.totalBeverages += quantity;
+      }
       return acc;
     },
-    { totalItems: 0, totalPrice: 0 }
+    { totalItems: 0, totalPrice: 0, totalCupcakes: 0, totalBeverages: 0 }
   );
 
   const handlePurchase = (e) => {
-    history.push("/login");
+    history.push("/cart");
   };
 
   return (
     <Wrapper>
       <TopContainer>
-        <Title>Your Cart</Title>
         <NumItems>
-          {totalItems} {totalItems <= 1 ? "item" : "items"}
+          {totalCupcakes} <RiCake3Line size="20" />, {totalBeverages}{" "}
+          <RiCupLine size="20" /> <BoldText>${totalPrice.toFixed(2)}</BoldText>
         </NumItems>
-        {cartItems.map((item) => {
-          return (
-            <CartItem
-              key={item.itemName}
-              _id={item._id}
-              itemName={item.itemName}
-              description={item.description}
-              price={item.price}
-              quantity={item.quantity}
-              image={item.image}
-            />
-          );
-        })}
       </TopContainer>
-      <TotalContainer>
-        <TotalPrice>
-          Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
-        </TotalPrice>
-        <Button onClick={(e) => handlePurchase(e)}>Sign in to continue</Button>
-      </TotalContainer>
+      {/* <TotalContainer>
+        <Button onClick={(e) => handlePurchase(e)}>Buy</Button>
+      </TotalContainer> */}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  padding: 20px;
+  padding: 2px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
+  align-items: flex-end;
   font-family: "Roboto Condensed", sans-serif;
-  border: 1px solid red;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 10;
 `;
 
 const TopContainer = styled.div``;
@@ -73,6 +71,10 @@ const Title = styled.h2`
 `;
 
 const NumItems = styled.div`
+  display: flex;
+
+  align-items: center;
+  padding: 6px;
   margin-bottom: 20px;
 `;
 
@@ -91,7 +93,6 @@ const TotalPrice = styled.div``;
 const Button = styled.button`
   position: relative;
   display: block;
-  width: 100%;
   border-radius: 12px;
   background: ${COLORS.secondary};
   color: white;
@@ -102,4 +103,4 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default Cart;
+export default TinyCart;

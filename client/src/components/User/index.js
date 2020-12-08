@@ -14,22 +14,20 @@ const User = () => {
   } else {
     return (
       <Wrapper>
-        <RightContainer>
-          <Switch>
-            <Route path="/user/orders">
-              <Orders />
-            </Route>
-            <Route exact path="/user/profile/edit">
-              <EditProfile />
-            </Route>
-            <Route path="/user/profile">
-              <Profile />
-            </Route>
-            <Route path="/user/cart">
-              <UserCart />
-            </Route>
-          </Switch>
-        </RightContainer>
+        <Switch>
+          <Route path="/user/orders">
+            <Orders />
+          </Route>
+          <Route exact path="/user/profile/edit">
+            <EditProfile />
+          </Route>
+          <Route path="/user/profile">
+            <Profile />
+          </Route>
+          <Route path="/cart">
+            <UserCart />
+          </Route>
+        </Switch>
       </Wrapper>
     );
   }
@@ -40,7 +38,5 @@ const Wrapper = styled.div`
   display: flex;
   padding: 30px;
 `;
-
-const RightContainer = styled.div``;
 
 export default User;

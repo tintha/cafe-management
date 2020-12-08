@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
+import { COLORS } from "../../contants";
 
 const MenuItems = () => {
   const history = useHistory();
@@ -45,7 +46,7 @@ const MenuItems = () => {
 
   return (
     <Wrapper>
-      <p>Menu items</p>
+      <h2>Edit or delete items</h2>
       {loadingStatus === "loading" && <p>loading...</p>}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
@@ -72,24 +73,25 @@ const MenuItems = () => {
                   <p>
                     <Bold>Price</Bold>: {formattedPrice}
                   </p>
-                  <p>
-                    <Bold>Image</Bold>:{" "}
+                  <ImageDiv>
                     {item.image ? (
                       <img src={item.image} alt="" width="200" />
                     ) : (
                       "No image"
                     )}
-                  </p>
-                  <Button
-                    onClick={() =>
-                      history.push(`/admin/menu/items/${item._id}`)
-                    }
-                  >
-                    Edit
-                  </Button>
-                  <Button onClick={(e) => handleDeleteItem(e, item._id)}>
-                    Delete
-                  </Button>
+                  </ImageDiv>
+                  <Buttons>
+                    <Button
+                      onClick={() =>
+                        history.push(`/admin/menu/items/${item._id}`)
+                      }
+                    >
+                      Edit
+                    </Button>
+                    <Button onClick={(e) => handleDeleteItem(e, item._id)}>
+                      Delete
+                    </Button>
+                  </Buttons>
                 </ItemBox>
               );
             })
@@ -100,7 +102,15 @@ const MenuItems = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  font-family: "Roboto Condensed", sans-serif;
+  width: 100%;
+  & > h2 {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+  }
+`;
 
 const DisplayItemContainer = styled.div`
   display: flex;
@@ -108,14 +118,32 @@ const DisplayItemContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const Button = styled.button``;
+const Buttons = styled.div`
+  display: flex;
+`;
+
+const Button = styled.button`
+  width: 100%;
+  background-color: ${COLORS.secondary};
+  color: white;
+  padding: 14px 20px;
+  margin-left: 1px;
+  margin-right: 1px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 const ItemBox = styled.div`
   border: 1px solid gray;
   border-radius: 10px;
-  padding: 20px;
-  margin: 10px;
-  width: 230px;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+`;
+
+const ImageDiv = styled.div`
+  text-align: center;
 `;
 
 const Bold = styled.span`
