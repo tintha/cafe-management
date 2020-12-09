@@ -150,6 +150,7 @@ const Input = styled.input`
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 1rem;
+  background-color: ${COLORS.inputBackground};
 `;
 
 const Textarea = styled.textarea`
@@ -164,12 +165,13 @@ const Textarea = styled.textarea`
   font-size: 1rem;
   padding: 12px 20px;
   margin: 8px 0;
+  background-color: ${COLORS.inputBackground};
 `;
 
 const Button = styled.button`
   width: 100%;
   background-color: ${COLORS.primary};
-  color: white;
+  color: ${COLORS.inputText};
   padding: 14px 20px;
   margin: 8px 0;
   border: none;

@@ -206,7 +206,7 @@ const ItemsList = styled.ul`
 const MyButton = styled.button`
   width: 100%;
   background-color: ${COLORS.primary};
-  color: white;
+  color: ${COLORS.inputText};
   padding: 14px 20px;
   margin: 8px 0;
   border: none;

@@ -167,6 +167,7 @@ const Input = styled.input`
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 1rem;
+  background-color: ${COLORS.inputBackground};
 `;
 
 const FieldBox = styled.div`
@@ -184,13 +185,11 @@ const Buttons = styled.div`
 const Button = styled.button`
   width: 100%;
   background-color: ${COLORS.primary};
-  color: white;
+  color: ${COLORS.inputText};
   padding: 14px 14px;
   margin-left: 1px;
   border: none;
   border-radius: 4px;
-  font-weight: bold;
-  font-size: 1rem;
   cursor: pointer;
 `;
 
