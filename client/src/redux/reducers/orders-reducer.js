@@ -47,6 +47,23 @@ export default function ordersReducer(state = initialState, action) {
       };
     }
 
+    // ADMIN DELETE ORDER
+    case "DELETE_ORDER_SUCCESS": {
+      return {
+        ...state,
+        orders: state.orders.filter(
+          (order) => order._id !== action.payload.orderId
+        ),
+      };
+    }
+    case "DELETE_ORDER_ERROR": {
+      return {
+        ...state,
+        status: "error",
+        error: action.payload.error,
+      };
+    }
+
     // USER ACTIONS
     case "REQUEST_USER_ORDERS": {
       return {

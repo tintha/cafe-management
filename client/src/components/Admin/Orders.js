@@ -5,6 +5,7 @@ import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
+import { FaTrash } from "react-icons/fa";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,25 @@ const Orders = () => {
       }
     } catch (err) {
       dispatch(actions.editOrderError(err));
+    }
+  };
+
+  const handleDeleteOrder = async (e, orderId) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+        dispatch(actions.deleteOrderSuccess(orderId));
+      }
+    } catch (err) {
+      dispatch(actions.deleteOrderError(err));
     }
   };
 
@@ -97,6 +117,10 @@ const Orders = () => {
                         Mark as new
                       </Button>
                     )}
+                    <FaTrash
+                      onClick={(e) => handleDeleteOrder(e, order._id)}
+                      style={{ cursor: "pointer" }}
+                    />
                   </SingleOrderBox>
                 );
               })
