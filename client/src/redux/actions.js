@@ -171,3 +171,16 @@ export const updateQuantity = (item) => ({
   type: "UPDATE_QUANTITY",
   item,
 });
+
+// ******************************** ADMIN DELETE ORDER ACTIONS
+export const deleteOrderSuccess = (orderId) => ({
+  type: "DELETE_ORDER_SUCCESS",
+  payload: {
+    orderId,
+  },
+});
+
+export const deleteOrderError = (error) => ({
+  type: "DELETE_ORDER_ERROR",
+  payload: { error },
+});

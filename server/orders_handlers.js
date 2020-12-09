@@ -161,8 +161,9 @@ const deleteOrder = async (req, res) => {
       .collection(ORDERS_COLLECTION)
       .deleteOne({ _id: ObjectID(orderId) });
     assert(1, order.deletedCount);
-    res.status(204).json({
-      status: 204,
+    res.status(200).json({
+      status: 200,
+      orderId: orderId,
     });
     client.close();
   } catch (e) {
