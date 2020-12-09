@@ -25,12 +25,12 @@ const Orders = () => {
     }
   };
 
-  const handleChangeOrder = async (e, orderId) => {
+  const handleChangeOrder = async (e, orderId, status) => {
     e.preventDefault();
     try {
       const response = await fetch(`/api/orders/${orderId}`, {
         method: "PUT",
-        body: JSON.stringify({ status: "completed" }),
+        body: JSON.stringify({ status: status }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -82,9 +82,21 @@ const Orders = () => {
                         </ItemsList>
                       </Items>
                     </OrderDetails>
-                    <Button onClick={(e) => handleChangeOrder(e, order._id)}>
-                      Mark completed
-                    </Button>
+                    {order.status === "new" ? (
+                      <Button
+                        onClick={(e) =>
+                          handleChangeOrder(e, order._id, "completed")
+                        }
+                      >
+                        Mark as completed
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={(e) => handleChangeOrder(e, order._id, "new")}
+                      >
+                        Mark as new
+                      </Button>
+                    )}
                   </SingleOrderBox>
                 );
               })

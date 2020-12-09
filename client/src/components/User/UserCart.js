@@ -11,6 +11,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
+  const [error, setError] = useState(null);
   const user = useSelector((state) => state.auth.currentUser);
   let { totalItems, totalPrice } = cartItems.reduce(
     (acc, cur) => {
@@ -50,8 +51,10 @@ const Cart = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
-        history.push("/thankyou");
+        history.push("/thankyou/");
         dispatch(actions.cleanCart());
+      } else if (data.status === 400) {
+        setError(data.data);
       }
     } catch (err) {
       console.log(err);
@@ -115,7 +118,6 @@ const Cart = () => {
                   />
                 </label>
               </FieldBox>
-
               <CreditCartSmall>
                 <FieldBox>
                   <label>
@@ -151,6 +153,7 @@ const Cart = () => {
                   Place your order
                 </Button>
               </ButtonsBox>
+              <Error>{error && <p>{error}</p>}</Error>
             </PaymentForm>
           ) : (
             <Button onClick={(e) => handleLogin(e)}>Sign in to checkout</Button>
@@ -199,6 +202,14 @@ const Empty = styled.div`
     padding: 30px;
     text-align: center;
   }
+`;
+
+const Error = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  color: ${COLORS.error};
+  font-weight: bold;
 `;
 
 const NumItems = styled.div`

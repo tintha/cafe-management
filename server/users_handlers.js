@@ -146,6 +146,11 @@ const authUser = async (req, res) => {
           user_sid: req.session.user_sid,
         },
       });
+    } else {
+      res.status(401).json({
+        status: 401,
+        message: "Login failed",
+      });
     }
     client.close();
   } catch (e) {
