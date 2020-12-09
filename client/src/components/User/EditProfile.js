@@ -13,10 +13,12 @@ const EditProfile = () => {
   const profile = useSelector((state) => state.profile.profile);
   const loadingStatus = useSelector((state) => state.profile.status);
   const [updatedProfile, setUpdatedProfile] = useState({
+    _id: profile._id,
     firstName: profile.firstName,
     lastName: profile.lastName,
     email: profile.email,
     address: profile.address,
+    isAdmin: profile.isAdmin,
   });
 
   useEffect(() => {
@@ -53,6 +55,7 @@ const EditProfile = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
+        dispatch(actions.profileUpdated({ ...updatedProfile }));
         history.push("/user/profile");
       }
     } catch (err) {

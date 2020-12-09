@@ -103,22 +103,26 @@ const Orders = () => {
                       </Items>
                     </OrderDetails>
                     {order.status === "new" ? (
-                      <Button
+                      <MyButton
                         onClick={(e) =>
                           handleChangeOrder(e, order._id, "completed")
                         }
                       >
                         Mark as completed
-                      </Button>
+                      </MyButton>
                     ) : (
-                      <Button
+                      <MyButton
                         onClick={(e) => handleChangeOrder(e, order._id, "new")}
                       >
                         Mark as new
-                      </Button>
+                      </MyButton>
                     )}
                     <FaTrash
-                      onClick={(e) => handleDeleteOrder(e, order._id)}
+                      onClick={(e) =>
+                        window.confirm(
+                          "Are you sure you wish to delete this item?"
+                        ) && handleDeleteOrder(e, order._id)
+                      }
                       style={{ cursor: "pointer" }}
                     />
                   </SingleOrderBox>
@@ -199,7 +203,7 @@ const ItemsList = styled.ul`
   list-style-type: circle;
 `;
 
-const Button = styled.button`
+const MyButton = styled.button`
   width: 100%;
   background-color: ${COLORS.primary};
   color: white;
