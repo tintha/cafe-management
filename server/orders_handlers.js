@@ -92,7 +92,10 @@ const getOrdersByUserId = async (req, res) => {
 const placeOrder = async (req, res) => {
   const orderId = ObjectID();
   try {
-    const { username, items, total, date } = req.body;
+    const { username, items, total, date, creditCard, cvc, exp } = req.body;
+    if (!creditCard || !cvc || !exp) {
+      throw new Error("Please enter your payment details!");
+    }
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
@@ -108,6 +111,7 @@ const placeOrder = async (req, res) => {
     res.status(200).json({
       status: 200,
       success: true,
+      orderId: orderId,
     });
     client.close();
   } catch (e) {
