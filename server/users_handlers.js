@@ -72,12 +72,12 @@ const registerUser = async (req, res) => {
   try {
     const username = req.body.username.toLowerCase();
     const { password, firstName, lastName, email } = req.body;
-    if (!firstName.match(letters) || !lastName.match(letters)) {
+    if (!username || !password || !firstName || !lastName || !email) {
+      throw new Error("All fields are required!");
+    } else if (!firstName.match(letters) || !lastName.match(letters)) {
       throw new Error("Names can only contain letters!");
     } else if (!email.match(emailRegex)) {
       throw new Error("Invalid email address!");
-    } else if (!username || !password || !firstName || !lastName || !email) {
-      throw new Error("All fields are required!");
     }
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
@@ -130,7 +130,7 @@ const authUser = async (req, res) => {
     const user = await db
       .collection(USERS_COLLECTION)
       .findOne({ _id: username });
-    assert(1, user.matchedCount, "Invalid credentials");
+    assert(1, user.matchedCount);
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       req.session.user_sid = user._id;
