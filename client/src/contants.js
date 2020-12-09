@@ -8,4 +8,5 @@ export const COLORS = {
   grayBorder: "#dedede",
   grayText: "#8c8c8c",
   lightGray: "#ebebeb",
+  error: "#d1082a",
 };
