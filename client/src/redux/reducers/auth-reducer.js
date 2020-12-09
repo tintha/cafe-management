@@ -1,5 +1,5 @@
 const initialState = {
-  status: "iddle",
+  status: "loading",
   currentUser: JSON.parse(localStorage.getItem("user")) || null,
   userProfile: {},
   loginError: null,

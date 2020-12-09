@@ -86,18 +86,19 @@ export const requestUserOrdersError = (error) => ({
 });
 
 // ******************************** USERS PROFILE ACTIONS
-export const requestProfile = () => ({
-  type: "REQUEST_PROFILE",
-});
-
 export const profileSuccess = (data) => ({
   type: "PROFILE_SUCCESSFUL",
-  data,
+  payload: { data },
 });
 
 export const profileError = (error) => ({
   type: "PROFILE_ERROR",
-  error,
+  payload: { error },
+});
+
+export const profileUpdated = (data) => ({
+  type: "PROFILE_UPDATED",
+  payload: { data },
 });
 
 // ******************************** ADMIN EDIT ORDERS ACTIONS

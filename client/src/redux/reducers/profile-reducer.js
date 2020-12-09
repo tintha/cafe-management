@@ -6,17 +6,17 @@ const initialState = {
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
-    case "REQUEST_PROFILE": {
+    case "PROFILE_UPDATED": {
       return {
         ...state,
-        status: "loading",
+        profile: { ...action.payload.data },
       };
     }
     case "PROFILE_SUCCESSFUL": {
       return {
         ...state,
         status: "success",
-        profile: { ...action.data },
+        profile: { ...action.payload.data },
         error: null,
       };
     }
@@ -24,13 +24,12 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         status: "error",
-        error: null,
-        profile: {},
+        error: action.payload.error,
       };
     }
     case "CLEANUP_PROFILE": {
       return {
-        status: "iddle",
+        status: "loading",
         profile: {},
       };
     }

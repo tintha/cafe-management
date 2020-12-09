@@ -16,11 +16,10 @@ const Profile = () => {
 
   useEffect(() => {
     loadData();
-  }, [user]);
+  }, []);
 
   const loadData = async () => {
     try {
-      dispatch(actions.requestProfile());
       const response = await fetch(`/api/users/${user}`);
       const data = await response.json();
       dispatch(actions.profileSuccess(data.data));
