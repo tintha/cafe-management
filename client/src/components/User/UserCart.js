@@ -237,6 +237,7 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  background-color: ${COLORS.inputBackground};
 `;
 
 const SmallInput = styled.input`
@@ -247,6 +248,7 @@ const SmallInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  background-color: ${COLORS.inputBackground};
   @media only screen and (min-width: 992px) {
     /* desktop */
     width: 80px;
@@ -282,11 +284,9 @@ const Button = styled.button`
   width: 100%;
   border-radius: 4px;
   background: ${COLORS.primary};
-  color: white;
+  color: ${COLORS.inputText};
   border: none;
   padding: 8px;
-  font-size: 16px;
-  font-weight: 600;
   margin: 1px;
   cursor: pointer;
 

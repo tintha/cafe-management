@@ -42,9 +42,7 @@ const Header = () => {
 
   return (
     <Wrapper>
-      <Logo>
-        <GiCupcake style={{ color: `${COLORS.lightmint}` }} size="50" />
-      </Logo>
+      <Logo>Coffee & Cupcakes</Logo>
       <SecondDiv>
         <NavMenu>
           <Navlink exact to="/">
@@ -98,7 +96,7 @@ const Wrapper = styled.header`
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
   width: 100%;
-  background-color: #fff;
+  background-color: ${COLORS.background};
   z-index: 10;
 
   @media only screen and (min-width: 992px) {
@@ -113,18 +111,18 @@ const SecondDiv = styled.div`
   flex-wrap: nowrap;
   justify-content: space-around;
   width: 100%;
-  background-color: ${COLORS.primary};
+  background-color: ${COLORS.background};
 `;
 
 const Logo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* font-family: "Euphoria Script", cursive; */
-  /* font-family: "Sacramento", cursive; */
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Fredericka the Great", cursive;
   font-size: 2rem;
   font-weight: bold;
+  padding: 20px;
+  color: ${COLORS.darkest};
   & > p {
     margin-top: 10px;
   }
@@ -134,7 +132,7 @@ const NavMenu = styled.div`
   display: flex;
   justify-content: center;
   font-family: "Roboto Condensed", sans-serif;
-  background-color: ${COLORS.primary};
+  background-color: ${COLORS.background};
   color: #fff;
   padding: 20px;
 `;
@@ -142,13 +140,13 @@ const NavMenu = styled.div`
 const Navlink = styled(NavLink)`
   text-decoration: none;
   margin-right: 20px;
-  color: #fff;
+  color: ${COLORS.darkest};
   &:hover {
-    border-bottom: 2px solid ${COLORS.lightGray};
+    border-bottom: 2px solid ${COLORS.darkest};
   }
   &.active {
-    color: ${COLORS.lightmint};
-    border-bottom: 2px solid ${COLORS.lightmint};
+    color: ${COLORS.darkest};
+    border-bottom: 2px solid ${COLORS.lightBorders};
   }
 `;
 
@@ -157,11 +155,13 @@ const Logout = styled.button`
   color: white;
   /* padding: 14px 20px;
   margin: 8px 0; */
+  height: 20px;
   border: none;
   border-radius: 4px;
-  font-weight: bold;
-
+  background-color: ${COLORS.darkest};
   cursor: pointer;
+  align-self: center;
+  color: ${COLORS.inputText};
 `;
 
 export default Header;

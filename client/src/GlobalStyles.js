@@ -1,4 +1,10 @@
 import { createGlobalStyle } from "styled-components";
+import { COLORS } from "../src/contants";
+
+// font-family: 'Fredericka the Great', cursive;
+// font-family: "Euphoria Script", cursive;
+// font-family: "Sacramento", cursive;
+// font-family: "Roboto Condensed", sans-serif;
 
 export default createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -36,6 +42,7 @@ html {
     }
 body {
 	line-height: 1;
+	background-color: ${COLORS.background};
 }
 ol, ul {
 	list-style: none;

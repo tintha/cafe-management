@@ -83,7 +83,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-
   border: 1px solid ${COLORS.lightmint};
   color: ${COLORS.darkest};
   border-radius: 4px;
@@ -107,13 +106,11 @@ const FieldBox = styled.div`
 const Button = styled.button`
   width: 100%;
   background-color: ${COLORS.primary};
-  color: white;
+  color: ${COLORS.inputText};
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
   border-radius: 4px;
-  font-weight: bold;
-  font-size: 1rem;
   cursor: pointer;
 `;
 

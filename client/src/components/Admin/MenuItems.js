@@ -129,7 +129,7 @@ const Buttons = styled.div`
 const Button = styled.button`
   width: 100%;
   background-color: ${COLORS.primary};
-  color: white;
+  color: ${COLORS.inputText};
   padding: 14px 20px;
   margin-left: 1px;
   margin-right: 1px;

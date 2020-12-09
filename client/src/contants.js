@@ -1,6 +1,7 @@
 export const COLORS = {
   darkest: "#3d1e21",
-  primary: "#966e72",
+  primary: "#3d1e21",
+  // primary: "#966e72",
   secondary: "#b89a9d",
   logo: "#ccb4b6",
   lightmint: "#ebd1d3",
@@ -8,5 +9,9 @@ export const COLORS = {
   grayBorder: "#dedede",
   grayText: "#8c8c8c",
   lightGray: "#ebebeb",
+  background: "#f0e4cc",
+  lightBorders: "#b59c82",
+  inputBackground: "#faf0e6",
+  inputText: "#f0e4cc",
   error: "#d1082a",
 };

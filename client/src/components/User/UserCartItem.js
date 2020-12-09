@@ -123,6 +123,7 @@ const QuantityNum = styled.input`
   margin-left: 5px;
   font-size: 1rem;
   border: 1px solid ${COLORS.grayBorder};
+  background-color: ${COLORS.inputBackground};
 `;
 
 const RemoveBtn = styled.button`

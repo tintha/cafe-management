@@ -70,7 +70,7 @@ const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: ${COLORS.background};
   color: ${COLORS.darkest};
   z-index: 10;
 `;

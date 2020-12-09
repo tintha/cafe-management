@@ -119,7 +119,7 @@ const ItemBox = styled.div`
   width: 100%;
   margin-bottom: 10px;
   margin-top: 20px;
-  border: 1px solid ${COLORS.lightpink};
+  border: 1px solid ${COLORS.lightBorders};
   padding: 10px;
 
   @media only screen and (min-width: 768px) {
@@ -165,6 +165,7 @@ const ItemTitle = styled.h4`
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 4px;
+  font-family: "Fredericka the Great", cursive;
 `;
 
 const ItemDesc = styled.h4`
@@ -210,11 +211,9 @@ const AddToCartBtn = styled.button`
   display: block;
   width: 50%;
   background: ${COLORS.primary};
-  color: white;
+  color: ${COLORS.inputText};
   border: none;
   padding: 8px;
-  font-size: 1rem;
-  font-weight: bold;
   margin-top: 0px;
   cursor: pointer;
 `;
