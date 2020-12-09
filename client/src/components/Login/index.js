@@ -79,7 +79,7 @@ const Login = () => {
               Login
             </Submit>
           </FieldBox>
-          <FieldBox>{error && <p>{error}</p>}</FieldBox>
+          <Error>{error && <p>{error}</p>}</Error>
         </>
       )}
     </Wrapper>
@@ -118,6 +118,14 @@ const FieldBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
+`;
+
+const Error = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  color: ${COLORS.error};
+  font-weight: bold;
 `;
 
 const Submit = styled.button`

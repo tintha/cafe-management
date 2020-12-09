@@ -67,10 +67,16 @@ const getUserById = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
+  let letters = /^[A-Za-z]+$/;
+  let emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
   try {
     const username = req.body.username.toLowerCase();
     const { password, firstName, lastName, email } = req.body;
-    if (!username || !password || !firstName || !lastName || !email) {
+    if (!firstName.match(letters) || !lastName.match(letters)) {
+      throw new Error("Names can only contain letters!");
+    } else if (!email.match(emailRegex)) {
+      throw new Error("Invalid email address!");
+    } else if (!username || !password || !firstName || !lastName || !email) {
       throw new Error("All fields are required!");
     }
     const client = await MongoClient(MONGO_URI, options);
@@ -124,7 +130,7 @@ const authUser = async (req, res) => {
     const user = await db
       .collection(USERS_COLLECTION)
       .findOne({ _id: username });
-    assert(1, user.matchedCount);
+    assert(1, user.matchedCount, "Invalid credentials");
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       req.session.user_sid = user._id;
@@ -140,8 +146,6 @@ const authUser = async (req, res) => {
           user_sid: req.session.user_sid,
         },
       });
-    } else {
-      throw error;
     }
     client.close();
   } catch (e) {

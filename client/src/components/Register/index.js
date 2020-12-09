@@ -110,7 +110,7 @@ const Register = () => {
           <Submit type="submit" onClick={(e) => handleRegister(e)}>
             Register
           </Submit>
-          {error && <p>{error}</p>}
+          <Error>{error && <p>{error}</p>}</Error>
         </FieldBox>
       </Wrapper>
     );
@@ -132,6 +132,14 @@ const Wrapper = styled.div`
     max-width: 400px;
     margin: auto;
   }
+`;
+
+const Error = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  color: ${COLORS.error};
+  font-weight: bold;
 `;
 
 const FieldBox = styled.div`
