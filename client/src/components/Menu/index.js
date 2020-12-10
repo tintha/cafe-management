@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
 
 const Menu = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const menuItems = useSelector((state) => state.items.items);
   const loadingStatus = useSelector((state) => state.items.status);
+  const user = useSelector((state) => state.auth.currentUser);
 
   useEffect(() => {
     loadData();
@@ -22,6 +25,45 @@ const Menu = () => {
     } catch (err) {
       dispatch(actions.itemsError(err));
     }
+  };
+
+  const handleReview = async (e, user, itemId, review, rating) => {
+    e.preventDefault();
+    try {
+      // fetch PUT method to /api/items/:id
+    } catch (err) {}
+  };
+
+  const handleClick = (e, itemId) => {
+    history.push(`/items/${itemId}`);
+  };
+
+  const handleKeyPress = (e, itemId) => {
+    if (e.code === "Enter") {
+      history.push(`/items/${itemId}`);
+    }
+  };
+
+  const handleAddToCart = (
+    e,
+    _id,
+    itemName,
+    description,
+    category,
+    price,
+    image
+  ) => {
+    e.stopPropagation();
+    dispatch(
+      actions.addItem({
+        _id,
+        itemName,
+        description,
+        category,
+        price,
+        image,
+      })
+    );
   };
 
   return (
@@ -47,7 +89,14 @@ const Menu = () => {
                 currency: "USD",
               }).format(item.price / 100);
               return (
-                <ItemBox key={item._id}>
+                <ItemBox
+                  key={item._id}
+                  tabIndex="0"
+                  onClick={(e) => handleClick(e, item._id)}
+                  onKeyDown={(e) => handleKeyPress(e, item._id)}
+                  aria-label="View item details"
+                  role="button"
+                >
                   <ItemImageBox>
                     {item.image && (
                       <ItemImage src={item.image} alt={item.itemName} />
@@ -62,22 +111,28 @@ const Menu = () => {
                     <PriceDiv>
                       <Price>{formattedPrice}</Price>
                       <AddToCartBtn
-                        onClick={() =>
-                          dispatch(
-                            actions.addItem({
-                              _id,
-                              itemName,
-                              description,
-                              category,
-                              price,
-                              image,
-                            })
-                          )
-                        }
+                        onClick={(e) => {
+                          handleAddToCart(
+                            e,
+                            _id,
+                            itemName,
+                            description,
+                            category,
+                            price,
+                            image
+                          );
+                        }}
                       >
                         Add to cart
                       </AddToCartBtn>
                     </PriceDiv>
+                    {user && (
+                      <button
+                        onClick={() => history.push(`/items/${item._id}`)}
+                      >
+                        Review
+                      </button>
+                    )}
                   </ItemInfoDiv>
                 </ItemBox>
               );
@@ -121,6 +176,11 @@ const ItemBox = styled.div`
   margin-top: 20px;
   border: 1px double ${COLORS.lightBorders};
   padding: 10px;
+  :hover {
+    cursor: pointer;
+    background-color: ${COLORS.lightBackground};
+    border: 1px solid ${COLORS.highlight};
+  }
 
   @media only screen and (min-width: 768px) {
     /* tablet */
@@ -228,6 +288,9 @@ const AddToCartBtn = styled.button`
   padding: 8px;
   margin-top: 0px;
   cursor: pointer;
+  :hover {
+    background-color: ${COLORS.highlight};
+  }
   @media only screen and (min-width: 992px) {
     /* desktop */
     padding: 2px;

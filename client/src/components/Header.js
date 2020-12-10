@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../redux/actions";
 import styled from "styled-components";
 import { COLORS } from "../contants";
+import TinyCart from "../components/Cart/TinyCart";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -37,63 +38,66 @@ const Header = () => {
   };
 
   return (
-    <Wrapper>
-      <Logo>Coffee & Cupcakes</Logo>
-      <SecondDiv>
-        <NavMenu>
-          {!userProfile.isAdmin || (user && user !== "admin") ? (
-            <Navlink exact to="/">
-              Home
-            </Navlink>
-          ) : null}
+    <>
+      <Wrapper>
+        <Logo>Coffee & Cupcakes</Logo>
+        <SecondDiv>
+          <NavMenu>
+            {!userProfile.isAdmin || (user && user !== "admin") ? (
+              <Navlink to="/items">Shop</Navlink>
+            ) : null}
 
-          {!user && (
-            <Navlink exact to="/cart">
-              Cart
-            </Navlink>
-          )}
+            {!user && (
+              <Navlink exact to="/cart">
+                Cart
+              </Navlink>
+            )}
 
-          {user ? (
-            <>
-              {userProfile.isAdmin || user === "admin" ? (
-                <>
-                  <Navlink exact to="/admin/">
-                    Stats
-                  </Navlink>
-                  <Navlink to="/admin/orders">Orders</Navlink>
-                  <Navlink to="/admin/menu/items/edit/">Edit items</Navlink>
-                  <Navlink exact to="/admin/menu/items/add">
-                    Add an item
-                  </Navlink>
-                </>
-              ) : (
-                <>
-                  <Navlink exact to="/cart">
-                    Cart
-                  </Navlink>
-                  <Navlink strict to="/user/profile">
-                    Profile
-                  </Navlink>
-                  <Navlink exact to="/user/orders">
-                    History
-                  </Navlink>
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <Navlink exact to="/login">
-                Sign in
-              </Navlink>
-              <Navlink exact to="/register">
-                Register
-              </Navlink>
-            </>
-          )}
-        </NavMenu>
-        {user && <Logout onClick={(e) => handleLogout(e)}>SIGN OUT</Logout>}
-      </SecondDiv>
-    </Wrapper>
+            {user ? (
+              <>
+                {userProfile.isAdmin || user === "admin" ? (
+                  <>
+                    <Navlink exact to="/admin/">
+                      Stats
+                    </Navlink>
+                    <Navlink to="/admin/orders">Orders</Navlink>
+                    <Navlink to="/admin/menu/items/edit/">Edit items</Navlink>
+                    <Navlink exact to="/admin/menu/items/add">
+                      Add an item
+                    </Navlink>
+                  </>
+                ) : (
+                  <>
+                    <Navlink exact to="/cart">
+                      Cart
+                    </Navlink>
+                    <Navlink strict to="/user/profile">
+                      Profile
+                    </Navlink>
+                    <Navlink exact to="/user/orders">
+                      History
+                    </Navlink>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Navlink exact to="/login">
+                  Sign in
+                </Navlink>
+                <Navlink exact to="/register">
+                  Register
+                </Navlink>
+              </>
+            )}
+          </NavMenu>
+          {user && <Logout onClick={(e) => handleLogout(e)}>SIGN OUT</Logout>}
+        </SecondDiv>
+      </Wrapper>
+      <TinyCartContainer>
+        {!userProfile.isAdmin && <TinyCart />}
+      </TinyCartContainer>
+    </>
   );
 };
 
@@ -109,6 +113,17 @@ const Wrapper = styled.header`
     /* desktop */
     max-width: 1000px;
     margin: auto;
+  }
+`;
+
+const TinyCartContainer = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin: auto;
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    max-width: 1000px;
   }
 `;
 

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
-import { HiOutlineTrash } from "react-icons/hi";
+import { FaWindowClose } from "react-icons/fa";
 import { COLORS } from "../../contants";
 
 const CartItem = ({
@@ -40,7 +40,7 @@ const CartItem = ({
         <ItemNameContainer>
           {itemName}
           <RemoveBtn onClick={() => dispatch(actions.removeItem({ itemName }))}>
-            <HiOutlineTrash size="30" style={{ color: `${COLORS.darkest}` }} />
+            <FaWindowClose size="30" style={{ color: `${COLORS.darkest}` }} />
           </RemoveBtn>
         </ItemNameContainer>
         <QuantityContainer>

@@ -115,7 +115,9 @@ const AddItem = () => {
             uploadImage(e);
           }}
         />
-        {currentImage && <img src={currentImage} height="200px" alt="" />}
+        {currentImage && (
+          <img src={currentImage} width="200px" height="auto" alt="" />
+        )}
       </FieldBox>
       <Button onClick={(e) => handleAddItem(e)}>Add item</Button>
     </Wrapper>
@@ -165,6 +167,7 @@ const Textarea = styled.textarea`
   font-size: 1rem;
   padding: 12px 20px;
   margin: 8px 0;
+  font-family: "Roboto Condensed", sans-serif;
   background-color: ${COLORS.inputBackground};
 `;
 

@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import styled from "styled-components";
 import Header from "./components/Header";
@@ -11,6 +16,7 @@ import User from "./components/User";
 import Admin from "./components/Admin";
 import ThankYou from "./components/ThankYou";
 import UserCart from "./components/User/UserCart";
+import ItemDetails from "./components/Menu/ItemDetails";
 
 function App() {
   return (
@@ -38,8 +44,14 @@ function App() {
             <Route path="/thankyou">
               <ThankYou />
             </Route>
-            <Route path="/">
+            <Route path="/items/:id">
+              <ItemDetails />
+            </Route>
+            <Route path="/items">
               <Home />
+            </Route>
+            <Route path="/">
+              <Redirect to="/items" />
             </Route>
           </Switch>
         </Main>
