@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import UserCartItem from "./UserCartItem";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import { FaCcVisa, FaCcMastercard, FaCcAmex } from "react-icons/fa";
 
 const Cart = () => {
   const history = useHistory();
@@ -109,6 +110,9 @@ const Cart = () => {
               <FieldBox>
                 <label>
                   <p>Credit card</p>
+                  <FaCcVisa size="24" className="ccicons" />
+                  <FaCcMastercard size="24" className="ccicons" />
+                  <FaCcAmex size="24" className="ccicons" />
                   <Input
                     type="text"
                     name="creditCard"
@@ -223,7 +227,11 @@ const PaymentForm = styled.div`
   }
 `;
 
-const FieldBox = styled.div``;
+const FieldBox = styled.div`
+  .ccicons {
+    margin-right: 6px;
+  }
+`;
 
 const BoldText = styled.span`
   font-weight: bold;
@@ -292,6 +300,8 @@ const Button = styled.button`
     /* desktop */
     /* width: 300px;
     height: 40px; */
+    height: 30px;
+    max-width: 170px;
     padding: 2px;
   }
 `;

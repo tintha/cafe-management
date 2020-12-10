@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
-import { RiAccountBoxLine } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 import Loading from "../Loading";
 
 const Profile = () => {
@@ -39,10 +39,7 @@ const Profile = () => {
       {loadingStatus === "success" && (
         <Content>
           <TopDiv>
-            <RiAccountBoxLine
-              size="100"
-              style={{ color: `${COLORS.darkest}` }}
-            />
+            <FaUser size="60" style={{ color: `${COLORS.darkest}` }} />
             <h3>
               {profile.firstName} {profile.lastName}
             </h3>
@@ -93,6 +90,7 @@ const TopDiv = styled.div`
   align-items: center;
   padding: 20px 20px;
   & > h3 {
+    margin-top: 20px;
     font-weight: bold;
     font-size: 1.5rem;
   }

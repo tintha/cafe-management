@@ -4,8 +4,6 @@ export const COLORS = {
   // primary: "#966e72",
   secondary: "#b89a9d",
   logo: "#ccb4b6",
-  lightmint: "#ebd1d3",
-  lightpink: "#ebd1d3",
   grayBorder: "#dedede",
   grayText: "#8c8c8c",
   lightGray: "#ebebeb",
@@ -17,4 +15,5 @@ export const COLORS = {
   error: "#d1082a",
   highlight: "#bf212e",
   highlight2: "#db2114",
+  lightBackground: "#f5ede1",
 };

@@ -1,10 +1,13 @@
 import React from "react";
+import { useHistory, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { COLORS } from "../../contants";
 import { GiCoffeeCup, GiCupcake } from "react-icons/gi";
+import { IoBagCheckSharp } from "react-icons/io5";
 
 const TinyCart = () => {
+  const history = useHistory();
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
 
@@ -22,23 +25,34 @@ const TinyCart = () => {
     { totalPrice: 0, totalCupcakes: 0, totalBeverages: 0 }
   );
 
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    history.push("/cart");
+  };
+
   return (
     <Wrapper>
-      <TopContainer>
-        <NumItems>
-          <TinyItem>
-            <span>Cart:</span>
-            <span className="tinyNum">{totalCupcakes}</span>
-            <GiCupcake size="20" />
-          </TinyItem>{" "}
-          <TinyItem>
-            <span className="tinyNum">{totalBeverages}</span>
-            <GiCoffeeCup size="20" />
-            <span>${totalPrice.toFixed(2)}</span>
-          </TinyItem>
-          <TinyItem></TinyItem>
-        </NumItems>
-      </TopContainer>
+      <TinyItem>
+        <span className="tinyNum">{totalCupcakes}</span>
+        <GiCupcake
+          size="20"
+          tabIndex="0"
+          onClick={(e) => handleCheckout(e)}
+          aria-label="Checkout"
+          role="button"
+          className="tinyBtn"
+        />
+        <span className="tinyNum">{totalBeverages}</span>
+        <GiCoffeeCup
+          size="20"
+          tabIndex="0"
+          onClick={(e) => handleCheckout(e)}
+          aria-label="Checkout"
+          role="button"
+          className="tinyBtn"
+        />
+        <span>${totalPrice.toFixed(2)} </span>
+      </TinyItem>
     </Wrapper>
   );
 };
@@ -46,8 +60,7 @@ const TinyCart = () => {
 const Wrapper = styled.div`
   padding: 2px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-end;
   font-family: "Roboto Condensed", sans-serif;
   position: sticky;
@@ -56,8 +69,6 @@ const Wrapper = styled.div`
   color: ${COLORS.darkest};
   z-index: 10;
 `;
-
-const TopContainer = styled.div``;
 
 const TinyItem = styled.div`
   display: flex;
@@ -75,13 +86,12 @@ const TinyItem = styled.div`
       margin-right: 2px;
     }
   }
-`;
-
-const NumItems = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 6px;
-  margin-bottom: 20px;
+  .tinyBtn {
+    cursor: pointer;
+    :hover {
+      color: ${COLORS.highlight};
+    }
+  }
 `;
 
 export default TinyCart;

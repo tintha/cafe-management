@@ -42,7 +42,7 @@ const Orders = () => {
               return (
                 <OrderBox key={order._id}>
                   {order.status === "new" ? (
-                    <p className="new">{order.status}</p>
+                    <p className="new">pending</p>
                   ) : (
                     <p className="completed">{order.status}</p>
                   )}
