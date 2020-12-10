@@ -28,6 +28,9 @@ const Login = () => {
       const data = await response.json();
       if (data.status === 401) {
         dispatch(actions.loginError(data.message));
+        setTimeout(() => {
+          dispatch(actions.loginClearError());
+        }, 2000);
       } else {
         dispatch(actions.loginSuccess(data.data));
       }

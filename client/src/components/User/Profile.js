@@ -82,8 +82,7 @@ const LoadingCentered = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  border: 1px solid ${COLORS.lightmint};
+  border: 1px solid ${COLORS.background};
   color: ${COLORS.darkest};
   border-radius: 4px;
 `;
@@ -101,6 +100,7 @@ const TopDiv = styled.div`
 
 const FieldBox = styled.div`
   font-size: 1rem;
+  margin-top: 20px;
 `;
 
 const Button = styled.button`

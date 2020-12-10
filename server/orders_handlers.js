@@ -21,7 +21,34 @@ const getOrders = async (req, res) => {
     const db = client.db(APP_DB);
     const orders = await db
       .collection(ORDERS_COLLECTION)
-      .find()
+      .find({ status: { $ne: "archived" } })
+      .sort({ date: -1 })
+      .toArray();
+    if (orders.length === 0) {
+      res.status(404).json({
+        status: 404,
+        message: "No orders found",
+      });
+    } else {
+      res.status(200).json({
+        status: 200,
+        data: orders,
+      });
+    }
+    client.close();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getArchivedOrders = async (req, res) => {
+  try {
+    const client = await MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db(APP_DB);
+    const orders = await db
+      .collection(ORDERS_COLLECTION)
+      .find({ status: { $eq: "archived" } })
       .sort({ date: -1 })
       .toArray();
     if (orders.length === 0) {
@@ -181,4 +208,5 @@ module.exports = {
   placeOrder,
   updateOrder,
   deleteOrder,
+  getArchivedOrders,
 };

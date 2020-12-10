@@ -34,6 +34,13 @@ export default function authReducer(state = initialState, action) {
         userProfile: {},
       };
     }
+    case "LOGIN_CLEAR_ERROR": {
+      return {
+        ...state,
+        status: "loading",
+        loginError: null,
+      };
+    }
     case "REQUEST_LOGOUT": {
       return {
         ...state,
@@ -85,6 +92,15 @@ export default function authReducer(state = initialState, action) {
         userProfile: {},
       };
     }
+
+    case "CLEAR_REGISTRATION_ERROR": {
+      return {
+        ...state,
+        status: "loading",
+        registerError: null,
+      };
+    }
+
     default: {
       return state;
     }

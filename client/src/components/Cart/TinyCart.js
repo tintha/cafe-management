@@ -1,62 +1,44 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import TinyCartItem from "./TinyCartItem";
 import { COLORS } from "../../contants";
-import { RiCake3Line, RiCupLine } from "react-icons/ri";
 import { GiCoffeeCup, GiCupcake } from "react-icons/gi";
 
 const TinyCart = () => {
-  const history = useHistory();
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
-  const user = useSelector((state) => state.auth.currentUser);
 
-  let {
-    totalItems,
-    totalPrice,
-    totalCupcakes,
-    totalBeverages,
-  } = cartItems.reduce(
+  let { totalPrice, totalCupcakes, totalBeverages } = cartItems.reduce(
     (acc, cur) => {
       const { quantity, price, category } = cur;
-      acc.totalItems += quantity;
       acc.totalPrice += (price * quantity) / 100;
       if (category === "Cupcakes") {
         acc.totalCupcakes += quantity;
-      } else if (category == "Coffee & Tea") {
+      } else if (category === "Coffee & Tea") {
         acc.totalBeverages += quantity;
       }
       return acc;
     },
-    { totalItems: 0, totalPrice: 0, totalCupcakes: 0, totalBeverages: 0 }
+    { totalPrice: 0, totalCupcakes: 0, totalBeverages: 0 }
   );
-
-  const handlePurchase = (e) => {
-    history.push("/cart");
-  };
 
   return (
     <Wrapper>
       <TopContainer>
         <NumItems>
           <TinyItem>
+            <span>Cart:</span>
+            <span className="tinyNum">{totalCupcakes}</span>
             <GiCupcake size="20" />
-            {totalCupcakes}
           </TinyItem>{" "}
           <TinyItem>
+            <span className="tinyNum">{totalBeverages}</span>
             <GiCoffeeCup size="20" />
-            {totalBeverages}
+            <span>${totalPrice.toFixed(2)}</span>
           </TinyItem>
-          <TinyItem>
-            <BoldText>${totalPrice.toFixed(2)}</BoldText>
-          </TinyItem>
+          <TinyItem></TinyItem>
         </NumItems>
       </TopContainer>
-      {/* <TotalContainer>
-        <Button onClick={(e) => handlePurchase(e)}>Buy</Button>
-      </TotalContainer> */}
     </Wrapper>
   );
 };
@@ -77,17 +59,22 @@ const Wrapper = styled.div`
 
 const TopContainer = styled.div``;
 
-const Title = styled.h2`
-  margin-bottom: 2px;
-`;
-
 const TinyItem = styled.div`
   display: flex;
   justify-content: center;
-  margin-left: 10px;
-  margin-right: 10px;
-  font-size: 0.8rem;
-  font-weight: bold;
+
+  & > span {
+    font-size: 1rem;
+    font-weight: normal;
+    align-self: flex-end;
+    margin-left: 10px;
+    color: ${COLORS.darkest};
+    &.tinyNum {
+      color: ${COLORS.highlight};
+      font-weight: bold;
+      margin-right: 2px;
+    }
+  }
 `;
 
 const NumItems = styled.div`
@@ -95,32 +82,6 @@ const NumItems = styled.div`
   align-items: center;
   padding: 6px;
   margin-bottom: 20px;
-`;
-
-const TotalContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-`;
-
-const BoldText = styled.span`
-  font-weight: bold;
-  font-size: 1rem;
-`;
-
-const TotalPrice = styled.div``;
-
-const Button = styled.button`
-  position: relative;
-  display: block;
-  border-radius: 12px;
-  background: ${COLORS.secondary};
-  color: white;
-  border: none;
-  padding: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
 `;
 
 export default TinyCart;

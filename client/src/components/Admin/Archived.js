@@ -6,15 +6,13 @@ import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
-import { MdCheckBox } from "react-icons/md";
-import { FaTrashAlt, FaArchive } from "react-icons/fa";
-import { MdFiberNew } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
 
-const Orders = () => {
+const Archived = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.orders.orders);
-  const loadingStatus = useSelector((state) => state.orders.status);
+  const archived = useSelector((state) => state.archived.archived);
+  const loadingStatus = useSelector((state) => state.archived.status);
 
   useEffect(() => {
     loadData();
@@ -22,37 +20,11 @@ const Orders = () => {
 
   const loadData = async () => {
     try {
-      const response = await fetch("/api/orders");
+      const response = await fetch("/api/orders/archived");
       const data = await response.json();
-      dispatch(actions.receivedAdminOrders(data.data));
+      dispatch(actions.receivedArchived(data.data));
     } catch (err) {
-      dispatch(actions.requestAdminOrdersError(err));
-    }
-  };
-
-  const handleChangeOrder = async (e, orderId, status) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`/api/orders/${orderId}`, {
-        method: "PUT",
-        body: JSON.stringify({ status: status }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      if (data.status === 200) {
-        if (status === "archived") {
-          dispatch(actions.deleteOrderSuccess(orderId));
-        } else {
-          dispatch(
-            actions.editOrderSuccess(data.data.orderId, data.data.status)
-          );
-        }
-      }
-    } catch (err) {
-      dispatch(actions.editOrderError(err));
+      dispatch(actions.requestArchivedError(err));
     }
   };
 
@@ -68,10 +40,10 @@ const Orders = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
-        dispatch(actions.deleteOrderSuccess(orderId));
+        dispatch(actions.deleteArchivedSuccess(orderId));
       }
     } catch (err) {
-      dispatch(actions.deleteOrderError(err));
+      dispatch(actions.deleteArchivedError(err));
     }
   };
 
@@ -81,19 +53,16 @@ const Orders = () => {
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
-          <MyButton onClick={() => history.push("/admin/orders/archived")}>
-            Archived
+          <MyButton onClick={() => history.push("/admin/orders")}>
+            Current orders
           </MyButton>
-          {orders !== "No orders found" ? (
-            orders.map((order) => {
+          {archived !== "No orders found" ? (
+            archived.map((order) => {
               return (
                 <SingleOrderBox key={order._id}>
                   <OrderDetails>
-                    {order.status === "new" ? (
-                      <p className="new">{order.status}</p>
-                    ) : (
-                      <p className="completed">{order.status}</p>
-                    )}
+                    <p className="completed">{order.status}</p>
+
                     <p>
                       DATE: {moment(order.date).format("ll")} @{" "}
                       {moment(order.date).format("LT")}
@@ -114,31 +83,6 @@ const Orders = () => {
                     </Items>
                   </OrderDetails>
                   <Buttons>
-                    {order.status === "new" ? (
-                      <>
-                        <ActionSet>
-                          <ActionButton
-                            onClick={(e) =>
-                              handleChangeOrder(e, order._id, "completed")
-                            }
-                          >
-                            <MdCheckBox size="30" />
-                          </ActionButton>
-                          Mark as completed
-                        </ActionSet>
-                      </>
-                    ) : (
-                      <ActionSet>
-                        <ActionButton
-                          onClick={(e) =>
-                            handleChangeOrder(e, order._id, "new")
-                          }
-                        >
-                          <MdFiberNew size="30" />
-                        </ActionButton>
-                        Mark as new
-                      </ActionSet>
-                    )}
                     <ActionSet>
                       <ActionButton
                         onClick={(e) =>
@@ -151,22 +95,12 @@ const Orders = () => {
                       </ActionButton>
                       Delete
                     </ActionSet>
-                    <ActionSet>
-                      <ActionButton
-                        onClick={(e) =>
-                          handleChangeOrder(e, order._id, "archived")
-                        }
-                      >
-                        <FaArchive size="24" />
-                      </ActionButton>
-                      Archive
-                    </ActionSet>
                   </Buttons>
                 </SingleOrderBox>
               );
             })
           ) : (
-            <p>There are no order history.</p>
+            <p>There are no archived orders.</p>
           )}
         </>
       )}
@@ -270,4 +204,4 @@ const ActionButton = styled.button`
   }
 `;
 
-export default Orders;
+export default Archived;

@@ -7,11 +7,9 @@ const Sidebar = () => {
   return (
     <Wrapper>
       <Navlink to="/admin/orders">Orders</Navlink>
-
       <Navlink exact to="/admin/menu/items">
-        Edit/Delete items
+        Edit items
       </Navlink>
-
       <Navlink to="/admin/menu/items/add">Add an item</Navlink>
     </Wrapper>
   );
@@ -19,18 +17,19 @@ const Sidebar = () => {
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  background-color: ${COLORS.logo};
-  width: 100%;
+  justify-content: center;
+  background-color: ${COLORS.background};
   margin-bottom: 10px;
-  border-top: 1px solid #fff;
+  font-family: "Roboto Condensed", sans-serif;
 `;
 
 const Navlink = styled(NavLink)`
   text-decoration: none;
-  color: #fff;
+  color: ${COLORS.darkest};
+  margin-left: 10px;
+  margin-right: 10px;
   &.active {
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid ${COLORS.highlight};
   }
 `;
 

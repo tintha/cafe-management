@@ -13,6 +13,10 @@ export const loginError = (error) => ({
   error,
 });
 
+export const loginClearError = () => ({
+  type: "LOGIN_CLEAR_ERROR",
+});
+
 // ******************************** LOGOUT ACTIONS
 export const requestLogout = () => ({
   type: "REQUEST_LOGOUT",
@@ -53,6 +57,10 @@ export const registrationSuccess = (data) => ({
 export const registrationError = (error) => ({
   type: "REGISTRATION_ERROR",
   error,
+});
+
+export const clearRegistrationError = () => ({
+  type: "CLEAR_REGISTRATION_ERROR",
 });
 
 // ******************************** ITEMS ACTIONS
@@ -114,6 +122,33 @@ export const receivedAdminOrders = (data) => ({
 export const requestAdminOrdersError = (error) => ({
   type: "REQUEST_ADMIN_ORDERS_ERROR",
   error,
+});
+
+// ******************************** ADMIN ARCHIVED ACTIONS
+export const requestArchived = () => ({
+  type: "REQUEST_ARCHIVED",
+});
+
+export const receivedArchived = (data) => ({
+  type: "RECEIVED_ARCHIVED",
+  payload: { data },
+});
+
+export const requestArchivedError = (error) => ({
+  type: "REQUEST_ARCHIVED_ERROR",
+  payload: { error },
+});
+
+export const deleteArchivedSuccess = (orderId) => ({
+  type: "DELETE_ARCHIVED_SUCCESS",
+  payload: {
+    orderId,
+  },
+});
+
+export const deleteArchivedError = (error) => ({
+  type: "DELETE_ARCHIVED_ERROR",
+  payload: { error },
 });
 
 // ******************************** ADMIN EDIT MENU ITEM ACTIONS
