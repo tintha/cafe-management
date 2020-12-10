@@ -30,12 +30,12 @@ const Orders = () => {
     }
   };
 
-  const handleChangeOrder = async (e, orderId, status) => {
+  const handleChangeOrder = async (e, orderId, status, isArchived) => {
     e.preventDefault();
     try {
       const response = await fetch(`/api/orders/${orderId}`, {
         method: "PUT",
-        body: JSON.stringify({ status: status }),
+        body: JSON.stringify({ status: status, isArchived: isArchived }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -43,11 +43,15 @@ const Orders = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
-        if (status === "archived") {
+        if (isArchived === true) {
           dispatch(actions.deleteOrderSuccess(orderId));
         } else {
           dispatch(
-            actions.editOrderSuccess(data.data.orderId, data.data.status)
+            actions.editOrderSuccess(
+              data.data.orderId,
+              data.data.status,
+              isArchived
+            )
           );
         }
       }
@@ -119,7 +123,12 @@ const Orders = () => {
                         <ActionSet>
                           <ActionButton
                             onClick={(e) =>
-                              handleChangeOrder(e, order._id, "completed")
+                              handleChangeOrder(
+                                e,
+                                order._id,
+                                "completed",
+                                false
+                              )
                             }
                           >
                             <MdCheckBox size="30" />
@@ -131,7 +140,7 @@ const Orders = () => {
                       <ActionSet>
                         <ActionButton
                           onClick={(e) =>
-                            handleChangeOrder(e, order._id, "new")
+                            handleChangeOrder(e, order._id, "new", false)
                           }
                         >
                           <MdFiberNew size="30" />
@@ -154,7 +163,7 @@ const Orders = () => {
                     <ActionSet>
                       <ActionButton
                         onClick={(e) =>
-                          handleChangeOrder(e, order._id, "archived")
+                          handleChangeOrder(e, order._id, order.status, true)
                         }
                       >
                         <FaArchive size="24" />

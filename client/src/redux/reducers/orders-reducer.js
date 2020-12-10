@@ -35,7 +35,11 @@ export default function ordersReducer(state = initialState, action) {
         orders: state.orders.map((order) =>
           order._id !== action.payload.orderId
             ? order
-            : { ...order, status: action.payload.orderStatus }
+            : {
+                ...order,
+                status: action.payload.orderStatus,
+                isArchived: action.payload.isArchived,
+              }
         ),
       };
     }

@@ -22,7 +22,11 @@ const Archived = () => {
     try {
       const response = await fetch("/api/orders/archived");
       const data = await response.json();
-      dispatch(actions.receivedArchived(data.data));
+      if (data.status === 200) {
+        dispatch(actions.receivedArchived(data.data));
+      } else if (data.status === 404) {
+        dispatch(actions.receivedArchived([]));
+      }
     } catch (err) {
       dispatch(actions.requestArchivedError(err));
     }
@@ -56,7 +60,7 @@ const Archived = () => {
           <MyButton onClick={() => history.push("/admin/orders")}>
             Current orders
           </MyButton>
-          {archived !== "No orders found" ? (
+          {archived.length !== 0 ? (
             archived.map((order) => {
               return (
                 <SingleOrderBox key={order._id}>
