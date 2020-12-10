@@ -158,7 +158,7 @@ const EditItem = () => {
           />
           <br></br>
           {currentImage && <img src={currentImage} height="200px" alt="" />}
-
+          <br></br>
           <Button onClick={(e) => handleUpdateItem(e, id)}>Save changes</Button>
         </>
       )}
@@ -222,8 +222,12 @@ const Button = styled.button`
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    padding: 2px;
+    width: 100px;
+  }
 `;
 
 export default EditItem;

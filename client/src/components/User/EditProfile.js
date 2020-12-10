@@ -189,8 +189,12 @@ const Button = styled.button`
   padding: 14px 14px;
   margin-left: 1px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  @media only screen and (min-width: 768px) {
+    /* tablet and desktop */
+    max-width: 100px;
+    padding: 2px;
+  }
 `;
 
 export default EditProfile;

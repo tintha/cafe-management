@@ -130,6 +130,7 @@ const DisplayItemContainer = styled.div`
 
 const Buttons = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const Button = styled.button`
@@ -140,8 +141,12 @@ const Button = styled.button`
   margin-left: 1px;
   margin-right: 1px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    padding: 2px;
+    width: 100px;
+  }
 `;
 
 const ItemBox = styled.div`

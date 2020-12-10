@@ -163,7 +163,6 @@ const Logout = styled.button`
   margin: 8px 0; */
   height: 20px;
   border: none;
-  border-radius: 4px;
   background-color: ${COLORS.darkest};
   cursor: pointer;
   align-self: center;
