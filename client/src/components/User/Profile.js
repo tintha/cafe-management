@@ -66,8 +66,8 @@ const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
 
-  @media only screen and (min-width: 992px) {
-    /* desktop */
+  @media only screen and (min-width: 768px) {
+    /* tablet and desktop */
     max-width: 400px;
     margin: auto;
   }
@@ -110,8 +110,12 @@ const Button = styled.button`
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  @media only screen and (min-width: 768px) {
+    /* tablet and desktop */
+    max-width: 100px;
+    padding: 2px;
+  }
 `;
 
 export default Profile;

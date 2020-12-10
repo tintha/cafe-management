@@ -193,9 +193,13 @@ const MyButton = styled.button`
   margin-right: 0;
   margin-bottom: 10px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
   align-self: flex-end;
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    padding: 2px;
+    width: 100px;
+  }
 `;
 
 const ActionButton = styled.button`

@@ -228,6 +228,10 @@ const AddToCartBtn = styled.button`
   padding: 8px;
   margin-top: 0px;
   cursor: pointer;
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    padding: 2px;
+  }
 `;
 
 export default Menu;

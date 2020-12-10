@@ -274,7 +274,6 @@ const ButtonsBox = styled.div`
 
   @media only screen and (min-width: 992px) {
     /* desktop */
-    flex-wrap: wrap;
   }
 `;
 
@@ -282,7 +281,6 @@ const Button = styled.button`
   position: relative;
   display: block;
   width: 100%;
-  border-radius: 4px;
   background: ${COLORS.primary};
   color: ${COLORS.inputText};
   border: none;
@@ -292,8 +290,9 @@ const Button = styled.button`
 
   @media only screen and (min-width: 992px) {
     /* desktop */
-    width: 300px;
-    height: 40px;
+    /* width: 300px;
+    height: 40px; */
+    padding: 2px;
   }
 `;
 
