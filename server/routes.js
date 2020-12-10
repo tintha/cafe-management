@@ -21,6 +21,7 @@ const {
   getOrdersByUserId,
   updateOrder,
   deleteOrder,
+  getArchivedOrders,
 } = require("./orders_handlers");
 
 const {
@@ -52,6 +53,7 @@ router.post("/api/users/logout", logoutUser);
 router.put("/api/users/:userId", updateUser);
 router.delete("/api/users", deleteUser);
 router.get("/api/orders", getOrders);
+router.get("/api/orders/archived", getArchivedOrders);
 router.get("/api/orders/:orderId", getOrderById);
 router.get("/api/orders/user/:userId", getOrdersByUserId);
 router.post("/api/orders", placeOrder);

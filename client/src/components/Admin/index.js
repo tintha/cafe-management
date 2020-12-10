@@ -2,24 +2,29 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
-import Sidebar from "./Sidebar";
 import Orders from "./Orders";
 import Menu from "./Menu";
+import Archived from "./Archived";
 
 const Admin = () => {
   const user = useSelector((state) => state.auth.currentUser);
   const userProfile = useSelector((state) => state.auth.userProfile);
 
-  if (!user || (user && userProfile.isAdmin !== true)) {
+  if (
+    !user ||
+    (user && userProfile.isAdmin !== true) ||
+    (user && user !== "admin")
+  ) {
     return <Redirect to="/" />;
   } else {
     return (
       <Wrapper>
-        <LeftContainer>
-          <Sidebar />
-        </LeftContainer>
+        <LeftContainer></LeftContainer>
         <RightContainer>
           <Switch>
+            <Route path="/admin/orders/archived">
+              <Archived />
+            </Route>
             <Route path="/admin/orders">
               <Orders />
             </Route>

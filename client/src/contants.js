@@ -9,9 +9,12 @@ export const COLORS = {
   grayBorder: "#dedede",
   grayText: "#8c8c8c",
   lightGray: "#ebebeb",
-  background: "#f0e4cc",
+  // background: "#f0e4cc",
+  background: "#f0e2da",
   lightBorders: "#b59c82",
   inputBackground: "#faf0e6",
   inputText: "#f0e4cc",
   error: "#d1082a",
+  highlight: "#bf212e",
+  highlight2: "#db2114",
 };

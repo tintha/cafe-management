@@ -31,6 +31,9 @@ const Register = () => {
       const data = await response.json();
       if (data.status === 500) {
         dispatch(actions.registrationError(data.message));
+        setTimeout(() => {
+          dispatch(actions.clearRegistrationError());
+        }, 2000);
       } else {
         dispatch(actions.registrationSuccess(data.data));
       }

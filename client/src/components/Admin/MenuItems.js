@@ -83,12 +83,18 @@ const MenuItems = () => {
                   <Buttons>
                     <Button
                       onClick={() =>
-                        history.push(`/admin/menu/items/${item._id}`)
+                        history.push(`/admin/menu/items/edit/${item._id}`)
                       }
                     >
                       Edit
                     </Button>
-                    <Button onClick={(e) => handleDeleteItem(e, item._id)}>
+                    <Button
+                      onClick={(e) =>
+                        window.confirm(
+                          "This action cannot be undone! Are you sure you wish to delete this item?"
+                        ) && handleDeleteItem(e, item._id)
+                      }
+                    >
                       Delete
                     </Button>
                   </Buttons>
@@ -139,7 +145,7 @@ const Button = styled.button`
 `;
 
 const ItemBox = styled.div`
-  border: 1px solid gray;
+  border: 1px solid ${COLORS.lightBorders};
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 20px;

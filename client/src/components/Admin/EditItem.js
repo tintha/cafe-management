@@ -77,7 +77,7 @@ const EditItem = () => {
       const data = await response.json();
 
       if (data.status === 200) {
-        history.push("/admin/menu/items");
+        history.push("/admin/menu/items/edit");
         dispatch(actions.editMenuItemSuccess(id, updateData));
       }
     } catch (err) {

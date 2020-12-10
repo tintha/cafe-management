@@ -102,14 +102,14 @@ const Wrapper = styled.div`
 
   @media only screen and (min-width: 768px) {
     /* tablet */
-    justify-content: flex-start;
+    justify-content: space-around;
     min-height: initial;
   }
 
   @media only screen and (min-width: 992px) {
     /* desktop */
     justify-content: space-between;
-    max-width: 1000px;
+    width: 1000px;
   }
 `;
 
@@ -119,7 +119,7 @@ const ItemBox = styled.div`
   width: 100%;
   margin-bottom: 10px;
   margin-top: 20px;
-  border: 1px solid ${COLORS.lightBorders};
+  border: 1px double ${COLORS.lightBorders};
   padding: 10px;
 
   @media only screen and (min-width: 768px) {
@@ -136,6 +136,11 @@ const ItemBox = styled.div`
 
 const ItemImageBox = styled.div`
   width: 100px;
+
+  @media only screen and (min-width: 768px) and (max-width: 992px) {
+    /* tablet */
+    width: 150px;
+  }
 
   @media only screen and (min-width: 992px) {
     /* desktop */
@@ -166,6 +171,7 @@ const ItemTitle = styled.h4`
   font-size: 1rem;
   margin-bottom: 4px;
   font-family: "Fredericka the Great", cursive;
+  color: ${COLORS.highlight2};
 `;
 
 const ItemDesc = styled.h4`
@@ -186,6 +192,12 @@ const ItemImage = styled.img`
   overflow: hidden;
   object-fit: cover;
   margin-bottom: 0px;
+
+  @media only screen and (min-width: 768px) and (max-width: 992px) {
+    /* tablet */
+    width: 150px;
+    height: 150px;
+  }
 
   @media only screen and (min-width: 992px) {
     /* desktop */

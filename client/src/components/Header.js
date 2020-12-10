@@ -3,10 +3,6 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../redux/actions";
 import styled from "styled-components";
-import { GiCupcake } from "react-icons/gi";
-import { BsHouse } from "react-icons/bs";
-import { BiLogOut, BiUser } from "react-icons/bi";
-import { IoCartOutline, IoClipboardOutline } from "react-icons/io5";
 import { COLORS } from "../contants";
 
 const Header = () => {
@@ -45,9 +41,12 @@ const Header = () => {
       <Logo>Coffee & Cupcakes</Logo>
       <SecondDiv>
         <NavMenu>
-          <Navlink exact to="/">
-            Home
-          </Navlink>
+          {!userProfile.isAdmin || (user && user !== "admin") ? (
+            <Navlink exact to="/">
+              Home
+            </Navlink>
+          ) : null}
+
           {!user && (
             <Navlink exact to="/cart">
               Cart
@@ -56,9 +55,16 @@ const Header = () => {
 
           {user ? (
             <>
-              {userProfile.isAdmin ? (
+              {userProfile.isAdmin || user === "admin" ? (
                 <>
-                  <Navlink to="/admin/">Admin Dashboad</Navlink>
+                  <Navlink exact to="/admin/">
+                    Stats
+                  </Navlink>
+                  <Navlink to="/admin/orders">Orders</Navlink>
+                  <Navlink to="/admin/menu/items/edit/">Edit items</Navlink>
+                  <Navlink exact to="/admin/menu/items/add">
+                    Add an item
+                  </Navlink>
                 </>
               ) : (
                 <>
@@ -109,7 +115,7 @@ const Wrapper = styled.header`
 const SecondDiv = styled.div`
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
   background-color: ${COLORS.background};
 `;
@@ -146,7 +152,7 @@ const Navlink = styled(NavLink)`
   }
   &.active {
     color: ${COLORS.darkest};
-    border-bottom: 2px solid ${COLORS.lightBorders};
+    border-bottom: 2px solid ${COLORS.highlight};
   }
 `;
 

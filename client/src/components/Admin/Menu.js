@@ -12,10 +12,10 @@ const Menu = () => {
         <Route exact path="/admin/menu/items/add">
           <AddItem />
         </Route>
-        <Route path="/admin/menu/items/:id">
+        <Route path="/admin/menu/items/edit/:id">
           <EditItem />
         </Route>
-        <Route path="/admin/menu/items">
+        <Route path="/admin/menu/items/edit">
           <MenuItems />
         </Route>
       </Switch>
