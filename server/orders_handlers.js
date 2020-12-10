@@ -21,7 +21,7 @@ const getOrders = async (req, res) => {
     const db = client.db(APP_DB);
     const orders = await db
       .collection(ORDERS_COLLECTION)
-      .find({ status: { $ne: "archived" } })
+      .find({ isArchived: { $ne: true } })
       .sort({ date: -1 })
       .toArray();
     if (orders.length === 0) {
@@ -48,7 +48,7 @@ const getArchivedOrders = async (req, res) => {
     const db = client.db(APP_DB);
     const orders = await db
       .collection(ORDERS_COLLECTION)
-      .find({ status: { $eq: "archived" } })
+      .find({ isArchived: { $eq: true } })
       .sort({ date: -1 })
       .toArray();
     if (orders.length === 0) {
@@ -133,6 +133,7 @@ const placeOrder = async (req, res) => {
       total: total,
       date: date,
       status: "new",
+      isArchived: false,
     });
     assert(1, order.insertedCount);
     res.status(200).json({
@@ -152,8 +153,9 @@ const placeOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
   const orderId = req.params.orderId;
   const status = req.body.status;
+  const isArchived = req.body.isArchived;
   const newValues = {
-    $set: { status: status },
+    $set: { status: status, isArchived: isArchived },
   };
   try {
     const client = await MongoClient(MONGO_URI, options);
@@ -167,7 +169,7 @@ const updateOrder = async (req, res) => {
     res.status(200).json({
       status: 200,
       success: true,
-      data: { orderId, status: status },
+      data: { orderId, status: status, isArchived: isArchived },
     });
     client.close();
   } catch (e) {

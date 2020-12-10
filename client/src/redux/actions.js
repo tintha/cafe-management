@@ -166,11 +166,12 @@ export const editMenuItemError = (error) => ({
 });
 
 // ******************************** ADMIN EDIT ORDER STATUS ACTIONS
-export const editOrderSuccess = (orderId, orderStatus) => ({
+export const editOrderSuccess = (orderId, orderStatus, isArchived) => ({
   type: "EDIT_ORDER_SUCCESS",
   payload: {
     orderId,
     orderStatus,
+    isArchived,
   },
 });
 
