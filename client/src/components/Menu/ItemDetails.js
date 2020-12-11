@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
 import { TiMediaPlayReverse } from "react-icons/ti";
-import { MdNavigateBefore } from "react-icons/md";
 
 const ItemDetails = () => {
   let { id } = useParams();
@@ -14,10 +13,23 @@ const ItemDetails = () => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [itemData, setItemData] = useState({});
+  const user = useSelector((state) => state.auth.currentUser);
+
+  const hasReviewed =
+    itemData.reviews && itemData.reviews.find((review) => review.user === user);
+
+  const [review, setReview] = useState({
+    user: user,
+    displayName: "",
+    review: "",
+    rating: "",
+    date: new Date(),
+  });
+
   useEffect(() => {
     loadData();
     window.scrollTo(0, 0);
-  }, [id]);
+  }, []);
 
   const loadData = async () => {
     try {
@@ -33,14 +45,15 @@ const ItemDetails = () => {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+    setReview({ ...review, [name]: value });
   };
 
-  const handleUpdateItem = async (e, id) => {
+  const handleAddReview = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/items/${id}`, {
-        method: "PUT",
-        body: JSON.stringify({}),
+      const response = await fetch(`/api/items/${id}/review`, {
+        method: "PATCH",
+        body: JSON.stringify({ ...review }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -49,7 +62,7 @@ const ItemDetails = () => {
       const data = await response.json();
 
       if (data.status === 200) {
-        history.push("/");
+        window.location.reload();
       }
     } catch (err) {
       console.log(err);
@@ -115,8 +128,94 @@ const ItemDetails = () => {
                 Add to cart
               </Button>
               <Button>Add to favorites</Button>
-              <Button>Review</Button>
+              {!user && (
+                <Button onClick={() => history.push("/login")}>Review</Button>
+              )}
             </ActionBar>
+            <ReviewDisplay>
+              <h6>Reviews</h6>
+              {itemData.reviews ? (
+                itemData.reviews.map((review) => {
+                  return (
+                    <div key={review.user}>
+                      <p>{review.review}</p>
+                      <p>
+                        - {review.displayName}, {review.date}
+                      </p>
+                      <p>{review.rating}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>There are no reviews yet.</p>
+              )}
+            </ReviewDisplay>
+
+            {user && (
+              <ReviewForm>
+                {hasReviewed && (
+                  <p className="warning">You already reviewed this product.</p>
+                )}
+                <label>
+                  <p>
+                    Display Name {`(This name will be shown with your review)`}
+                  </p>
+                  <Input
+                    type="text"
+                    name="displayName"
+                    value={review.displayName}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </label>
+                <label>
+                  <p>Your review:</p>
+                  <Textarea
+                    type="text"
+                    name="review"
+                    value={review.review}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </label>
+                <div>
+                  <input
+                    type="radio"
+                    value="1"
+                    name="rating"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  1
+                  <input
+                    type="radio"
+                    value="2"
+                    name="rating"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  2
+                  <input
+                    type="radio"
+                    value="3"
+                    name="rating"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  3
+                  <input
+                    type="radio"
+                    value="4"
+                    name="rating"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  4
+                  <input
+                    type="radio"
+                    value="5"
+                    name="rating"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  5
+                </div>
+                <Button onClick={(e) => handleAddReview(e)}>Post Review</Button>
+              </ReviewForm>
+            )}
           </ContentDetails>
         </Content>
       )}
@@ -159,9 +258,7 @@ const Content = styled.div`
   border: 1px solid ${COLORS.lightBorders};
 `;
 
-const ContentImage = styled.div`
-  border: 1px solid ${COLORS.lightBorders};
-`;
+const ContentImage = styled.div``;
 
 const ContentDetails = styled.div`
   width: 100%;
@@ -190,6 +287,22 @@ const ItemdDesc = styled.div`
 `;
 
 const ActionBar = styled.div``;
+
+const ReviewDisplay = styled.div`
+  margin-top: 20px;
+  & > h6 {
+    font-weight: bold;
+  }
+`;
+
+const ReviewForm = styled.div`
+  margin-top: 30px;
+  .warning {
+    color: ${COLORS.highlight};
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+`;
 
 const Input = styled.input`
   width: 100%;
