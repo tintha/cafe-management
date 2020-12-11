@@ -158,13 +158,18 @@ const addReviewToItem = async (req, res) => {
   const itemId = req.params.itemId;
   const { user, displayName, review, rating, date } = req.body;
   try {
+    if (!user) {
+      throw new Error("Only registered users can post reviews");
+    } else if (!displayName || !review || !rating) {
+      throw new Error("Missing required information");
+    }
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
     const item = await db.collection(ITEMS_COLLECTION).updateOne(
       { _id: ObjectID(itemId) },
       {
-        $push: {
+        $addToSet: {
           reviews: {
             user: user,
             review: review,
@@ -185,7 +190,7 @@ const addReviewToItem = async (req, res) => {
   } catch (e) {
     res.status(400).json({
       status: 400,
-      data: "Unable to perform action",
+      message: e.message,
     });
   }
 };

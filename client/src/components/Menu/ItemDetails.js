@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import moment from "moment";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
 import { TiMediaPlayReverse } from "react-icons/ti";
+import { BsStarFill, BsStar } from "react-icons/bs";
 
 const ItemDetails = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
+  const [reviewError, setReviewError] = useState(null);
   const [itemData, setItemData] = useState({});
   const user = useSelector((state) => state.auth.currentUser);
 
@@ -63,6 +66,11 @@ const ItemDetails = () => {
 
       if (data.status === 200) {
         window.location.reload();
+      } else {
+        setReviewError(data.message);
+        setTimeout(() => {
+          setReviewError(null);
+        }, 2000);
       }
     } catch (err) {
       console.log(err);
@@ -136,14 +144,31 @@ const ItemDetails = () => {
               <h6>Reviews</h6>
               {itemData.reviews ? (
                 itemData.reviews.map((review) => {
+                  const stars = [1, 2, 3, 4, 5];
                   return (
-                    <div key={review.user}>
+                    <SingleReview key={review.date}>
                       <p>{review.review}</p>
                       <p>
-                        - {review.displayName}, {review.date}
+                        {stars.map((star) => {
+                          return (
+                            <span key={star}>
+                              {" "}
+                              {star <= review.rating ? (
+                                <BsStarFill />
+                              ) : (
+                                <BsStar />
+                              )}
+                            </span>
+                          );
+                        })}{" "}
+                        <span
+                          style={{ fontStyle: "italic", fontWeight: "bold" }}
+                        >
+                          {review.displayName}
+                        </span>
+                        , {moment(review.date).format("ll")}
                       </p>
-                      <p>{review.rating}</p>
-                    </div>
+                    </SingleReview>
                   );
                 })
               ) : (
@@ -214,6 +239,7 @@ const ItemDetails = () => {
                   5
                 </div>
                 <Button onClick={(e) => handleAddReview(e)}>Post Review</Button>
+                {reviewError && <p className="warning">{reviewError}</p>}
               </ReviewForm>
             )}
           </ContentDetails>
@@ -292,6 +318,14 @@ const ReviewDisplay = styled.div`
   margin-top: 20px;
   & > h6 {
     font-weight: bold;
+    font-size: 1.5rem;
+  }
+`;
+
+const SingleReview = styled.div`
+  padding: 20px;
+  & > p {
+    line-height: 30px;
   }
 `;
 
