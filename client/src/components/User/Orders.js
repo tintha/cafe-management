@@ -80,7 +80,6 @@ const Orders = () => {
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
   color: ${COLORS.darkest};
   & > h2 {
     font-size: 1rem;

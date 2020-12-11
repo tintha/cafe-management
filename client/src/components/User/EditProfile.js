@@ -140,7 +140,6 @@ const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
   color: ${COLORS.darkest};
   & > p {
     margin: 20px;

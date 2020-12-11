@@ -125,7 +125,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
   align-items: center;
-  min-height: 100vh;
   & > p {
     margin: 20px;
   }
