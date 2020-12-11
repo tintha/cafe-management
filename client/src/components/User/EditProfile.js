@@ -184,11 +184,13 @@ const Buttons = styled.div`
 const Button = styled.button`
   width: 100%;
   background-color: ${COLORS.primary};
-  color: ${COLORS.inputText};
+  color: #fff;
   padding: 14px 14px;
   margin-left: 1px;
   border: none;
   cursor: pointer;
+  font-family: "Fredericka the Great", cursive;
+
   @media only screen and (min-width: 768px) {
     /* tablet and desktop */
     max-width: 100px;

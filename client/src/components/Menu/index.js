@@ -282,11 +282,12 @@ const AddToCartBtn = styled.button`
   display: block;
   width: 50%;
   background: ${COLORS.primary};
-  color: ${COLORS.inputText};
+  color: #fff;
   border: none;
   padding: 8px;
   margin-top: 0px;
   cursor: pointer;
+  font-family: "Fredericka the Great", cursive;
   :hover {
     background-color: ${COLORS.highlight};
   }

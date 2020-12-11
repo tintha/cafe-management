@@ -415,18 +415,19 @@ const Textarea = styled.textarea`
 
 const Button = styled.button`
   background-color: ${COLORS.primary};
-  color: ${COLORS.inputText};
+  color: #fff;
   padding: 14px 20px;
   margin: 8px 2px;
   border: none;
   cursor: pointer;
+  font-family: "Fredericka the Great", cursive;
   :hover {
     background-color: ${COLORS.highlight};
   }
   @media only screen and (min-width: 768px) {
     /* tablet & desktop */
     padding: 2px;
-    width: 100px;
+    width: 120px;
     margin: 8px 1px;
   }
 `;
