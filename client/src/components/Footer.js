@@ -22,9 +22,14 @@ const Wrapper = styled.footer`
   padding: 10px;
   justify-content: flex-start;
   font-family: "Roboto Condensed", sans-serif;
-  color: #fff;
-  background-color: ${COLORS.primary};
+  color: ${COLORS.darkest};
+  background-color: ${COLORS.background};
 
+  @media only screen and (min-width: 768px) {
+    /* tablet */
+    max-width: 750px;
+    margin: auto;
+  }
   @media only screen and (min-width: 992px) {
     /* desktop */
     max-width: 1000px;

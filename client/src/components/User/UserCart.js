@@ -174,7 +174,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 90%;
   color: ${COLORS.darkest};
-  min-height: 100vh;
 
   @media only screen and (min-width: 992px) {
     /* desktop */

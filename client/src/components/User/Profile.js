@@ -61,7 +61,6 @@ const Profile = () => {
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
 
   @media only screen and (min-width: 768px) {
     /* tablet and desktop */

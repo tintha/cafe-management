@@ -128,7 +128,6 @@ const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
   width: 100%;
-  min-height: 100vh;
   & > h2 {
     font-weight: bold;
     font-size: 1.5rem;

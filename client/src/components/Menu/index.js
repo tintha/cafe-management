@@ -153,7 +153,6 @@ const Wrapper = styled.div`
   padding: 10px;
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
-  min-height: 100vh;
 
   @media only screen and (min-width: 768px) {
     /* tablet */

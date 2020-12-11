@@ -8,6 +8,7 @@ import { COLORS } from "../../contants";
 import Loading from "../Loading";
 import { TiMediaPlayReverse } from "react-icons/ti";
 import { BsStarFill, BsStar } from "react-icons/bs";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 
 const ItemDetails = () => {
   let { id } = useParams();
@@ -111,9 +112,7 @@ const ItemDetails = () => {
       {itemData.itemName && itemData.description && (
         <Content>
           <ContentImage>
-            {itemData.image && (
-              <img src={itemData.image} width="300px" height="auto" />
-            )}
+            {itemData.image && <img src={itemData.image} />}
           </ContentImage>
           <ContentDetails>
             <ItemTitle>{itemData.itemName}</ItemTitle>
@@ -154,9 +153,9 @@ const ItemDetails = () => {
                             <span key={star}>
                               {" "}
                               {star <= review.rating ? (
-                                <BsStarFill />
+                                <IoHeart />
                               ) : (
-                                <BsStar />
+                                <IoHeartOutline />
                               )}
                             </span>
                           );
@@ -202,6 +201,7 @@ const ItemDetails = () => {
                   />
                 </label>
                 <div>
+                  <p>Rating</p>
                   <input
                     type="radio"
                     value="1"
@@ -251,12 +251,16 @@ const ItemDetails = () => {
 
 const Wrapper = styled.div`
   width: 100%;
+  margin: auto;
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
+  @media only screen and (min-width: 768px) {
+    /* tablet */
+    max-width: 750px;
+  }
   @media only screen and (min-width: 992px) {
     /* desktop */
-    width: 1000px;
-    margin: auto;
+    max-width: 1000px;
   }
 `;
 
@@ -280,17 +284,59 @@ const PageTitle = styled.div`
 
 const Content = styled.div`
   display: flex;
-  padding: 10px;
-  border: 1px solid ${COLORS.lightBorders};
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  @media only screen and (min-width: 768px) {
+    /* tablet & desktop */
+    flex-direction: row;
+    margin: auto;
+    border: 1px solid ${COLORS.lightBorders};
+    padding: 10px;
+  }
+  @media only screen and (min-width: 992px) {
+    /* tablet & desktop */
+    flex-direction: row;
+    width: 1000px;
+    margin: auto;
+  }
 `;
 
-const ContentImage = styled.div``;
+const ContentImage = styled.div`
+  box-sizing: border-box;
+  margin: auto;
+  & img {
+    width: 90%;
+  }
+  @media only screen and (min-width: 768px) {
+    /* tablet & desktop */
+    margin: initial;
+  }
+  @media only screen and (min-width: 992px) {
+    /* tablet & desktop */
+    margin: initial;
+    & > img {
+      width: 300px;
+    }
+  }
+`;
 
 const ContentDetails = styled.div`
-  width: 100%;
-  margin-left: 20px;
-  padding: 20px;
-  background-color: ${COLORS.lightBackground};
+  width: 90%;
+  margin: auto;
+
+  @media only screen and (min-width: 768px) {
+    /* tablet */
+    padding: 20px;
+    width: 100%;
+    background-color: ${COLORS.lightBackground};
+  }
+  @media only screen and (min-width: 992px) {
+    /* desktop */
+    margin-left: 10px;
+    padding: 20px;
+  }
 `;
 
 const LoadingCentered = styled.div`
@@ -312,7 +358,9 @@ const ItemdDesc = styled.div`
   margin-bottom: 10px;
 `;
 
-const ActionBar = styled.div``;
+const ActionBar = styled.div`
+  display: flex;
+`;
 
 const ReviewDisplay = styled.div`
   margin-top: 20px;
@@ -366,24 +414,20 @@ const Textarea = styled.textarea`
 `;
 
 const Button = styled.button`
-  width: 100%;
   background-color: ${COLORS.primary};
   color: ${COLORS.inputText};
   padding: 14px 20px;
-  margin: 8px 0;
+  margin: 8px 2px;
   border: none;
   cursor: pointer;
   :hover {
     background-color: ${COLORS.highlight};
   }
-  :focus {
-    background-color: ${COLORS.highlight};
-  }
-  @media only screen and (min-width: 992px) {
-    /* desktop */
+  @media only screen and (min-width: 768px) {
+    /* tablet & desktop */
     padding: 2px;
     width: 100px;
-    margin-right: 10px;
+    margin: 8px 1px;
   }
 `;
 
