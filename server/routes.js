@@ -51,7 +51,7 @@ router.post("/api/users", registerUser);
 router.post("/api/users/login", authUser);
 router.post("/api/users/logout", logoutUser);
 router.put("/api/users/:userId", updateUser);
-router.delete("/api/users", deleteUser);
+router.delete("/api/users/:userId", deleteUser);
 router.get("/api/orders", getOrders);
 router.get("/api/orders/archived", getArchivedOrders);
 router.get("/api/orders/:orderId", getOrderById);

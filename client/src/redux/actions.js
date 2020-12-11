@@ -221,3 +221,47 @@ export const deleteOrderError = (error) => ({
   type: "DELETE_ORDER_ERROR",
   payload: { error },
 });
+
+// ******************************** ADMIN USERS MANAGEMENT ACTIONS
+export const requestUsers = () => ({
+  type: "REQUEST_USERS",
+});
+
+export const receivedUsers = (data) => ({
+  type: "RECEIVED_USERS",
+  payload: { data },
+});
+
+export const requestUsersError = (error) => ({
+  type: "REQUEST_USERS_ERROR",
+  payload: { error },
+});
+
+export const editUsersSuccess = (id, updatedData) => ({
+  type: "EDIT_USERS_SUCCESS",
+  payload: {
+    id,
+    updatedData,
+  },
+});
+
+export const editUsersError = (error) => ({
+  type: "EDIT_USERS_ERROR",
+  payload: { error },
+});
+
+export const deleteUsersSuccess = (userId) => ({
+  type: "DELETE_USERS_SUCCESS",
+  payload: {
+    userId,
+  },
+});
+
+export const deleteUsersError = (error) => ({
+  type: "DELETE_USERS_ERROR",
+  payload: { error },
+});
+
+export const logoutCleanUsers = () => ({
+  type: "CLEANUP_USERS",
+});

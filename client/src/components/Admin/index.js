@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Orders from "./Orders";
 import Menu from "./Menu";
 import Archived from "./Archived";
+import Users from "./Users";
 
 const Admin = () => {
   const user = useSelector((state) => state.auth.currentUser);
@@ -30,6 +31,9 @@ const Admin = () => {
             </Route>
             <Route path="/admin/menu">
               <Menu />
+            </Route>
+            <Route path="/admin/users">
+              <Users />
             </Route>
           </Switch>
         </RightContainer>

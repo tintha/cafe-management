@@ -165,11 +165,12 @@ const LoginInput = styled.input`
 const Submit = styled.button`
   width: 100%;
   background-color: ${COLORS.primary};
-  color: ${COLORS.inputText};
+  color: #fff;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
+  font-family: "Fredericka the Great", cursive;
   @media only screen and (min-width: 992px) {
     /* desktop */
     padding: 2px;

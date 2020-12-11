@@ -289,11 +289,12 @@ const Button = styled.button`
   display: block;
   width: 100%;
   background: ${COLORS.primary};
-  color: ${COLORS.inputText};
+  color: #fff;
   border: none;
   padding: 8px;
   margin: 1px;
   cursor: pointer;
+  font-family: "Fredericka the Great", cursive;
 
   @media only screen and (min-width: 992px) {
     /* desktop */

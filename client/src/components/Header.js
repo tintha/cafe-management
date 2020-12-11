@@ -29,6 +29,7 @@ const Header = () => {
         dispatch(actions.logoutCleanOrders());
         dispatch(actions.logoutCleanProfile());
         dispatch(actions.cleanCart());
+        dispatch(actions.logoutCleanUsers());
       } else {
         dispatch(actions.logoutError(data.message));
       }
@@ -64,6 +65,9 @@ const Header = () => {
                     <Navlink to="/admin/menu/items/edit/">Edit items</Navlink>
                     <Navlink exact to="/admin/menu/items/add">
                       Add an item
+                    </Navlink>
+                    <Navlink exact to="/admin/users">
+                      Users
                     </Navlink>
                   </>
                 ) : (
@@ -181,7 +185,8 @@ const Logout = styled.button`
   background-color: ${COLORS.darkest};
   cursor: pointer;
   align-self: center;
-  color: ${COLORS.inputText};
+  color: #fff;
+  font-family: "Fredericka the Great", cursive;
 `;
 
 export default Header;

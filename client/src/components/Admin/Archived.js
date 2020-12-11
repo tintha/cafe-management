@@ -188,12 +188,14 @@ const ActionSet = styled.div`
 
 const MyButton = styled.button`
   background-color: ${COLORS.primary};
-  color: ${COLORS.inputText};
+  color: #fff;
   margin-right: 0;
   margin-bottom: 10px;
   border: none;
   cursor: pointer;
   align-self: flex-end;
+  font-family: "Fredericka the Great", cursive;
+
   @media only screen and (min-width: 992px) {
     /* desktop */
     padding: 2px;

@@ -20,16 +20,28 @@ const getUsers = async (req, res) => {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
-    const users = await db.collection(USERS_COLLECTION).find().toArray();
+    const users = await db
+      .collection(USERS_COLLECTION)
+      .find({ isAdmin: { $eq: false } })
+      .toArray();
     if (users.length === 0) {
       res.status(404).json({
         status: 404,
         message: "No user found",
       });
     } else {
+      const excludePassword = users.map((user) => {
+        return {
+          _id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          address: user.address,
+        };
+      });
       res.status(200).json({
         status: 200,
-        data: users,
+        data: excludePassword,
       });
     }
     client.close();
@@ -122,7 +134,7 @@ const registerUser = async (req, res) => {
 
 const authUser = async (req, res) => {
   try {
-    const username = req.body.username.toLowerCase();
+    const username = req.body.username.toLowerCase().trim();
     const password = req.body.password;
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
@@ -193,7 +205,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const username = req.body.username.toLowerCase();
+  const username = req.params.userId.toLowerCase();
   try {
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
