@@ -174,6 +174,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 90%;
   color: ${COLORS.darkest};
+  font-family: "Roboto Condensed", sans-serif;
 
   @media only screen and (min-width: 992px) {
     /* desktop */
@@ -190,12 +191,6 @@ const TopContainer = styled.div`
     margin-right: 100px;
     margin-left: 50px;
   }
-`;
-
-const Title = styled.h2`
-  font-weight: bold;
-  margin-bottom: 2px;
-  text-align: center;
 `;
 
 const Empty = styled.div`
@@ -295,6 +290,9 @@ const Button = styled.button`
   margin: 1px;
   cursor: pointer;
   font-family: "Fredericka the Great", cursive;
+  :hover {
+    background-color: ${COLORS.highlight};
+  }
 
   @media only screen and (min-width: 992px) {
     /* desktop */

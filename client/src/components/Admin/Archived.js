@@ -195,6 +195,9 @@ const MyButton = styled.button`
   cursor: pointer;
   align-self: flex-end;
   font-family: "Fredericka the Great", cursive;
+  :hover {
+    background-color: ${COLORS.highlight};
+  }
 
   @media only screen and (min-width: 992px) {
     /* desktop */

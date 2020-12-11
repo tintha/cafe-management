@@ -130,7 +130,7 @@ const DisplayItemContainer = styled.div`
 
 const Buttons = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
 const Button = styled.button`
@@ -143,6 +143,9 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-family: "Fredericka the Great", cursive;
+  :hover {
+    background-color: ${COLORS.highlight};
+  }
 
   @media only screen and (min-width: 992px) {
     /* desktop */
@@ -153,7 +156,7 @@ const Button = styled.button`
 
 const ItemBox = styled.div`
   border: 1px solid ${COLORS.lightBorders};
-  border-radius: 10px;
+  background-color: ${COLORS.lightBackground};
   padding: 10px;
   margin-bottom: 20px;
   width: 100%;

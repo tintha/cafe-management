@@ -38,7 +38,7 @@ const CartItem = ({
       </ItemImageDiv>
       <RightDiv>
         <ItemNameContainer>
-          {itemName}
+          <h6>{itemName}</h6>
           <RemoveBtn onClick={() => dispatch(actions.removeItem({ itemName }))}>
             <FaWindowClose size="30" style={{ color: `${COLORS.darkest}` }} />
           </RemoveBtn>
@@ -72,6 +72,10 @@ const ItemNameContainer = styled.div`
   padding: 10px;
   font-size: 1rem;
   font-weight: bold;
+  & > h6 {
+    font-family: "Fredericka the Great", cursive;
+    color: ${COLORS.highlight};
+  }
 `;
 
 const ItemImageDiv = styled.div`
@@ -129,9 +133,12 @@ const QuantityNum = styled.input`
 const RemoveBtn = styled.button`
   border: none;
   border-radius: 6px;
-  color: black;
+  color: ${COLORS.darkest};
   cursor: pointer;
   background-color: transparent;
+  :hover {
+    color: ${COLORS.highlight};
+  }
 `;
 
 export default CartItem;

@@ -254,6 +254,7 @@ const Wrapper = styled.div`
   margin: auto;
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
+
   @media only screen and (min-width: 768px) {
     /* tablet */
     max-width: 750px;
@@ -283,39 +284,30 @@ const PageTitle = styled.div`
 `;
 
 const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-
+  box-sizing: border-box;
+  background-color: ${COLORS.lightBackground};
   @media only screen and (min-width: 768px) {
-    /* tablet & desktop */
-    flex-direction: row;
-    margin: auto;
+    display: grid;
+    grid-template-columns: 300px auto;
+    align-items: start;
     border: 1px solid ${COLORS.lightBorders};
     padding: 10px;
   }
   @media only screen and (min-width: 992px) {
-    /* tablet & desktop */
-    flex-direction: row;
     width: 1000px;
-    margin: auto;
   }
 `;
 
 const ContentImage = styled.div`
-  box-sizing: border-box;
   margin: auto;
   & img {
-    width: 90%;
+    width: 100%;
   }
+
   @media only screen and (min-width: 768px) {
-    /* tablet & desktop */
     margin: initial;
   }
   @media only screen and (min-width: 992px) {
-    /* tablet & desktop */
-    margin: initial;
     & > img {
       width: 300px;
     }
@@ -323,19 +315,13 @@ const ContentImage = styled.div`
 `;
 
 const ContentDetails = styled.div`
-  width: 90%;
-  margin: auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
 
   @media only screen and (min-width: 768px) {
-    /* tablet */
-    padding: 20px;
-    width: 100%;
-    background-color: ${COLORS.lightBackground};
   }
   @media only screen and (min-width: 992px) {
-    /* desktop */
-    margin-left: 10px;
-    padding: 20px;
   }
 `;
 

@@ -140,6 +140,9 @@ const Submit = styled.button`
   border: none;
   cursor: pointer;
   font-family: "Fredericka the Great", cursive;
+  :hover {
+    background-color: ${COLORS.highlight};
+  }
 
   @media only screen and (min-width: 992px) {
     /* desktop */
