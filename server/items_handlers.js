@@ -60,30 +60,6 @@ const getItemById = async (req, res) => {
   }
 };
 
-const getItemsByCategory = async (req, res) => {
-  const category = req.params.category;
-  try {
-    const client = await MongoClient(MONGO_URI, options);
-    await client.connect();
-    const db = client.db(APP_DB);
-    const items = await db
-      .collection(ITEMS_COLLECTION)
-      .find({ category: category })
-      .toArray();
-    assert(items.length, items.matchedCount);
-    res.status(200).json({
-      status: 200,
-      data: items,
-    });
-    client.close();
-  } catch (e) {
-    res.status(404).json({
-      status: 404,
-      data: "No items found",
-    });
-  }
-};
-
 const addItem = async (req, res) => {
   const itemId = ObjectID();
   try {
@@ -178,11 +154,47 @@ const deleteItem = async (req, res) => {
   }
 };
 
+const addReviewToItem = async (req, res) => {
+  const itemId = req.params.itemId;
+  const { user, displayName, review, rating, date } = req.body;
+  try {
+    const client = await MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db(APP_DB);
+    const item = await db.collection(ITEMS_COLLECTION).updateOne(
+      { _id: ObjectID(itemId) },
+      {
+        $push: {
+          reviews: {
+            user: user,
+            review: review,
+            displayName: displayName,
+            rating: rating,
+            date: date,
+          },
+        },
+      }
+    );
+    assert(1, item.matchedCount);
+    assert(1, item.updatedCount);
+    res.status(200).json({
+      status: 200,
+      success: true,
+    });
+    client.close();
+  } catch (e) {
+    res.status(400).json({
+      status: 400,
+      data: "Unable to perform action",
+    });
+  }
+};
+
 module.exports = {
   getItems,
   getItemById,
-  getItemsByCategory,
   addItem,
   updateItem,
   deleteItem,
+  addReviewToItem,
 };

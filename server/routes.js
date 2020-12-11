@@ -27,10 +27,10 @@ const {
 const {
   getItems,
   getItemById,
-  getItemsByCategory,
   addItem,
   updateItem,
   deleteItem,
+  addReviewToItem,
 } = require("./items_handlers");
 
 router.use(
@@ -61,9 +61,9 @@ router.put("/api/orders/:orderId", updateOrder);
 router.delete("/api/orders/:orderId", deleteOrder);
 router.get("/api/items", getItems);
 router.get("/api/items/:itemId", getItemById);
-router.get("/api/items/category/:category", getItemsByCategory);
 router.post("/api/items", addItem);
-router.put("/api/items/:itemId", updateItem);
+router.patch("/api/items/:itemId/review", addReviewToItem);
+router.patch("/api/items/:itemId", updateItem);
 router.delete("/api/items/:itemId", deleteItem);
 
 module.exports = router;

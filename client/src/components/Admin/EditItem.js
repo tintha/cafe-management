@@ -67,7 +67,7 @@ const EditItem = () => {
     e.preventDefault();
     try {
       const response = await fetch(`/api/items/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify({ ...updateData }),
         headers: {
           Accept: "application/json",
