@@ -187,6 +187,9 @@ const Logout = styled.button`
   align-self: center;
   color: #fff;
   font-family: "Fredericka the Great", cursive;
+  :hover {
+    background-color: ${COLORS.highlight};
+  }
 `;
 
 export default Header;
