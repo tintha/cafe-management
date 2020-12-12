@@ -107,6 +107,11 @@ const EditItem = () => {
     });
   };
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    history.push("/admin/menu/items/edit");
+  };
+
   return (
     <Wrapper>
       <h2>Edit item</h2>
@@ -159,7 +164,10 @@ const EditItem = () => {
           <br></br>
           {currentImage && <img src={currentImage} height="200px" alt="" />}
           <br></br>
-          <Button onClick={(e) => handleUpdateItem(e, id)}>Save changes</Button>
+          <Button onClick={(e) => handleUpdateItem(e, id)}>
+            Save changes
+          </Button>{" "}
+          <Button onClick={(e) => handleCancel(e)}>Cancel</Button>
         </>
       )}
     </Wrapper>

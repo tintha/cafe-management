@@ -41,10 +41,15 @@ const Orders = () => {
             userOrders.map((order) => {
               return (
                 <OrderBox key={order._id}>
-                  {order.status === "new" ? (
-                    <p className="new">pending</p>
-                  ) : (
-                    <p className="completed">{order.status}</p>
+                  {order.status === "new" && <p className="new">pending</p>}
+                  {order.status === "processing" && (
+                    <p className="processing">{order.status}</p>
+                  )}
+                  {order.status === "delivered" && (
+                    <p className="delivered">{order.status}</p>
+                  )}
+                  {order.status === "shipped" && (
+                    <p className="shipped">{order.status}</p>
                   )}
                   <p>
                     <Bold>Date:</Bold> {moment(order.date).format("ll")} @{" "}
@@ -111,11 +116,24 @@ const OrderBox = styled.div`
     margin-bottom: 10px;
   }
   .new {
-    color: red;
+    color: ${COLORS.highlight};
     font-weight: bold;
     text-transform: uppercase;
   }
-  .completed {
+  .delivered {
+    color: #399143;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .processing {
+    color: #c96406;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .shipped {
+    color: #1384a1;
     font-weight: bold;
     text-transform: uppercase;
   }

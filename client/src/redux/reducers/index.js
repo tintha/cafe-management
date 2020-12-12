@@ -7,6 +7,7 @@ import profile from "./profile-reducer";
 import cart from "./cart-reducer";
 import archived from "./archived-reducer";
 import users from "./Users-reducer";
+import location from "./Location";
 
 export default combineReducers({
   auth,
@@ -16,4 +17,5 @@ export default combineReducers({
   cart,
   archived,
   users,
+  location,
 });
