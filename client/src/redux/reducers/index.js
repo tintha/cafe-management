@@ -6,8 +6,8 @@ import orders from "./orders-reducer";
 import profile from "./profile-reducer";
 import cart from "./cart-reducer";
 import archived from "./archived-reducer";
-import users from "./Users-reducer";
-import location from "./Location";
+import users from "./users-reducer";
+import location from "./location-reducer";
 
 export default combineReducers({
   auth,
