@@ -6,9 +6,11 @@ import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
-import { MdCheckBox } from "react-icons/md";
-import { FaTrashAlt, FaArchive } from "react-icons/fa";
-import { MdFiberNew } from "react-icons/md";
+import { FaTrash, FaArchive } from "react-icons/fa";
+import { MdFiberNew, MdLocalShipping } from "react-icons/md";
+import { GiCardboardBox } from "react-icons/gi";
+import { HiClipboardCheck } from "react-icons/hi";
+import Tooltip from "./Tooltip";
 
 const Orders = () => {
   const history = useHistory();
@@ -93,10 +95,17 @@ const Orders = () => {
               return (
                 <SingleOrderBox key={order._id}>
                   <OrderDetails>
-                    {order.status === "new" ? (
+                    {order.status === "new" && (
                       <p className="new">{order.status}</p>
-                    ) : (
-                      <p className="completed">{order.status}</p>
+                    )}
+                    {order.status === "processing" && (
+                      <p className="processing">{order.status}</p>
+                    )}
+                    {order.status === "delivered" && (
+                      <p className="delivered">{order.status}</p>
+                    )}
+                    {order.status === "shipped" && (
+                      <p className="shipped">{order.status}</p>
                     )}
                     <p>
                       DATE: {moment(order.date).format("ll")} @{" "}
@@ -118,57 +127,137 @@ const Orders = () => {
                     </Items>
                   </OrderDetails>
                   <Buttons>
-                    {order.status === "new" ? (
-                      <>
-                        <ActionSet>
+                    <ActionSet>
+                      <Tooltip action="Mark as new">
+                        {order.status === "new" ? (
+                          <ActionButton
+                            disabled
+                            onClick={(e) =>
+                              handleChangeOrder(e, order._id, "new", false)
+                            }
+                          >
+                            <MdFiberNew size="26" />
+                          </ActionButton>
+                        ) : (
+                          <ActionButton
+                            onClick={(e) =>
+                              handleChangeOrder(e, order._id, "new", false)
+                            }
+                          >
+                            <MdFiberNew size="26" />
+                          </ActionButton>
+                        )}
+                      </Tooltip>
+                    </ActionSet>
+                    <ActionSet>
+                      <Tooltip action="Mark as processing">
+                        {order.status === "processing" ? (
+                          <ActionButton
+                            disabled
+                            onClick={(e) =>
+                              handleChangeOrder(
+                                e,
+                                order._id,
+                                "processing",
+                                false
+                              )
+                            }
+                          >
+                            <GiCardboardBox size="26" />
+                          </ActionButton>
+                        ) : (
                           <ActionButton
                             onClick={(e) =>
                               handleChangeOrder(
                                 e,
                                 order._id,
-                                "completed",
+                                "processing",
                                 false
                               )
                             }
                           >
-                            <MdCheckBox size="30" />
+                            <GiCardboardBox size="26" />
                           </ActionButton>
-                          Mark as completed
-                        </ActionSet>
-                      </>
-                    ) : (
-                      <ActionSet>
-                        <ActionButton
-                          onClick={(e) =>
-                            handleChangeOrder(e, order._id, "new", false)
-                          }
-                        >
-                          <MdFiberNew size="30" />
-                        </ActionButton>
-                        Mark as new
-                      </ActionSet>
-                    )}
-                    <ActionSet>
-                      <ActionButton
-                        onClick={(e) =>
-                          window.confirm(
-                            "This action cannot be undone! Are you sure you wish to delete this order?"
-                          ) && handleDeleteOrder(e, order._id)
-                        }
-                      >
-                        <FaTrashAlt size="24" />
-                      </ActionButton>
-                      Delete
+                        )}
+                      </Tooltip>
                     </ActionSet>
                     <ActionSet>
-                      <ActionButton
-                        onClick={(e) =>
-                          handleChangeOrder(e, order._id, order.status, true)
-                        }
-                      >
-                        <FaArchive size="24" />
-                      </ActionButton>
-                      Archive
+                      <Tooltip action="Mark as shipped">
+                        {order.status === "shipped" ? (
+                          <ActionButton
+                            disabled
+                            onClick={(e) =>
+                              handleChangeOrder(e, order._id, "shipped", false)
+                            }
+                          >
+                            <MdLocalShipping size="26" />
+                          </ActionButton>
+                        ) : (
+                          <ActionButton
+                            onClick={(e) =>
+                              handleChangeOrder(e, order._id, "shipped", false)
+                            }
+                          >
+                            <MdLocalShipping size="26" />
+                          </ActionButton>
+                        )}
+                      </Tooltip>
+                    </ActionSet>
+                    <ActionSet>
+                      <Tooltip action="Mark as delivered">
+                        {order.status === "delivered" ? (
+                          <ActionButton
+                            disabled
+                            onClick={(e) =>
+                              handleChangeOrder(
+                                e,
+                                order._id,
+                                "delivered",
+                                false
+                              )
+                            }
+                          >
+                            <HiClipboardCheck size="26" />
+                          </ActionButton>
+                        ) : (
+                          <ActionButton
+                            onClick={(e) =>
+                              handleChangeOrder(
+                                e,
+                                order._id,
+                                "delivered",
+                                false
+                              )
+                            }
+                          >
+                            <HiClipboardCheck size="26" />
+                          </ActionButton>
+                        )}
+                      </Tooltip>
+                    </ActionSet>
+                    <ActionSet>
+                      <Tooltip action="Delete">
+                        <ActionButton
+                          onClick={(e) =>
+                            window.confirm(
+                              "This action cannot be undone! Are you sure you wish to delete this order?"
+                            ) && handleDeleteOrder(e, order._id)
+                          }
+                        >
+                          <FaTrash size="20" />
+                        </ActionButton>
+                      </Tooltip>
+                    </ActionSet>
+                    <ActionSet>
+                      <Tooltip action="Archive">
+                        <ActionButton
+                          onClick={(e) =>
+                            handleChangeOrder(e, order._id, order.status, true)
+                          }
+                        >
+                          <FaArchive size="22" />
+                        </ActionButton>
+                      </Tooltip>
                     </ActionSet>
                   </Buttons>
                 </SingleOrderBox>
@@ -212,11 +301,24 @@ const SingleOrderBox = styled.div`
     margin-bottom: 10px;
   }
   .new {
-    color: ${COLORS.highlight2};
+    color: ${COLORS.highlight};
     font-weight: bold;
     text-transform: uppercase;
   }
-  .completed {
+  .delivered {
+    color: #399143;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .processing {
+    color: #c96406;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .shipped {
+    color: #1384a1;
     font-weight: bold;
     text-transform: uppercase;
   }
@@ -269,6 +371,7 @@ const MyButton = styled.button`
   :hover {
     background-color: ${COLORS.highlight};
   }
+
   @media only screen and (min-width: 992px) {
     /* desktop */
     padding: 2px;
@@ -283,6 +386,11 @@ const ActionButton = styled.button`
   cursor: pointer;
   :hover {
     color: ${COLORS.highlight2};
+  }
+  :disabled {
+    cursor: not-allowed;
+
+    border-bottom: 2px solid ${COLORS.darkest};
   }
 `;
 

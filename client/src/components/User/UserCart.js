@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import UserCartItem from "./UserCartItem";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
@@ -10,6 +10,8 @@ import { FaCcVisa, FaCcMastercard, FaCcAmex } from "react-icons/fa";
 const Cart = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const lastLocation = location.pathname;
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
   const [error, setError] = useState(null);
@@ -67,7 +69,9 @@ const Cart = () => {
     history.push("/");
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = (e, lastLocation) => {
+    e.preventDefault();
+    dispatch(actions.redirectAfterLogin(lastLocation));
     history.push("/login");
   };
 
@@ -152,15 +156,17 @@ const Cart = () => {
                 Total: <BoldText>${totalPrice.toFixed(2)}</BoldText>
               </TotalPrice>
               <ButtonsBox>
-                <Button onClick={() => history.push("/")}>Keep shopping</Button>
                 <Button onClick={(e) => handlePlaceOrder(e)}>
                   Place your order
                 </Button>
+                <Button onClick={() => history.push("/")}>Keep shopping</Button>
               </ButtonsBox>
               <Error>{error && <p>{error}</p>}</Error>
             </PaymentForm>
           ) : (
-            <Button onClick={(e) => handleLogin(e)}>Sign in to checkout</Button>
+            <Button onClick={(e) => handleLogin(e, lastLocation)}>
+              Sign in to checkout
+            </Button>
           )}
         </>
       )}

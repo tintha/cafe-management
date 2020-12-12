@@ -30,6 +30,7 @@ const Header = () => {
         dispatch(actions.logoutCleanProfile());
         dispatch(actions.cleanCart());
         dispatch(actions.logoutCleanUsers());
+        dispatch(actions.cleanPath());
       } else {
         dispatch(actions.logoutError(data.message));
       }
@@ -76,10 +77,10 @@ const Header = () => {
                       Cart
                     </Navlink>
                     <Navlink strict to="/user/profile">
-                      Profile
+                      Account
                     </Navlink>
                     <Navlink exact to="/user/orders">
-                      History
+                      Order History
                     </Navlink>
                   </>
                 )}

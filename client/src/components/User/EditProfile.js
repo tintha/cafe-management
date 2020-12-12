@@ -70,7 +70,7 @@ const EditProfile = () => {
 
   return (
     <Wrapper>
-      <H2>Edit Profile</H2>
+      <H2>Edit your account information</H2>
       {loadingStatus === "loading" && <Loading />}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
@@ -122,10 +122,10 @@ const EditProfile = () => {
           </FieldBox>
           <FieldBox>
             <Buttons>
-              <Button onClick={(e) => handleCancel(e)}>Cancel</Button>
               <Button onClick={(e) => handleUpdateProfile(e)}>
                 Save changes
               </Button>
+              <Button onClick={(e) => handleCancel(e)}>Cancel</Button>
             </Buttons>
           </FieldBox>
         </>

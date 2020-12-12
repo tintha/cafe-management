@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import moment from "moment";
@@ -7,13 +7,14 @@ import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
 import { TiMediaPlayReverse } from "react-icons/ti";
-import { BsStarFill, BsStar } from "react-icons/bs";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 
 const ItemDetails = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
+  const lastLocation = location.pathname;
   const [isLoading, setIsLoading] = useState(true);
   const [reviewError, setReviewError] = useState(null);
   const [itemData, setItemData] = useState({});
@@ -88,6 +89,12 @@ const ItemDetails = () => {
     }
   };
 
+  const handleRedirectReview = (e, lastLocation) => {
+    e.preventDefault();
+    dispatch(actions.redirectAfterLogin(lastLocation));
+    history.push("/login");
+  };
+
   return (
     <Wrapper>
       <PageTitle>
@@ -136,7 +143,9 @@ const ItemDetails = () => {
               </Button>
               <Button>Add to favorites</Button>
               {!user && (
-                <Button onClick={() => history.push("/login")}>Review</Button>
+                <Button onClick={(e) => handleRedirectReview(e, lastLocation)}>
+                  Review
+                </Button>
               )}
             </ActionBar>
             <ReviewDisplay>

@@ -6,7 +6,8 @@ import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import Tooltip from "./Tooltip";
 
 const Archived = () => {
   const history = useHistory();
@@ -88,16 +89,17 @@ const Archived = () => {
                   </OrderDetails>
                   <Buttons>
                     <ActionSet>
-                      <ActionButton
-                        onClick={(e) =>
-                          window.confirm(
-                            "This action cannot be undone! Are you sure you wish to delete this order?"
-                          ) && handleDeleteOrder(e, order._id)
-                        }
-                      >
-                        <FaTrashAlt size="24" />
-                      </ActionButton>
-                      Delete
+                      <Tooltip action="Delete">
+                        <ActionButton
+                          onClick={(e) =>
+                            window.confirm(
+                              "This action cannot be undone! Are you sure you wish to delete this order?"
+                            ) && handleDeleteOrder(e, order._id)
+                          }
+                        >
+                          <FaTrash size="20" />
+                        </ActionButton>
+                      </Tooltip>
                     </ActionSet>
                   </Buttons>
                 </SingleOrderBox>

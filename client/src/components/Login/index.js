@@ -12,6 +12,8 @@ const Login = () => {
   const error = useSelector((state) => state.auth.loginError);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const lastLocation = useSelector((state) => state.location.path);
+  const redirectUser = lastLocation ? lastLocation : "cart";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +48,7 @@ const Login = () => {
           {userProfile.isAdmin === true ? (
             <Redirect to="/admin" />
           ) : (
-            <Redirect to="/cart" />
+            <Redirect to={redirectUser} />
           )}
         </>
       ) : (

@@ -265,3 +265,13 @@ export const deleteUsersError = (error) => ({
 export const logoutCleanUsers = () => ({
   type: "CLEANUP_USERS",
 });
+
+// ********************************************* LOCATION
+export const redirectAfterLogin = (path) => ({
+  type: "REDIRECT_AFTER_LOGIN",
+  payload: { path },
+});
+
+export const cleanPath = () => ({
+  type: "CLEAN_PATH",
+});
