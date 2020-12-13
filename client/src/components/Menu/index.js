@@ -29,11 +29,13 @@ const Menu = () => {
   };
 
   const handleClick = (e, itemId) => {
+    dispatch(actions.redirectAfterLogin(`/items/${itemId}`));
     history.push(`/items/${itemId}`);
   };
 
   const handleKeyPress = (e, itemId) => {
     if (e.code === "Enter") {
+      dispatch(actions.redirectAfterLogin(`/items/${itemId}`));
       history.push(`/items/${itemId}`);
     }
   };
