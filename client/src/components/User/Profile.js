@@ -47,7 +47,13 @@ const Profile = () => {
           <FieldBox>First Name: {profile.firstName}</FieldBox>
           <FieldBox>Last Name: {profile.lastName}</FieldBox>
           <FieldBox>Username: {user}</FieldBox>
-          <FieldBox>Address: {profile.address}</FieldBox>
+          <FieldBox>
+            Address: {profile.address.line1}
+            <br></br>
+            {profile.address.city}
+            <br></br>
+            {profile.address.postalCode}
+          </FieldBox>
           <FieldBox>
             <Button onClick={() => history.push("/user/profile/edit")}>
               Edit

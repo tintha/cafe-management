@@ -19,7 +19,11 @@ const EditProfile = () => {
     firstName: profile.firstName,
     lastName: profile.lastName,
     email: profile.email,
-    address: profile.address,
+    address: {
+      line1: profile.address.line1 || "",
+      city: profile.address.city || "",
+      postalCode: profile.address.postalCode || "",
+    },
   });
 
   useEffect(() => {
@@ -39,7 +43,12 @@ const EditProfile = () => {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setUpdatedProfile({ ...updatedProfile, [name]: value });
+    if (name === "line1" || name === "city" || name === "postalCode") {
+      const newAddress = { ...updatedProfile.address, [name]: value };
+      setUpdatedProfile({ ...updatedProfile, address: { ...newAddress } });
+    } else {
+      setUpdatedProfile({ ...updatedProfile, [name]: value });
+    }
   };
 
   const handleUpdateProfile = async (e) => {
@@ -121,8 +130,30 @@ const EditProfile = () => {
               Address:
               <Input
                 type="text"
-                name="address"
-                value={updatedProfile.address}
+                name="line1"
+                value={updatedProfile.address.line1}
+                onChange={handleChange}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <label>
+              City:
+              <Input
+                type="text"
+                name="city"
+                value={updatedProfile.address.city}
+                onChange={handleChange}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <label>
+              Postal Code:
+              <Input
+                type="text"
+                name="postalCode"
+                value={updatedProfile.address.postalCode}
                 onChange={handleChange}
               />
             </label>
@@ -154,7 +185,6 @@ const Wrapper = styled.div`
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     max-width: 400px;
     margin: auto;
   }
@@ -203,7 +233,6 @@ const Button = styled.button`
   }
 
   @media only screen and (min-width: 768px) {
-    /* tablet and desktop */
     max-width: 100px;
     padding: 2px;
   }
