@@ -63,9 +63,9 @@ const Wrapper = styled.div`
   width: 100%;
 
   @media only screen and (min-width: 768px) {
-    /* tablet and desktop */
     max-width: 400px;
     margin: auto;
+    padding: 20px;
   }
 `;
 
@@ -78,9 +78,7 @@ const LoadingCentered = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${COLORS.background};
   color: ${COLORS.darkest};
-  border-radius: 4px;
 `;
 
 const TopDiv = styled.div`

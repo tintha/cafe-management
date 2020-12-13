@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import moment from "moment";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
@@ -15,6 +16,7 @@ import Tooltip from "./Tooltip";
 const Orders = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { addToast } = useToasts();
   const orders = useSelector((state) => state.orders.orders);
   const loadingStatus = useSelector((state) => state.orders.status);
 
@@ -46,6 +48,10 @@ const Orders = () => {
       const data = await response.json();
       if (data.status === 200) {
         if (isArchived === true) {
+          addToast("Order archived", {
+            appearance: "success",
+            autoDismiss: true,
+          });
           dispatch(actions.deleteOrderSuccess(orderId));
         } else {
           dispatch(
@@ -74,9 +80,16 @@ const Orders = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
+        addToast("Order deleted", {
+          appearance: "success",
+          autoDismiss: true,
+        });
         dispatch(actions.deleteOrderSuccess(orderId));
       }
     } catch (err) {
+      addToast(err, {
+        appearance: "error",
+      });
       dispatch(actions.deleteOrderError(err));
     }
   };
@@ -90,7 +103,7 @@ const Orders = () => {
           <MyButton onClick={() => history.push("/admin/orders/archived")}>
             Archived
           </MyButton>
-          {orders !== "No orders found" ? (
+          {orders !== "No orders found" || orders.length !== 0 ? (
             orders.map((order) => {
               return (
                 <SingleOrderBox key={order._id}>
@@ -105,7 +118,7 @@ const Orders = () => {
                       <p className="delivered">{order.status}</p>
                     )}
                     {order.status === "shipped" && (
-                      <p className="shipped">{order.status}</p>
+                      <p className="shipped">Out for delivery</p>
                     )}
                     <p>
                       DATE: {moment(order.date).format("ll")} @{" "}
@@ -182,7 +195,7 @@ const Orders = () => {
                       </Tooltip>
                     </ActionSet>
                     <ActionSet>
-                      <Tooltip action="Mark as shipped">
+                      <Tooltip action="Mark as out for delivery">
                         {order.status === "shipped" ? (
                           <ActionButton
                             disabled
@@ -286,7 +299,6 @@ const Wrapper = styled.div`
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     align-items: flex-start;
     justify-content: flex-start;
     align-content: flex-start;
@@ -296,7 +308,9 @@ const Wrapper = styled.div`
 const SingleOrderBox = styled.div`
   border: 1px solid ${COLORS.lightBorders};
   width: 100%;
-  padding: 10px;
+  padding: 30px;
+  box-shadow: inset 0 0 30px #bfa984;
+  box-sizing: border-box;
   & > p {
     margin-bottom: 10px;
   }
@@ -306,7 +320,7 @@ const SingleOrderBox = styled.div`
     text-transform: uppercase;
   }
   .delivered {
-    color: #399143;
+    color: #28634f;
     font-weight: bold;
     text-transform: uppercase;
   }
@@ -324,7 +338,6 @@ const SingleOrderBox = styled.div`
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     display: flex;
     justify-content: space-between;
   }
@@ -348,7 +361,6 @@ const Buttons = styled.div`
   display: flex;
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     height: 40px;
   }
 `;
@@ -368,12 +380,12 @@ const MyButton = styled.button`
   cursor: pointer;
   align-self: flex-end;
   font-family: "Fredericka the Great", cursive;
+
   :hover {
     background-color: ${COLORS.highlight};
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     padding: 2px;
     width: 100px;
   }
@@ -381,15 +393,15 @@ const MyButton = styled.button`
 
 const ActionButton = styled.button`
   border: none;
-  background-color: ${COLORS.background};
   color: ${COLORS.darkest};
+  background-color: transparent;
   cursor: pointer;
+  outline: none;
   :hover {
     color: ${COLORS.highlight2};
   }
   :disabled {
     cursor: not-allowed;
-
     border-bottom: 2px solid ${COLORS.darkest};
   }
 `;

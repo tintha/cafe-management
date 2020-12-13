@@ -30,6 +30,10 @@ const CartItem = ({
         })
       );
   };
+  const formattedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(price / 100);
 
   return (
     <Wrapper>
@@ -38,10 +42,17 @@ const CartItem = ({
       </ItemImageDiv>
       <RightDiv>
         <ItemNameContainer>
-          <h6>{itemName}</h6>
-          <RemoveBtn onClick={() => dispatch(actions.removeItem({ itemName }))}>
-            <FaWindowClose size="30" style={{ color: `${COLORS.darkest}` }} />
-          </RemoveBtn>
+          <ItemDescAndPriceContainer>
+            <h6>{itemName}</h6>
+            <p>{formattedPrice}</p>
+          </ItemDescAndPriceContainer>
+          <RemoveBtnContainer>
+            <RemoveBtn
+              onClick={() => dispatch(actions.removeItem({ itemName }))}
+            >
+              <FaWindowClose size="30" style={{ color: `${COLORS.darkest}` }} />
+            </RemoveBtn>
+          </RemoveBtnContainer>
         </ItemNameContainer>
         <QuantityContainer>
           <label htmlFor="quantity">Quantity:</label>
@@ -61,7 +72,7 @@ const CartItem = ({
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
-  border-bottom: 1px solid ${COLORS.grayBorder};
+  border-bottom: 1px solid ${COLORS.darkest};
   margin-bottom: 20px;
   max-height: 150px;
 `;
@@ -69,14 +80,25 @@ const Wrapper = styled.div`
 const ItemNameContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  font-size: 1rem;
+`;
+
+const ItemDescAndPriceContainer = styled.div`
   font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
   & > h6 {
+    font-size: 1.4rem;
     font-family: "Fredericka the Great", cursive;
     color: ${COLORS.highlight};
   }
+  & > p {
+    font-family: "Fredericka the Great", cursive;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    color: ${COLORS.darkest};
+  }
 `;
+const RemoveBtnContainer = styled.div``;
 
 const ItemImageDiv = styled.div`
   overflow: hidden;

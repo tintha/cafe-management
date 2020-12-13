@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
@@ -9,6 +10,7 @@ import Loading from "../Loading";
 const MenuItems = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { addToast } = useToasts();
   const menuItems = useSelector((state) => state.items.items);
   const loadingStatus = useSelector((state) => state.items.status);
 
@@ -38,6 +40,10 @@ const MenuItems = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
+        addToast("Item deleted", {
+          appearance: "success",
+          autoDismiss: true,
+        });
         dispatch(actions.deleteItemSuccess(data.itemId));
       }
     } catch (err) {
@@ -148,7 +154,6 @@ const Button = styled.button`
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     padding: 2px;
     width: 100px;
   }
@@ -160,6 +165,7 @@ const ItemBox = styled.div`
   padding: 10px;
   margin-bottom: 20px;
   width: 100%;
+  box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.38);
   @media only screen and (min-width: 768px) {
     /* tablet */
     width: 30%;

@@ -4,6 +4,7 @@ import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import { GrFormCheckmark } from "react-icons/gr";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const lastLocation = useSelector((state) => state.location.path);
-  const redirectUser = lastLocation ? lastLocation : "cart";
+  const redirectUser = lastLocation ? lastLocation : "/items";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,38 +54,59 @@ const Login = () => {
         </>
       ) : (
         <>
-          <p>
-            Don't have an account? You can create one{" "}
-            <Link to="/register">here</Link>.
-          </p>
-          <FieldBox>
-            <label htmlFor="username">
-              Username<br></br>
-              <LoginInput
-                type="text"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
-          </FieldBox>
-          <FieldBox>
-            <label htmlFor="password">
-              Password<br></br>
-              <LoginInput
-                type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </label>
-          </FieldBox>
-          <FieldBox>
-            <Submit type="submit" onClick={(e) => handleSubmit(e)}>
-              Login
-            </Submit>
-          </FieldBox>
-          <Error>{error && <p>{error}</p>}</Error>
+          <LeftCol>
+            <p>
+              Don't have an account? You can create one{" "}
+              <Link to="/register">here</Link>.
+            </p>
+            <p className="bold">Benefits of signing in:</p>
+            <p>
+              <GrFormCheckmark />
+              Faster checkout
+            </p>
+            <p>
+              <GrFormCheckmark />
+              Leave reviews and ratings
+            </p>
+            <p>
+              <GrFormCheckmark />
+              Track your orders
+            </p>
+            <p>
+              <GrFormCheckmark />
+              View your order history
+            </p>
+          </LeftCol>
+          <RightCol>
+            <FieldBox>
+              <label htmlFor="username">
+                Username<br></br>
+                <LoginInput
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </label>
+            </FieldBox>
+            <FieldBox>
+              <label htmlFor="password">
+                Password<br></br>
+                <LoginInput
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </label>
+            </FieldBox>
+            <FieldBox>
+              <Submit type="submit" onClick={(e) => handleSubmit(e)}>
+                Login
+              </Submit>
+            </FieldBox>
+            <Error>{error && <p>{error}</p>}</Error>
+          </RightCol>
         </>
       )}
     </Wrapper>
@@ -95,17 +117,36 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
+  color: ${COLORS.darkest};
   align-items: center;
   & > p {
     margin: 20px;
   }
 
-  @media only screen and (min-width: 992px) {
-    /* desktop */
-    max-width: 400px;
+  @media only screen and (min-width: 768px) {
     margin: auto;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 250px 400px;
+    justify-content: center;
+    align-items: start;
   }
 `;
+
+const LeftCol = styled.div`
+  padding-bottom: 20px;
+  .bold {
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    padding-right: 20px;
+  }
+`;
+
+const RightCol = styled.div``;
 
 const LoginInput = styled.input`
   width: 100%;
@@ -147,7 +188,6 @@ const Submit = styled.button`
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     padding: 2px;
     width: 100px;
   }

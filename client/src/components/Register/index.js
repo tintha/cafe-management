@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import { GrFormCheckmark } from "react-icons/gr";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -53,68 +54,88 @@ const Register = () => {
   } else {
     return (
       <Wrapper>
-        <p>Register</p>
-        <FieldBox>
-          <label>
-            First Name
-            <LoginInput
-              type="text"
-              name="firstName"
-              value={newUser.firstName}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </FieldBox>
-        <FieldBox>
-          <label>
-            Last Name
-            <LoginInput
-              type="text"
-              name="lastName"
-              value={newUser.lastName}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </FieldBox>
-        <FieldBox>
-          <label>
-            Email
-            <LoginInput
-              type="text"
-              name="email"
-              value={newUser.email}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </FieldBox>
-        <FieldBox>
-          <label>
-            Username
-            <LoginInput
-              type="text"
-              name="username"
-              value={newUser.username}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </FieldBox>
-        <FieldBox>
-          <label>
-            Password
-            <LoginInput
-              type="password"
-              name="password"
-              value={newUser.password}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-        </FieldBox>
-        <FieldBox>
-          <Submit type="submit" onClick={(e) => handleRegister(e)}>
-            Register
-          </Submit>
-          <Error>{error && <p>{error}</p>}</Error>
-        </FieldBox>
+        <LeftCol>
+          <p className="bold">Create an account and you'll be able to:</p>
+          <p>
+            <GrFormCheckmark />
+            Checkout faster
+          </p>
+          <p>
+            <GrFormCheckmark />
+            Leave reviews and ratings
+          </p>
+          <p>
+            <GrFormCheckmark />
+            Track your orders
+          </p>
+          <p>
+            <GrFormCheckmark />
+            View your order history
+          </p>
+        </LeftCol>
+        <RightCol>
+          <FieldBox>
+            <label>
+              First Name
+              <LoginInput
+                type="text"
+                name="firstName"
+                value={newUser.firstName}
+                onChange={(e) => handleChange(e)}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <label>
+              Last Name
+              <LoginInput
+                type="text"
+                name="lastName"
+                value={newUser.lastName}
+                onChange={(e) => handleChange(e)}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <label>
+              Email
+              <LoginInput
+                type="text"
+                name="email"
+                value={newUser.email}
+                onChange={(e) => handleChange(e)}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <label>
+              Username
+              <LoginInput
+                type="text"
+                name="username"
+                value={newUser.username}
+                onChange={(e) => handleChange(e)}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <label>
+              Password
+              <LoginInput
+                type="password"
+                name="password"
+                value={newUser.password}
+                onChange={(e) => handleChange(e)}
+              />
+            </label>
+          </FieldBox>
+          <FieldBox>
+            <Submit type="submit" onClick={(e) => handleRegister(e)}>
+              Register
+            </Submit>
+            <Error>{error && <p>{error}</p>}</Error>
+          </FieldBox>
+        </RightCol>
       </Wrapper>
     );
   }
@@ -124,17 +145,34 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
+  color: ${COLORS.darkest};
   align-items: center;
   & > p {
     margin: 20px;
   }
-
-  @media only screen and (min-width: 992px) {
-    /* desktop */
-    max-width: 400px;
+  @media only screen and (min-width: 768px) {
     margin: auto;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 250px 400px;
+    justify-content: center;
+    align-items: start;
   }
 `;
+
+const LeftCol = styled.div`
+  padding-bottom: 20px;
+  .bold {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    padding-right: 20px;
+  }
+`;
+
+const RightCol = styled.div``;
 
 const Error = styled.div`
   display: flex;

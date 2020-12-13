@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useToasts } from "react-toast-notifications";
 import styled from "styled-components";
 import { options } from "./categories";
 import * as actions from "../../redux/actions";
@@ -11,6 +12,7 @@ const EditItem = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { addToast } = useToasts();
   const [itemData, setItemData] = useState({});
   const [updateData, setUpdateData] = useState({
     itemName: "",
@@ -75,13 +77,18 @@ const EditItem = () => {
         },
       });
       const data = await response.json();
-
       if (data.status === 200) {
+        addToast("Item updated", {
+          appearance: "success",
+          autoDismiss: true,
+        });
         history.push("/admin/menu/items/edit");
         dispatch(actions.editMenuItemSuccess(id, updateData));
       }
     } catch (err) {
-      console.log(err);
+      addToast(err, {
+        appearance: "error",
+      });
     }
   };
 

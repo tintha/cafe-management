@@ -61,7 +61,9 @@ function App() {
   );
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  min-height: 100vh;
+`;
 
 const Main = styled.div`
   min-height: 50vh;

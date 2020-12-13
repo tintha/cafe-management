@@ -1,13 +1,17 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../redux/actions";
 import styled from "styled-components";
 import { COLORS } from "../contants";
 import TinyCart from "../components/Cart/TinyCart";
+import { AiFillHome } from "react-icons/ai";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const lastLocation = location.pathname;
   const user = useSelector((state) => state.auth.currentUser);
   const userProfile = useSelector((state) => state.auth.userProfile);
 
@@ -39,6 +43,16 @@ const Header = () => {
     }
   };
 
+  const handleClickHome = (e) => {
+    dispatch(actions.redirectAfterLogin("/items"));
+    history.push("/items");
+  };
+
+  const handleClickCart = (e) => {
+    dispatch(actions.redirectAfterLogin("/cart"));
+    history.push("/cart");
+  };
+
   return (
     <>
       <Wrapper>
@@ -46,12 +60,14 @@ const Header = () => {
         <SecondDiv>
           <NavMenu>
             {!userProfile.isAdmin || (user && user !== "admin") ? (
-              <Navlink to="/items">Shop</Navlink>
+              <Navlink to="/items">
+                <div onClick={(e) => handleClickHome(e)}>Home</div>
+              </Navlink>
             ) : null}
 
             {!user && (
               <Navlink exact to="/cart">
-                Cart
+                <div onClick={(e) => handleClickCart(e)}>Cart</div>
               </Navlink>
             )}
 
@@ -111,12 +127,10 @@ const Wrapper = styled.header`
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
   width: 100%;
-  background-color: ${COLORS.background};
+
   z-index: 10;
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
-    max-width: 1000px;
     margin: auto;
   }
 `;
@@ -125,10 +139,10 @@ const TinyCartContainer = styled.div`
   position: sticky;
   top: 0;
   z-index: 20;
-  margin: auto;
+  margin-right: 20px;
   @media only screen and (min-width: 992px) {
-    /* desktop */
-    max-width: 1000px;
+    max-width: 1020px;
+    margin: auto;
   }
 `;
 
@@ -136,8 +150,8 @@ const SecondDiv = styled.div`
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  width: 100%;
-  background-color: ${COLORS.background};
+  max-width: 1000px;
+  margin: auto;
 `;
 
 const Logo = styled.div`
@@ -145,10 +159,11 @@ const Logo = styled.div`
   justify-content: center;
   align-items: center;
   font-family: "Fredericka the Great", cursive;
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
   padding: 20px;
   color: ${COLORS.darkest};
+
   & > p {
     margin-top: 10px;
   }
@@ -158,9 +173,9 @@ const NavMenu = styled.div`
   display: flex;
   justify-content: center;
   font-family: "Roboto Condensed", sans-serif;
-  background-color: ${COLORS.background};
   color: #fff;
   padding: 20px;
+  width: 100%;
 `;
 
 const Navlink = styled(NavLink)`
@@ -179,8 +194,6 @@ const Navlink = styled(NavLink)`
 const Logout = styled.button`
   background-color: ${COLORS.secondary};
   color: white;
-  /* padding: 14px 20px;
-  margin: 8px 0; */
   height: 20px;
   border: none;
   background-color: ${COLORS.darkest};

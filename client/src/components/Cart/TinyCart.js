@@ -58,16 +58,16 @@ const TinyCart = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 2px;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
   font-family: "Roboto Condensed", sans-serif;
   position: sticky;
   top: 0;
-  background-color: ${COLORS.background};
   color: ${COLORS.darkest};
   z-index: 10;
+  background-color: ${COLORS.lightBackground};
 `;
 
 const TinyItem = styled.div`

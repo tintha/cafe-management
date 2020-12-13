@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import moment from "moment";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
@@ -12,6 +13,7 @@ import Tooltip from "./Tooltip";
 const Archived = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { addToast } = useToasts();
   const archived = useSelector((state) => state.archived.archived);
   const loadingStatus = useSelector((state) => state.archived.status);
 
@@ -45,6 +47,10 @@ const Archived = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
+        addToast("Order deleted", {
+          appearance: "success",
+          autoDismiss: true,
+        });
         dispatch(actions.deleteArchivedSuccess(orderId));
       }
     } catch (err) {
@@ -121,6 +127,7 @@ const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
   width: 100%;
+
   & > h2 {
     font-weight: bold;
     font-size: 1.5rem;
@@ -138,7 +145,9 @@ const Wrapper = styled.div`
 const SingleOrderBox = styled.div`
   border: 1px solid ${COLORS.lightBorders};
   width: 100%;
-  padding: 10px;
+  padding: 30px;
+  box-shadow: inset 0 0 50px #bfa984;
+  box-sizing: border-box;
   & > p {
     margin-bottom: 10px;
   }
