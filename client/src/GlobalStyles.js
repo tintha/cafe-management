@@ -5,6 +5,8 @@ import { COLORS } from "../src/contants";
 // font-family: "Euphoria Script", cursive;
 // font-family: "Sacramento", cursive;
 // font-family: "Roboto Condensed", sans-serif;
+// font-family: 'Zilla Slab Highlight', cursive;
+// font-family: 'Cutive', serif;
 
 export default createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -42,7 +44,7 @@ html {
     }
 body {
 	line-height: 1;
-	background-color: ${COLORS.background};
+	background-color: ${COLORS.lightBackground};
 }
 ol, ul {
 	list-style: none;

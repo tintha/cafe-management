@@ -41,7 +41,9 @@ const Orders = () => {
             userOrders.map((order) => {
               return (
                 <OrderBox key={order._id}>
-                  {order.status === "new" && <p className="new">pending</p>}
+                  {order.status === "new" && (
+                    <p className="new">{order.status}</p>
+                  )}
                   {order.status === "processing" && (
                     <p className="processing">{order.status}</p>
                   )}
@@ -49,7 +51,7 @@ const Orders = () => {
                     <p className="delivered">{order.status}</p>
                   )}
                   {order.status === "shipped" && (
-                    <p className="shipped">{order.status}</p>
+                    <p className="shipped">Out for delivery</p>
                   )}
                   <p>
                     <Bold>Date:</Bold> {moment(order.date).format("ll")} @{" "}
@@ -92,10 +94,12 @@ const Wrapper = styled.div`
     margin-bottom: 20px;
   }
 
-  @media only screen and (min-width: 992px) {
-    /* desktop */
-    max-width: 500px;
+  @media only screen and (min-width: 768px) {
+    max-width: 600px;
     margin: auto;
+  }
+  @media only screen and (min-width: 992px) {
+    max-width: 900px;
   }
 `;
 
@@ -112,6 +116,8 @@ const OrderBox = styled.div`
   box-sizing: border-box;
   padding: 20px;
   margin-bottom: 10px;
+  box-shadow: inset 0 0 20px #bfa984;
+
   & > p {
     margin-bottom: 10px;
   }
@@ -119,23 +125,27 @@ const OrderBox = styled.div`
     color: ${COLORS.highlight};
     font-weight: bold;
     text-transform: uppercase;
+    font-family: "Fredericka the Great", cursive;
   }
   .delivered {
-    color: #399143;
+    color: #28634f;
     font-weight: bold;
     text-transform: uppercase;
+    font-family: "Fredericka the Great", cursive;
   }
 
   .processing {
     color: #c96406;
     font-weight: bold;
     text-transform: uppercase;
+    font-family: "Fredericka the Great", cursive;
   }
 
   .shipped {
     color: #1384a1;
     font-weight: bold;
     text-transform: uppercase;
+    font-family: "Fredericka the Great", cursive;
   }
 `;
 

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useToasts } from "react-toast-notifications";
 import styled from "styled-components";
 import moment from "moment";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
-import { TiMediaPlayReverse } from "react-icons/ti";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { AiFillHome } from "react-icons/ai";
 
 const ItemDetails = () => {
   let { id } = useParams();
@@ -19,6 +20,7 @@ const ItemDetails = () => {
   const [reviewError, setReviewError] = useState(null);
   const [itemData, setItemData] = useState({});
   const user = useSelector((state) => state.auth.currentUser);
+  const { addToast } = useToasts();
 
   const hasReviewed =
     itemData.reviews && itemData.reviews.find((review) => review.user === user);
@@ -67,7 +69,13 @@ const ItemDetails = () => {
       const data = await response.json();
 
       if (data.status === 200) {
-        window.location.reload();
+        addToast("Review posted!", {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         setReviewError(data.message);
         setTimeout(() => {
@@ -80,11 +88,13 @@ const ItemDetails = () => {
   };
 
   const handleClickBack = (e) => {
+    dispatch(actions.redirectAfterLogin("/items"));
     history.push("/items/");
   };
 
   const handleKeyPressBack = (e) => {
     if (e.code === "Enter") {
+      dispatch(actions.redirectAfterLogin("/items"));
       history.push("/items/");
     }
   };
@@ -95,12 +105,45 @@ const ItemDetails = () => {
     history.push("/login");
   };
 
+  const formattedPrice =
+    itemData.price &&
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(itemData.price / 100);
+
+  const handleAddToCart = (
+    e,
+    _id,
+    itemName,
+    description,
+    category,
+    price,
+    image
+  ) => {
+    e.stopPropagation();
+    dispatch(
+      actions.addItem({
+        _id,
+        itemName,
+        description,
+        category,
+        price,
+        image,
+      })
+    );
+    addToast(`${itemName} was added to your cart`, {
+      appearance: "success",
+      autoDismiss: true,
+    });
+  };
+
   return (
     <Wrapper>
       <PageTitle>
         <span>
-          <TiMediaPlayReverse
-            size="36"
+          <AiFillHome
+            size="30"
             tabIndex="0"
             onClick={(e) => handleClickBack(e)}
             onKeyDown={(e) => handleKeyPressBack(e)}
@@ -109,7 +152,7 @@ const ItemDetails = () => {
             className="backArrow"
           />
         </span>
-        Item details
+        <p>{itemData.itemName}</p>
       </PageTitle>
       {isLoading && (
         <LoadingCentered>
@@ -123,28 +166,30 @@ const ItemDetails = () => {
           </ContentImage>
           <ContentDetails>
             <ItemTitle>{itemData.itemName}</ItemTitle>
-            <ItemdDesc>{itemData.description}</ItemdDesc>
+            <ItemdDesc>
+              {itemData.description}
+              <p className="price">{formattedPrice && formattedPrice}</p>
+            </ItemdDesc>
             <ActionBar>
               <Button
-                onClick={() =>
-                  dispatch(
-                    actions.addItem({
-                      _id: itemData._id,
-                      itemName: itemData.itemName,
-                      description: itemData.description,
-                      category: itemData.category,
-                      price: itemData.price,
-                      image: itemData.image,
-                    })
-                  )
-                }
+                onClick={(e) => {
+                  handleAddToCart(
+                    e,
+                    itemData._id,
+                    itemData.itemName,
+                    itemData.description,
+                    itemData.category,
+                    itemData.price,
+                    itemData.image
+                  );
+                }}
               >
                 Add to cart
               </Button>
-              <Button>Add to favorites</Button>
+              <Button>Add to wishlist</Button>
               {!user && (
                 <Button onClick={(e) => handleRedirectReview(e, lastLocation)}>
-                  Review
+                  Review this item
                 </Button>
               )}
             </ActionBar>
@@ -186,69 +231,75 @@ const ItemDetails = () => {
 
             {user && (
               <ReviewForm>
-                {hasReviewed && (
-                  <p className="warning">You already reviewed this product.</p>
+                {hasReviewed ? (
+                  <p>You already reviewed this product.</p>
+                ) : (
+                  <>
+                    <label>
+                      <p>
+                        Display Name{" "}
+                        {`(This name will be shown with your review)`}
+                      </p>
+                      <Input
+                        type="text"
+                        name="displayName"
+                        value={review.displayName}
+                        onChange={(e) => handleChange(e)}
+                      />
+                    </label>
+                    <label>
+                      <p>Your review:</p>
+                      <Textarea
+                        type="text"
+                        name="review"
+                        value={review.review}
+                        onChange={(e) => handleChange(e)}
+                      />
+                    </label>
+                    <div>
+                      <p>Rating</p>
+                      <input
+                        type="radio"
+                        value="1"
+                        name="rating"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      1
+                      <input
+                        type="radio"
+                        value="2"
+                        name="rating"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      2
+                      <input
+                        type="radio"
+                        value="3"
+                        name="rating"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      3
+                      <input
+                        type="radio"
+                        value="4"
+                        name="rating"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      4
+                      <input
+                        type="radio"
+                        value="5"
+                        name="rating"
+                        onChange={(e) => handleChange(e)}
+                      />
+                      5
+                    </div>
+                    <Button onClick={(e) => handleAddReview(e)}>
+                      Post Review
+                    </Button>
+                    {reviewError && <p className="warning">{reviewError}</p>}
+                  </>
                 )}
-                <label>
-                  <p>
-                    Display Name {`(This name will be shown with your review)`}
-                  </p>
-                  <Input
-                    type="text"
-                    name="displayName"
-                    value={review.displayName}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </label>
-                <label>
-                  <p>Your review:</p>
-                  <Textarea
-                    type="text"
-                    name="review"
-                    value={review.review}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </label>
-                <div>
-                  <p>Rating</p>
-                  <input
-                    type="radio"
-                    value="1"
-                    name="rating"
-                    onChange={(e) => handleChange(e)}
-                  />
-                  1
-                  <input
-                    type="radio"
-                    value="2"
-                    name="rating"
-                    onChange={(e) => handleChange(e)}
-                  />
-                  2
-                  <input
-                    type="radio"
-                    value="3"
-                    name="rating"
-                    onChange={(e) => handleChange(e)}
-                  />
-                  3
-                  <input
-                    type="radio"
-                    value="4"
-                    name="rating"
-                    onChange={(e) => handleChange(e)}
-                  />
-                  4
-                  <input
-                    type="radio"
-                    value="5"
-                    name="rating"
-                    onChange={(e) => handleChange(e)}
-                  />
-                  5
-                </div>
-                <Button onClick={(e) => handleAddReview(e)}>Post Review</Button>
-                {reviewError && <p className="warning">{reviewError}</p>}
               </ReviewForm>
             )}
           </ContentDetails>
@@ -281,6 +332,9 @@ const PageTitle = styled.div`
   font-weight: bold;
   font-size: 1.5rem;
   padding-bottom: 10px;
+  & > p {
+    margin-left: 20px;
+  }
   .backArrow {
     cursor: pointer;
     :hover {
@@ -295,6 +349,7 @@ const PageTitle = styled.div`
 const Content = styled.div`
   box-sizing: border-box;
   background-color: ${COLORS.lightBackground};
+  box-shadow: inset 0 0 50px #bfa984;
   @media only screen and (min-width: 768px) {
     display: grid;
     grid-template-columns: 300px auto;
@@ -311,6 +366,8 @@ const ContentImage = styled.div`
   margin: auto;
   & img {
     width: 100%;
+    border: 2px solid ${COLORS.lightBackground};
+    box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.38);
   }
 
   @media only screen and (min-width: 768px) {
@@ -326,7 +383,8 @@ const ContentImage = styled.div`
 const ContentDetails = styled.div`
   width: 100%;
   box-sizing: border-box;
-  padding: 20px;
+  padding-left: 30px;
+  padding-right: 20px;
 
   @media only screen and (min-width: 768px) {
   }
@@ -351,6 +409,12 @@ const ItemTitle = styled.div`
 const ItemdDesc = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
+  .price {
+    font-family: "Fredericka the Great", cursive;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 10px;
+  }
 `;
 
 const ActionBar = styled.div`
@@ -424,6 +488,16 @@ const Button = styled.button`
     padding: 2px;
     width: 120px;
     margin: 8px 1px;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: ${COLORS.darkest};
+  text-decoration: none;
+  :hover {
+    color: ${COLORS.highlight};
   }
 `;
 

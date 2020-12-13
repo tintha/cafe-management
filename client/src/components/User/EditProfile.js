@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
@@ -9,6 +10,7 @@ import Loading from "../Loading";
 const EditProfile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { addToast } = useToasts();
   const user = useSelector((state) => state.auth.currentUser);
   const profile = useSelector((state) => state.profile.profile);
   const loadingStatus = useSelector((state) => state.profile.status);
@@ -18,7 +20,6 @@ const EditProfile = () => {
     lastName: profile.lastName,
     email: profile.email,
     address: profile.address,
-    isAdmin: profile.isAdmin,
   });
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       const response = await fetch(`/api/users/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify({ ...updatedProfile }),
         headers: {
           Accept: "application/json",
@@ -55,11 +56,17 @@ const EditProfile = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
+        addToast("Profile updated", {
+          appearance: "success",
+          autoDismiss: true,
+        });
         dispatch(actions.profileUpdated({ ...updatedProfile }));
         history.push("/user/profile");
       }
     } catch (err) {
-      console.log(err);
+      addToast(err, {
+        appearance: "error",
+      });
     }
   };
 
@@ -141,6 +148,7 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   color: ${COLORS.darkest};
+
   & > p {
     margin: 20px;
   }

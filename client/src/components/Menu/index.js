@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
@@ -11,7 +12,7 @@ const Menu = () => {
   const dispatch = useDispatch();
   const menuItems = useSelector((state) => state.items.items);
   const loadingStatus = useSelector((state) => state.items.status);
-  const user = useSelector((state) => state.auth.currentUser);
+  const { addToast } = useToasts();
 
   useEffect(() => {
     loadData();
@@ -25,13 +26,6 @@ const Menu = () => {
     } catch (err) {
       dispatch(actions.itemsError(err));
     }
-  };
-
-  const handleReview = async (e, user, itemId, review, rating) => {
-    e.preventDefault();
-    try {
-      // fetch PUT method to /api/items/:id
-    } catch (err) {}
   };
 
   const handleClick = (e, itemId) => {
@@ -64,6 +58,10 @@ const Menu = () => {
         image,
       })
     );
+    addToast(`${itemName} was added to your cart`, {
+      appearance: "success",
+      autoDismiss: true,
+    });
   };
 
   return (
@@ -126,13 +124,6 @@ const Menu = () => {
                         Add to cart
                       </AddToCartBtn>
                     </PriceDiv>
-                    {user && (
-                      <button
-                        onClick={() => history.push(`/items/${item._id}`)}
-                      >
-                        Review
-                      </button>
-                    )}
                   </ItemInfoDiv>
                 </ItemBox>
               );
@@ -155,13 +146,11 @@ const Wrapper = styled.div`
   color: ${COLORS.darkest};
 
   @media only screen and (min-width: 768px) {
-    /* tablet */
     justify-content: space-around;
     min-height: initial;
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     justify-content: space-between;
     width: 1000px;
   }
@@ -172,22 +161,21 @@ const ItemBox = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-bottom: 10px;
-  margin-top: 20px;
   border: 1px double ${COLORS.lightBorders};
   padding: 10px;
+  box-shadow: inset 0 0 50px #bfa984;
+  background-color: #f7f0e4;
+
   :hover {
     cursor: pointer;
     background-color: ${COLORS.lightBackground};
-    border: 1px solid ${COLORS.highlight};
   }
 
   @media only screen and (min-width: 768px) {
-    /* tablet */
     width: 45%;
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     width: 300px;
     flex-direction: column;
   }
@@ -195,6 +183,10 @@ const ItemBox = styled.div`
 
 const ItemImageBox = styled.div`
   width: 100px;
+  & > img {
+    border: 2px solid ${COLORS.lightBackground};
+    box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.38);
+  }
 
   @media only screen and (min-width: 768px) and (max-width: 992px) {
     /* tablet */
@@ -273,8 +265,10 @@ const PriceDiv = styled.div`
 `;
 
 const Price = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
+  color: ${COLORS.darkest};
+  font-family: "Fredericka the Great", cursive;
 `;
 
 const AddToCartBtn = styled.button`
@@ -288,6 +282,7 @@ const AddToCartBtn = styled.button`
   margin-top: 0px;
   cursor: pointer;
   font-family: "Fredericka the Great", cursive;
+
   :hover {
     background-color: ${COLORS.highlight};
   }

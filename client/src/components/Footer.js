@@ -7,10 +7,8 @@ const Footer = () => {
   return (
     <Wrapper>
       <Content>
-        <p>CONTACT</p>
-        <p>hello@youremail.com</p>
-        <p>1600 Saint-Catherine St W FB-117</p>
-        <p>Montreal, Quebec H3H 2S7</p>
+        <p>Small café/store management web app</p>
+        <p>Concordia Bootcamp Final Project</p>
         <AiFillInstagram /> <AiFillFacebook />
       </Content>
     </Wrapper>
@@ -19,26 +17,20 @@ const Footer = () => {
 
 const Wrapper = styled.footer`
   display: flex;
-  padding: 10px;
   justify-content: flex-start;
   font-family: "Roboto Condensed", sans-serif;
   color: ${COLORS.darkest};
-  background-color: ${COLORS.background};
-
-  @media only screen and (min-width: 768px) {
-    /* tablet */
-    max-width: 750px;
-    margin: auto;
-  }
-  @media only screen and (min-width: 992px) {
-    /* desktop */
-    max-width: 1000px;
-    margin: auto;
-  }
+  margin: auto;
+  width: 100%;
 `;
 
 const Content = styled.div`
   padding: 20px;
+  width: 100%;
+  text-align: center;
+  & > p {
+    font-size: 0.8rem;
+  }
 `;
 
 export default Footer;

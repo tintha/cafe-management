@@ -183,7 +183,6 @@ const Wrapper = styled.div`
   font-family: "Roboto Condensed", sans-serif;
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
     max-width: 1000px;
     margin: auto;
     flex-direction: row;
@@ -192,7 +191,6 @@ const Wrapper = styled.div`
 
 const TopContainer = styled.div`
   @media only screen and (min-width: 992px) {
-    /* desktop */
     width: 450px;
     margin-right: 100px;
     margin-left: 50px;

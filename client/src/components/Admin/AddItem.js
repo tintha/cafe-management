@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import styled from "styled-components";
 import { options } from "./categories";
 import { COLORS } from "../../contants";
 
 const AddItem = () => {
   const history = useHistory();
+  const { addToast } = useToasts();
   const [updateData, setUpdateData] = useState({
     itemName: "",
     description: "",
@@ -34,10 +36,16 @@ const AddItem = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
+        addToast("Item added", {
+          appearance: "success",
+          autoDismiss: true,
+        });
         history.push("/admin/menu/items/edit");
       }
     } catch (err) {
-      console.log(err);
+      addToast(err, {
+        appearance: "error",
+      });
     }
   };
 

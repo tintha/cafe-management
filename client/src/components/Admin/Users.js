@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import styled from "styled-components";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import Loading from "../Loading";
-import { FaTrash, FaTrashAlt } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 
 const Users = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
+  const { addToast } = useToasts();
   const users = useSelector((state) => state.users.users);
   const loadingStatus = useSelector((state) => state.users.status);
 
@@ -39,6 +39,10 @@ const Users = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
+        addToast("User deleted", {
+          appearance: "success",
+          autoDismiss: true,
+        });
         dispatch(actions.deleteUsersSuccess(userId));
       }
     } catch (err) {
@@ -122,11 +126,12 @@ const Wrapper = styled.div`
 
 const SingleUserBox = styled.div`
   display: grid;
-  grid-template-columns: 200px 200px 200px auto 30px;
+  grid-template-columns: 160px 200px 200px auto 30px;
   justify-items: start;
   border: 1px solid ${COLORS.lightBorders};
   width: 100%;
   padding: 10px;
+  box-shadow: inset 0 0 10px #bfa984;
   & > p {
     margin-bottom: 10px;
   }
@@ -151,7 +156,7 @@ const Bold = styled.span`
 
 const ActionButton = styled.button`
   border: none;
-  background-color: ${COLORS.background};
+  background-color: transparent;
   color: ${COLORS.darkest};
   cursor: pointer;
   :hover {
