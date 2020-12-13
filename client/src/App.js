@@ -17,6 +17,7 @@ import Admin from "./components/Admin";
 import ThankYou from "./components/ThankYou";
 import UserCart from "./components/User/UserCart";
 import ItemDetails from "./components/Menu/ItemDetails";
+import RegistrationSuccess from "./components/Register/RegistrationSuccess";
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
             </Route>
             <Route path="/thankyou">
               <ThankYou />
+            </Route>
+            <Route path="/registered">
+              <RegistrationSuccess />
             </Route>
             <Route path="/items/:id">
               <ItemDetails />

@@ -11,22 +11,24 @@ const Profile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
-  const profile = useSelector((state) => state.profile.profile);
-  const loadingStatus = useSelector((state) => state.profile.status);
+  const profile = useSelector((state) => state.auth.userProfile);
+  const loadingStatus = useSelector((state) => state.auth.status);
+  // const profile = useSelector((state) => state.profile.profile);
+  // const loadingStatus = useSelector((state) => state.profile.status);
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
 
-  const loadData = async () => {
-    try {
-      const response = await fetch(`/api/users/${user}`);
-      const data = await response.json();
-      dispatch(actions.profileSuccess(data.data));
-    } catch (err) {
-      dispatch(actions.profileError(err));
-    }
-  };
+  // const loadData = async () => {
+  //   try {
+  //     const response = await fetch(`/api/users/${user}`);
+  //     const data = await response.json();
+  //     dispatch(actions.profileSuccess(data.data));
+  //   } catch (err) {
+  //     dispatch(actions.profileError(err));
+  //   }
+  // };
 
   return (
     <Wrapper>
