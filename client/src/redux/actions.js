@@ -104,8 +104,14 @@ export const profileError = (error) => ({
   payload: { error },
 });
 
+// ----------------------------------------------- DELETE THIS ACTION
 export const profileUpdated = (data) => ({
   type: "PROFILE_UPDATED",
+  payload: { data },
+});
+
+export const userProfileUpdated = (data) => ({
+  type: "USER_PROFILE_UPDATED",
   payload: { data },
 });
 

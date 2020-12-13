@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
@@ -16,9 +16,9 @@ const Cart = () => {
   const cartItems = Object.values(cartState);
   const [error, setError] = useState(null);
   const [isDelivery, setIsDelivery] = useState(false);
-  const [useProfileAddress, setUseProfileAddress] = useState(false);
+  const [useProfileAddress, setUseProfileAddress] = useState(true);
   const user = useSelector((state) => state.auth.currentUser);
-  const profile = useSelector((state) => state.profile.profile);
+  const profile = useSelector((state) => state.auth.userProfile);
   let { totalItems, totalPrice } = cartItems.reduce(
     (acc, cur) => {
       const { quantity, price } = cur;
@@ -37,7 +37,6 @@ const Cart = () => {
     total: totalPrice.toFixed(2),
     date: new Date(),
     deliveryMethod: "",
-    selectedAddress: "",
     address: {
       line1: "",
       city: "",
@@ -53,9 +52,9 @@ const Cart = () => {
     } else if (name === "deliveryMethod" && value === "pickup") {
       setIsDelivery(false);
     }
-    if (name === "selectedAddress" && value === "profileAddress") {
+    if (name === "useProfileAddress" && value === "profileAddress") {
       setUseProfileAddress(true);
-    } else if (name === "selectedAddress" && value === "newAddress") {
+    } else if (name === "useProfileAddress" && value === "newAddress") {
       setUseProfileAddress(false);
     }
 
@@ -103,6 +102,7 @@ const Cart = () => {
   };
 
   console.log(newOrder);
+  console.log(useProfileAddress);
 
   return (
     <Wrapper>
@@ -165,67 +165,110 @@ const Cart = () => {
 
               {isDelivery && (
                 <>
-                  {profile.address ? (
-                    <FieldBox>
-                      <div className="radioContainer">
-                        <DeliveryMethod
-                          type="radio"
-                          value="profileAddress"
-                          name="selectedAddress"
-                          onChange={(e) => handleChange(e)}
-                        />
-                        <label htmlFor="profileAddress">
-                          Select this address: {profile.address.line1}
-                          {profile.address.city} {profile.address.postalCode}
-                        </label>
+                  {profile.address.line1 ? (
+                    <>
+                      <FieldBox>
+                        <div className="radioContainer">
+                          <DeliveryMethod
+                            type="radio"
+                            value="profileAddress"
+                            name="useProfileAddress"
+                            onChange={(e) => handleChange(e)}
+                          />
+                          <label htmlFor="profileAddress">
+                            Select this address: {profile.address.line1}
+                            {profile.address.city} {profile.address.postalCode}
+                          </label>
 
-                        <DeliveryMethod
-                          type="radio"
-                          value="newAddress"
-                          name="selectedAddress"
-                          onChange={(e) => handleChange(e)}
-                        />
-                        <label htmlFor="delivery">
-                          Enter a new address for this delivery
+                          <DeliveryMethod
+                            type="radio"
+                            value="newAddress"
+                            name="useProfileAddress"
+                            onChange={(e) => handleChange(e)}
+                          />
+                          <label htmlFor="newAddress">
+                            Enter a new address for this delivery
+                          </label>
+                        </div>
+                      </FieldBox>
+                      {!useProfileAddress && profile.address.line1 && (
+                        <>
+                          <FieldBox>
+                            <label>
+                              Address:
+                              <Input
+                                type="text"
+                                name="line1"
+                                value={newOrder.address.line1}
+                                onChange={(e) => handleChange(e)}
+                              />
+                            </label>
+                          </FieldBox>
+                          <FieldBox>
+                            <label>
+                              City:
+                              <Input
+                                type="text"
+                                name="city"
+                                value={newOrder.address.city}
+                                onChange={(e) => handleChange(e)}
+                              />
+                            </label>
+                          </FieldBox>
+                          <FieldBox>
+                            <label>
+                              Postal Code:
+                              <Input
+                                type="text"
+                                name="postalCode"
+                                value={newOrder.address.postalCode}
+                                onChange={(e) => handleChange(e)}
+                              />
+                            </label>
+                          </FieldBox>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <FieldBox>
+                        <label>
+                          Address:
+                          <Input
+                            type="text"
+                            name="line1"
+                            value={newOrder.address.line1}
+                            onChange={(e) => handleChange(e)}
+                          />
                         </label>
-                      </div>
-                    </FieldBox>
-                  ) : null}
-                  <FieldBox>
-                    <label>
-                      Address:
-                      <Input
-                        type="text"
-                        name="line1"
-                        value={newOrder.address.line1}
-                        onChange={(e) => handleChange(e)}
-                      />
-                    </label>
-                  </FieldBox>
-                  <FieldBox>
-                    <label>
-                      City:
-                      <Input
-                        type="text"
-                        name="city"
-                        value={newOrder.address.city}
-                        onChange={(e) => handleChange(e)}
-                      />
-                    </label>
-                  </FieldBox>
-                  <FieldBox>
-                    <label>
-                      Postal Code:
-                      <Input
-                        type="text"
-                        name="postalCode"
-                        value={newOrder.address.postalCode}
-                        onChange={(e) => handleChange(e)}
-                      />
-                    </label>
-                  </FieldBox>
+                      </FieldBox>
+                      <FieldBox>
+                        <label>
+                          City:
+                          <Input
+                            type="text"
+                            name="city"
+                            value={newOrder.address.city}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        </label>
+                      </FieldBox>
+                      <FieldBox>
+                        <label>
+                          Postal Code:
+                          <Input
+                            type="text"
+                            name="postalCode"
+                            value={newOrder.address.postalCode}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        </label>
+                      </FieldBox>
+                    </>
+                  )}
                 </>
               )}
+
               <FieldBox>
                 <label>
                   <p>Credit card</p>

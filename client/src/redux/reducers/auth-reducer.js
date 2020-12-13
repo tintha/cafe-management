@@ -41,6 +41,12 @@ export default function authReducer(state = initialState, action) {
         loginError: null,
       };
     }
+    case "USER_PROFILE_UPDATED": {
+      return {
+        ...state,
+        userProfile: { ...state.userProfile, ...action.payload.data },
+      };
+    }
     case "REQUEST_LOGOUT": {
       return {
         ...state,

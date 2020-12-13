@@ -12,8 +12,10 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   const { addToast } = useToasts();
   const user = useSelector((state) => state.auth.currentUser);
-  const profile = useSelector((state) => state.profile.profile);
-  const loadingStatus = useSelector((state) => state.profile.status);
+  const profile = useSelector((state) => state.auth.userProfile);
+  const loadingStatus = useSelector((state) => state.auth.status);
+  // const profile = useSelector((state) => state.profile.profile);
+  // const loadingStatus = useSelector((state) => state.profile.status);
   const [updatedProfile, setUpdatedProfile] = useState({
     _id: profile._id,
     firstName: profile.firstName,
@@ -26,19 +28,19 @@ const EditProfile = () => {
     },
   });
 
-  useEffect(() => {
-    loadData();
-  }, [user]);
+  // useEffect(() => {
+  //   loadData();
+  // }, [user]);
 
-  const loadData = async () => {
-    try {
-      const response = await fetch(`/api/users/${user}`);
-      const data = await response.json();
-      dispatch(actions.profileSuccess(data.data));
-    } catch (err) {
-      dispatch(actions.profileError(err));
-    }
-  };
+  // const loadData = async () => {
+  //   try {
+  //     const response = await fetch(`/api/users/${user}`);
+  //     const data = await response.json();
+  //     dispatch(actions.profileSuccess(data.data));
+  //   } catch (err) {
+  //     dispatch(actions.profileError(err));
+  //   }
+  // };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -69,7 +71,7 @@ const EditProfile = () => {
           appearance: "success",
           autoDismiss: true,
         });
-        dispatch(actions.profileUpdated({ ...updatedProfile }));
+        dispatch(actions.userProfileUpdated({ ...updatedProfile }));
         history.push("/user/profile");
       }
     } catch (err) {

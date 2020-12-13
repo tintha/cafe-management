@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
@@ -8,6 +8,7 @@ import { GrFormCheckmark } from "react-icons/gr";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((state) => state.auth.currentUser);
   const error = useSelector((state) => state.auth.registerError);
   const [newUser, setNewUser] = useState({
@@ -36,7 +37,7 @@ const Register = () => {
           dispatch(actions.clearRegistrationError());
         }, 2000);
       } else {
-        dispatch(actions.registrationSuccess(data.data));
+        history.push("/registered");
       }
     } catch (err) {
       dispatch(actions.registrationError(err));
