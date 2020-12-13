@@ -55,13 +55,21 @@ const Header = () => {
 
   return (
     <>
+      <Welcome>
+        {user && (
+          <>
+            <p>You are loggued in as {user}.</p>
+            <Logout onClick={(e) => handleLogout(e)}>SIGN OUT</Logout>
+          </>
+        )}
+      </Welcome>
       <Wrapper>
         <Logo>Coffee & Cupcakes</Logo>
         <SecondDiv>
           <NavMenu>
             {!userProfile.isAdmin || (user && user !== "admin") ? (
               <Navlink to="/items">
-                <div onClick={(e) => handleClickHome(e)}>Home</div>
+                <div onClick={(e) => handleClickHome(e)}>Shop</div>
               </Navlink>
             ) : null}
 
@@ -112,9 +120,9 @@ const Header = () => {
               </>
             )}
           </NavMenu>
-          {user && <Logout onClick={(e) => handleLogout(e)}>SIGN OUT</Logout>}
         </SecondDiv>
       </Wrapper>
+
       <TinyCartContainer>
         {!userProfile.isAdmin && <TinyCart />}
       </TinyCartContainer>
@@ -140,6 +148,7 @@ const TinyCartContainer = styled.div`
   top: 0;
   z-index: 20;
   margin-right: 20px;
+
   @media only screen and (min-width: 992px) {
     max-width: 1020px;
     margin: auto;
@@ -163,7 +172,6 @@ const Logo = styled.div`
   font-weight: bold;
   padding: 20px;
   color: ${COLORS.darkest};
-
   & > p {
     margin-top: 10px;
   }
@@ -191,6 +199,20 @@ const Navlink = styled(NavLink)`
   }
 `;
 
+const Welcome = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-family: "Roboto Condensed", sans-serif;
+  padding-right: 20px;
+  padding-top: 10px;
+  & > p {
+    margin-right: 10px;
+    font-weight: bold;
+    color: ${COLORS.darkest};
+  }
+`;
+
 const Logout = styled.button`
   background-color: ${COLORS.secondary};
   color: white;
@@ -200,6 +222,7 @@ const Logout = styled.button`
   cursor: pointer;
   align-self: center;
   color: #fff;
+  width: 150px;
   font-family: "Fredericka the Great", cursive;
   :hover {
     background-color: ${COLORS.highlight};

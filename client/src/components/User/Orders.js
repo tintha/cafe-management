@@ -88,6 +88,9 @@ const Orders = () => {
 const Wrapper = styled.div`
   width: 100%;
   color: ${COLORS.darkest};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   & > h2 {
     font-size: 1rem;
     font-weight: bold;
@@ -99,7 +102,7 @@ const Wrapper = styled.div`
     margin: auto;
   }
   @media only screen and (min-width: 992px) {
-    max-width: 900px;
+    max-width: 700px;
   }
 `;
 

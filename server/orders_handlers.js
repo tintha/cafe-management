@@ -119,9 +119,21 @@ const getOrdersByUserId = async (req, res) => {
 const placeOrder = async (req, res) => {
   const orderId = ObjectID();
   try {
-    const { username, items, total, date, creditCard, cvc, exp } = req.body;
+    const {
+      username,
+      items,
+      total,
+      date,
+      creditCard,
+      cvc,
+      exp,
+      deliveryMethod,
+    } = req.body;
+    if (!deliveryMethod) {
+      throw new Error("Please select a delivery method");
+    }
     if (!creditCard || !cvc || !exp) {
-      throw new Error("Please enter your payment details!");
+      throw new Error("Please enter your payment details");
     }
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
@@ -134,6 +146,7 @@ const placeOrder = async (req, res) => {
       date: date,
       status: "new",
       isArchived: false,
+      deliveryMethod: deliveryMethod,
     });
     assert(1, order.insertedCount);
     res.status(200).json({

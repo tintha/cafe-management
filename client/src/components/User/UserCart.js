@@ -15,7 +15,10 @@ const Cart = () => {
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
   const [error, setError] = useState(null);
+  const [isDelivery, setIsDelivery] = useState(false);
+  const [useProfileAddress, setUseProfileAddress] = useState(false);
   const user = useSelector((state) => state.auth.currentUser);
+  const profile = useSelector((state) => state.profile.profile);
   let { totalItems, totalPrice } = cartItems.reduce(
     (acc, cur) => {
       const { quantity, price } = cur;
@@ -33,12 +36,35 @@ const Cart = () => {
     exp: "",
     total: totalPrice.toFixed(2),
     date: new Date(),
+    deliveryMethod: "",
+    selectedAddress: "",
+    address: {
+      line1: "",
+      city: "",
+      postalCode: "",
+    },
   });
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setNewOrder({ ...newOrder, [name]: value });
+    if (name === "deliveryMethod" && value === "delivery") {
+      setIsDelivery(true);
+    } else if (name === "deliveryMethod" && value === "pickup") {
+      setIsDelivery(false);
+    }
+    if (name === "selectedAddress" && value === "profileAddress") {
+      setUseProfileAddress(true);
+    } else if (name === "selectedAddress" && value === "newAddress") {
+      setUseProfileAddress(false);
+    }
+
+    if (name === "line1" || name === "city" || name === "postalCode") {
+      const newAddress = { ...newOrder.address, [name]: value };
+      setNewOrder({ ...newOrder, address: { ...newAddress } });
+    } else {
+      setNewOrder({ ...newOrder, [name]: value });
+    }
   };
 
   const handlePlaceOrder = async (e) => {
@@ -66,7 +92,8 @@ const Cart = () => {
 
   const handleShopNow = (e) => {
     e.preventDefault();
-    history.push("/");
+    dispatch(actions.redirectAfterLogin("/items"));
+    history.push("/items");
   };
 
   const handleLogin = (e, lastLocation) => {
@@ -74,6 +101,8 @@ const Cart = () => {
     dispatch(actions.redirectAfterLogin(lastLocation));
     history.push("/login");
   };
+
+  console.log(newOrder);
 
   return (
     <Wrapper>
@@ -111,6 +140,92 @@ const Cart = () => {
           </TopContainer>
           {user ? (
             <PaymentForm>
+              <FieldBox>
+                <div className="radioContainer">
+                  <div className="radios">
+                    <DeliveryMethod
+                      type="radio"
+                      value="pickup"
+                      name="deliveryMethod"
+                      onChange={(e) => handleChange(e)}
+                    />
+                    <label htmlFor="pickup">Pickup</label>
+                  </div>
+                  <div className="radios">
+                    <DeliveryMethod
+                      type="radio"
+                      value="delivery"
+                      name="deliveryMethod"
+                      onChange={(e) => handleChange(e)}
+                    />
+                    <label htmlFor="delivery">Delivery</label>
+                  </div>
+                </div>
+              </FieldBox>
+
+              {isDelivery && (
+                <>
+                  {profile.address ? (
+                    <FieldBox>
+                      <div className="radioContainer">
+                        <DeliveryMethod
+                          type="radio"
+                          value="profileAddress"
+                          name="selectedAddress"
+                          onChange={(e) => handleChange(e)}
+                        />
+                        <label htmlFor="profileAddress">
+                          Select this address: {profile.address.line1}
+                          {profile.address.city} {profile.address.postalCode}
+                        </label>
+
+                        <DeliveryMethod
+                          type="radio"
+                          value="newAddress"
+                          name="selectedAddress"
+                          onChange={(e) => handleChange(e)}
+                        />
+                        <label htmlFor="delivery">
+                          Enter a new address for this delivery
+                        </label>
+                      </div>
+                    </FieldBox>
+                  ) : null}
+                  <FieldBox>
+                    <label>
+                      Address:
+                      <Input
+                        type="text"
+                        name="line1"
+                        value={newOrder.address.line1}
+                        onChange={(e) => handleChange(e)}
+                      />
+                    </label>
+                  </FieldBox>
+                  <FieldBox>
+                    <label>
+                      City:
+                      <Input
+                        type="text"
+                        name="city"
+                        value={newOrder.address.city}
+                        onChange={(e) => handleChange(e)}
+                      />
+                    </label>
+                  </FieldBox>
+                  <FieldBox>
+                    <label>
+                      Postal Code:
+                      <Input
+                        type="text"
+                        name="postalCode"
+                        value={newOrder.address.postalCode}
+                        onChange={(e) => handleChange(e)}
+                      />
+                    </label>
+                  </FieldBox>
+                </>
+              )}
               <FieldBox>
                 <label>
                   <p>Credit card</p>
@@ -220,7 +335,6 @@ const NumItems = styled.div`
 
 const PaymentForm = styled.div`
   @media only screen and (min-width: 992px) {
-    /* desktop */
     width: 300px;
   }
 `;
@@ -228,6 +342,13 @@ const PaymentForm = styled.div`
 const FieldBox = styled.div`
   .ccicons {
     margin-right: 6px;
+  }
+
+  .radioContainer {
+    display: flex;
+    padding: 20px;
+    justify-content: space-evenly;
+    align-content: flex-start;
   }
 `;
 
@@ -256,7 +377,6 @@ const SmallInput = styled.input`
   box-sizing: border-box;
   background-color: ${COLORS.inputBackground};
   @media only screen and (min-width: 992px) {
-    /* desktop */
     width: 80px;
     margin-right: 20px;
   }
@@ -264,7 +384,6 @@ const SmallInput = styled.input`
 
 const CreditCartSmall = styled.div`
   @media only screen and (min-width: 992px) {
-    /* desktop */
     display: flex;
   }
 `;
@@ -277,10 +396,6 @@ const TotalPrice = styled.div`
 const ButtonsBox = styled.div`
   display: flex;
   flex-wrap: nowrap;
-
-  @media only screen and (min-width: 992px) {
-    /* desktop */
-  }
 `;
 
 const Button = styled.button`
@@ -299,13 +414,12 @@ const Button = styled.button`
   }
 
   @media only screen and (min-width: 992px) {
-    /* desktop */
-    /* width: 300px;
-    height: 40px; */
     height: 30px;
     max-width: 170px;
     padding: 2px;
   }
 `;
-
+const DeliveryMethod = styled.input`
+  margin-bottom: 20px;
+`;
 export default Cart;

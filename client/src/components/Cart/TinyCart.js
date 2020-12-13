@@ -1,12 +1,13 @@
 import React from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { COLORS } from "../../contants";
 import { GiCoffeeCup, GiCupcake } from "react-icons/gi";
-import { IoBagCheckSharp } from "react-icons/io5";
+import * as actions from "../../redux/actions";
 
 const TinyCart = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const cartState = useSelector((state) => state.cart);
   const cartItems = Object.values(cartState);
@@ -27,6 +28,7 @@ const TinyCart = () => {
 
   const handleCheckout = (e) => {
     e.preventDefault();
+    dispatch(actions.redirectAfterLogin("/cart"));
     history.push("/cart");
   };
 

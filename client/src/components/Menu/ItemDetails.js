@@ -152,7 +152,7 @@ const ItemDetails = () => {
             className="backArrow"
           />
         </span>
-        <p>{itemData.itemName}</p>
+        {itemData.itemName && <p>{itemData.itemName} details</p>}
       </PageTitle>
       {isLoading && (
         <LoadingCentered>
