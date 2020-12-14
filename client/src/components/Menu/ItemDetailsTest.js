@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useHistory, useLocation, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useToasts } from "react-toast-notifications";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 import moment from "moment";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
+import Loading from "../Loading";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { AiFillHome } from "react-icons/ai";
 
@@ -15,13 +16,19 @@ const ItemDetails = () => {
   const history = useHistory();
   const location = useLocation();
   const lastLocation = location.pathname;
+  const [isLoading, setIsLoading] = useState(true);
   const [reviewError, setReviewError] = useState(null);
+  const [itemData, setItemData] = useState({});
   const user = useSelector((state) => state.auth.currentUser);
   const menuItems = useSelector((state) => state.items.items);
   const { addToast } = useToasts();
-  const item = menuItems.find((item) => item._id === id);
+  const [postedReview, setPostedReview] = useState(false);
+  const findItem = menuItems.find((item) => item._id === id);
+  console.log(findItem);
+
   const hasReviewed =
-    item.reviews && item.reviews.find((review) => review.user === user);
+    itemData.reviews && itemData.reviews.find((review) => review.user === user);
+
   const [review, setReview] = useState({
     user: user,
     displayName: "",
@@ -29,6 +36,22 @@ const ItemDetails = () => {
     rating: "",
     date: new Date(),
   });
+
+  useEffect(() => {
+    loadData();
+    window.scrollTo(0, 0);
+  }, [postedReview]);
+
+  const loadData = async () => {
+    try {
+      const response = await fetch(`/api/items/${id}`);
+      const data = await response.json();
+      setItemData({ ...data.data });
+      setIsLoading(!isLoading);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -48,12 +71,13 @@ const ItemDetails = () => {
         },
       });
       const data = await response.json();
+
       if (data.status === 200) {
         addToast("Review posted!", {
           appearance: "success",
           autoDismiss: true,
         });
-        dispatch(actions.addedReview(id, review));
+        setPostedReview(!postedReview);
       } else {
         setReviewError(data.message);
         setTimeout(() => {
@@ -84,11 +108,11 @@ const ItemDetails = () => {
   };
 
   const formattedPrice =
-    item.price &&
+    itemData.price &&
     new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-    }).format(item.price / 100);
+    }).format(itemData.price / 100);
 
   const handleAddToCart = (
     e,
@@ -130,16 +154,22 @@ const ItemDetails = () => {
             className="backArrow"
           />
         </span>
-        {item.itemName && <p>{item.itemName} details</p>}
+        {itemData.itemName && <p>{itemData.itemName} details</p>}
       </PageTitle>
-
-      {item.itemName && item.description && (
+      {isLoading && (
+        <LoadingCentered>
+          <Loading />
+        </LoadingCentered>
+      )}
+      {itemData.itemName && itemData.description && (
         <Content>
-          <ContentImage>{item.image && <img src={item.image} />}</ContentImage>
+          <ContentImage>
+            {itemData.image && <img src={itemData.image} />}
+          </ContentImage>
           <ContentDetails>
-            <ItemTitle>{item.itemName}</ItemTitle>
+            <ItemTitle>{itemData.itemName}</ItemTitle>
             <ItemdDesc>
-              {item.description}
+              {itemData.description}
               <p className="price">{formattedPrice && formattedPrice}</p>
             </ItemdDesc>
             <ActionBar>
@@ -147,12 +177,12 @@ const ItemDetails = () => {
                 onClick={(e) => {
                   handleAddToCart(
                     e,
-                    item._id,
-                    item.itemName,
-                    item.description,
-                    item.category,
-                    item.price,
-                    item.image
+                    itemData._id,
+                    itemData.itemName,
+                    itemData.description,
+                    itemData.category,
+                    itemData.price,
+                    itemData.image
                   );
                 }}
               >
@@ -166,8 +196,8 @@ const ItemDetails = () => {
             </ActionBar>
             <ReviewDisplay>
               <h6>Reviews</h6>
-              {item.reviews ? (
-                item.reviews.map((review) => {
+              {itemData.reviews ? (
+                itemData.reviews.map((review) => {
                   const stars = [1, 2, 3, 4, 5];
                   return (
                     <SingleReview key={review.date}>
@@ -199,10 +229,11 @@ const ItemDetails = () => {
                 <p>There are no reviews yet.</p>
               )}
             </ReviewDisplay>
+
             {user && (
               <ReviewForm>
                 {hasReviewed ? (
-                  <p>You reviewed this product.</p>
+                  <p>You already reviewed this product.</p>
                 ) : (
                   <>
                     <label>

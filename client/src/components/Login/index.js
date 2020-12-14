@@ -51,7 +51,7 @@ const Login = () => {
       {user ? (
         <>
           {userProfile.isAdmin === true ? (
-            <Redirect to="/admin" />
+            <Redirect to="/admin/orders" />
           ) : (
             <Redirect to={redirectUser} />
           )}

@@ -1,34 +1,16 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import { FaUser } from "react-icons/fa";
 import Loading from "../Loading";
 
 const Profile = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.currentUser);
   const profile = useSelector((state) => state.auth.userProfile);
   const loadingStatus = useSelector((state) => state.auth.status);
-  // const profile = useSelector((state) => state.profile.profile);
-  // const loadingStatus = useSelector((state) => state.profile.status);
-
-  // useEffect(() => {
-  //   loadData();
-  // }, []);
-
-  // const loadData = async () => {
-  //   try {
-  //     const response = await fetch(`/api/users/${user}`);
-  //     const data = await response.json();
-  //     dispatch(actions.profileSuccess(data.data));
-  //   } catch (err) {
-  //     dispatch(actions.profileError(err));
-  //   }
-  // };
 
   return (
     <Wrapper>

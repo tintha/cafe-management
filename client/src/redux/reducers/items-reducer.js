@@ -25,6 +25,29 @@ export default function itemsReducer(state = initialState, action) {
         error: action.payload.error,
       };
     }
+    case "ADDED_REVIEW": {
+      const findItem = state.items.find(
+        (item) => item._id === action.payload.id
+      );
+      let itemReviews = [];
+      if (findItem.reviews !== undefined) {
+        findItem.reviews.forEach((element) => {
+          itemReviews.push(element);
+        });
+      }
+
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item._id !== action.payload.id
+            ? item
+            : {
+                ...item,
+                reviews: [...itemReviews, action.payload.review],
+              }
+        ),
+      };
+    }
 
     // ADMIN DELETE ITEM
     case "DELETE_ITEM_SUCCESS": {
