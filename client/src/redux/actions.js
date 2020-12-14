@@ -281,3 +281,8 @@ export const redirectAfterLogin = (path) => ({
 export const cleanPath = () => ({
   type: "CLEAN_PATH",
 });
+
+export const addedReview = (id, review) => ({
+  type: "ADDED_REVIEW",
+  payload: { id, review },
+});

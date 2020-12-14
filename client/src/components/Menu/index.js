@@ -110,7 +110,7 @@ const Menu = () => {
                     <ItemCat>Category: {item.category}</ItemCat>
                     <PriceDiv>
                       <Price>{formattedPrice}</Price>
-                      <AddToCartBtn
+                      <Btn
                         onClick={(e) => {
                           handleAddToCart(
                             e,
@@ -124,7 +124,7 @@ const Menu = () => {
                         }}
                       >
                         Add to cart
-                      </AddToCartBtn>
+                      </Btn>
                     </PriceDiv>
                   </ItemInfoDiv>
                 </ItemBox>
@@ -273,7 +273,7 @@ const Price = styled.p`
   font-family: "Fredericka the Great", cursive;
 `;
 
-const AddToCartBtn = styled.button`
+const Btn = styled.button`
   position: relative;
   display: block;
   width: 50%;

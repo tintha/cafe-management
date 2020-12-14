@@ -5,7 +5,6 @@ import * as actions from "../redux/actions";
 import styled from "styled-components";
 import { COLORS } from "../contants";
 import TinyCart from "../components/Cart/TinyCart";
-import { AiFillHome } from "react-icons/ai";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -83,9 +82,6 @@ const Header = () => {
               <>
                 {userProfile.isAdmin || user === "admin" ? (
                   <>
-                    <Navlink exact to="/admin/">
-                      Stats
-                    </Navlink>
                     <Navlink to="/admin/orders">Orders</Navlink>
                     <Navlink to="/admin/menu/items/edit/">Edit items</Navlink>
                     <Navlink exact to="/admin/menu/items/add">
