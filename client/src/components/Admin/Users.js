@@ -77,7 +77,8 @@ const Users = () => {
                   </UserElement>
                   <UserElement>
                     <p>
-                      <Bold>Address</Bold>: {user.address}
+                      <Bold>Address</Bold>: {user.address.line1}{" "}
+                      {user.address.city} {user.address.postalCode}
                     </p>
                   </UserElement>
                   <Actions>
@@ -125,9 +126,6 @@ const Wrapper = styled.div`
 `;
 
 const SingleUserBox = styled.div`
-  display: grid;
-  grid-template-columns: 160px 200px 200px auto 30px;
-  justify-items: start;
   border: 1px solid ${COLORS.lightBorders};
   width: 100%;
   padding: 10px;
@@ -143,6 +141,12 @@ const SingleUserBox = styled.div`
   .completed {
     font-weight: bold;
     text-transform: uppercase;
+  }
+
+  @media only screen and (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 160px 200px 200px auto 30px;
+    justify-items: start;
   }
 `;
 

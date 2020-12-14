@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useToasts } from "react-toast-notifications";
 import * as actions from "../../redux/actions";
 import { COLORS } from "../../contants";
 import { GrFormCheckmark } from "react-icons/gr";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const { addToast } = useToasts();
   const user = useSelector((state) => state.auth.currentUser);
   const userProfile = useSelector((state) => state.auth.userProfile);
-  const error = useSelector((state) => state.auth.loginError);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const lastLocation = useSelector((state) => state.location.path);
@@ -34,6 +35,9 @@ const Login = () => {
         setTimeout(() => {
           dispatch(actions.loginClearError());
         }, 2000);
+        addToast(data.message, {
+          appearance: "error",
+        });
       } else {
         dispatch(actions.loginSuccess(data.data));
       }
@@ -80,7 +84,7 @@ const Login = () => {
           <RightCol>
             <FieldBox>
               <label htmlFor="username">
-                Username<br></br>
+                *Username<br></br>
                 <LoginInput
                   type="text"
                   name="username"
@@ -91,7 +95,7 @@ const Login = () => {
             </FieldBox>
             <FieldBox>
               <label htmlFor="password">
-                Password<br></br>
+                *Password<br></br>
                 <LoginInput
                   type="password"
                   name="password"
@@ -105,7 +109,6 @@ const Login = () => {
                 Login
               </Submit>
             </FieldBox>
-            <Error>{error && <p>{error}</p>}</Error>
           </RightCol>
         </>
       )}

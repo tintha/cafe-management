@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
@@ -9,6 +10,7 @@ import { GrFormCheckmark } from "react-icons/gr";
 const Register = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { addToast } = useToasts();
   const user = useSelector((state) => state.auth.currentUser);
   const error = useSelector((state) => state.auth.registerError);
   const [newUser, setNewUser] = useState({
@@ -36,6 +38,9 @@ const Register = () => {
         setTimeout(() => {
           dispatch(actions.clearRegistrationError());
         }, 2000);
+        addToast(data.message, {
+          appearance: "error",
+        });
       } else {
         history.push("/registered");
       }
@@ -77,7 +82,7 @@ const Register = () => {
         <RightCol>
           <FieldBox>
             <label>
-              First Name
+              *First Name
               <LoginInput
                 type="text"
                 name="firstName"
@@ -88,7 +93,7 @@ const Register = () => {
           </FieldBox>
           <FieldBox>
             <label>
-              Last Name
+              *Last Name
               <LoginInput
                 type="text"
                 name="lastName"
@@ -99,7 +104,7 @@ const Register = () => {
           </FieldBox>
           <FieldBox>
             <label>
-              Email
+              *Email
               <LoginInput
                 type="text"
                 name="email"
@@ -110,7 +115,7 @@ const Register = () => {
           </FieldBox>
           <FieldBox>
             <label>
-              Username
+              *Username
               <LoginInput
                 type="text"
                 name="username"
@@ -121,7 +126,7 @@ const Register = () => {
           </FieldBox>
           <FieldBox>
             <label>
-              Password
+              *Password
               <LoginInput
                 type="password"
                 name="password"
@@ -134,7 +139,6 @@ const Register = () => {
             <Submit type="submit" onClick={(e) => handleRegister(e)}>
               Register
             </Submit>
-            <Error>{error && <p>{error}</p>}</Error>
           </FieldBox>
         </RightCol>
       </Wrapper>

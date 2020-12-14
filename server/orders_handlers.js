@@ -128,9 +128,29 @@ const placeOrder = async (req, res) => {
       cvc,
       exp,
       deliveryMethod,
+      address,
+      useProfileAddress,
+      userProfileAddress,
     } = req.body;
     if (!deliveryMethod) {
       throw new Error("Please select a delivery method");
+    } else if (
+      (deliveryMethod === "delivery" &&
+        useProfileAddress === "newAddress" &&
+        !address.line1) ||
+      (deliveryMethod === "delivery" &&
+        useProfileAddress === "newAddress" &&
+        !address.city) ||
+      (deliveryMethod === "delivery" &&
+        useProfileAddress === "newAddress" &&
+        !address.postalCode) ||
+      (deliveryMethod === "delivery" && !useProfileAddress && !address.line1) ||
+      (deliveryMethod === "delivery" && !useProfileAddress && !address.city) ||
+      (deliveryMethod === "delivery" &&
+        !useProfileAddress &&
+        !address.postalCode)
+    ) {
+      throw new Error("Please provide a complete address");
     }
     if (!creditCard || !cvc || !exp) {
       throw new Error("Please enter your payment details");
@@ -147,6 +167,9 @@ const placeOrder = async (req, res) => {
       status: "new",
       isArchived: false,
       deliveryMethod: deliveryMethod,
+      address: address,
+      useProfileAddress: useProfileAddress,
+      userProfileAddress: userProfileAddress,
     });
     assert(1, order.insertedCount);
     res.status(200).json({

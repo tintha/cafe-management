@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
@@ -14,8 +14,6 @@ const EditProfile = () => {
   const user = useSelector((state) => state.auth.currentUser);
   const profile = useSelector((state) => state.auth.userProfile);
   const loadingStatus = useSelector((state) => state.auth.status);
-  // const profile = useSelector((state) => state.profile.profile);
-  // const loadingStatus = useSelector((state) => state.profile.status);
   const [updatedProfile, setUpdatedProfile] = useState({
     _id: profile._id,
     firstName: profile.firstName,
@@ -27,20 +25,6 @@ const EditProfile = () => {
       postalCode: profile.address.postalCode || "",
     },
   });
-
-  // useEffect(() => {
-  //   loadData();
-  // }, [user]);
-
-  // const loadData = async () => {
-  //   try {
-  //     const response = await fetch(`/api/users/${user}`);
-  //     const data = await response.json();
-  //     dispatch(actions.profileSuccess(data.data));
-  //   } catch (err) {
-  //     dispatch(actions.profileError(err));
-  //   }
-  // };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -73,6 +57,10 @@ const EditProfile = () => {
         });
         dispatch(actions.userProfileUpdated({ ...updatedProfile }));
         history.push("/user/profile");
+      } else if (data.status === 400) {
+        addToast(data.message, {
+          appearance: "error",
+        });
       }
     } catch (err) {
       addToast(err, {
@@ -96,7 +84,7 @@ const EditProfile = () => {
           <p>Username: {user}</p>
           <FieldBox>
             <label>
-              First Name:{" "}
+              *First Name:{" "}
               <Input
                 type="text"
                 name="firstName"
@@ -107,7 +95,7 @@ const EditProfile = () => {
           </FieldBox>
           <FieldBox>
             <label>
-              Last Name:
+              *Last Name:
               <Input
                 type="text"
                 name="lastName"
@@ -118,7 +106,7 @@ const EditProfile = () => {
           </FieldBox>
           <FieldBox>
             <label>
-              Email:
+              *Email:
               <Input
                 type="text"
                 name="email"

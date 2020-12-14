@@ -53,6 +53,42 @@ const Orders = () => {
                   {order.status === "shipped" && (
                     <p className="shipped">Out for delivery</p>
                   )}
+                  {order.status === "readyforpickup" && (
+                    <p className="shipped">Ready for pickup</p>
+                  )}
+                  <p>
+                    <Bold>Delivery option:</Bold> {order.deliveryMethod}
+                  </p>
+                  {order.deliveryMethod === "delivery" && (
+                    <DeliveryAddress>
+                      <div>
+                        <p>
+                          <Bold>Delivery Address:</Bold>
+                        </p>
+                      </div>
+                      {order.useProfileAddress === "newAddress" && (
+                        <Address>
+                          <p>{order.address.line1}</p>
+                          <p>{order.address.city}</p>
+                          <p>{order.address.postalCode}</p>
+                        </Address>
+                      )}
+                      {order.useProfileAddress === "" && (
+                        <Address>
+                          <p>{order.address.line1}</p>
+                          <p>{order.address.city}</p>
+                          <p>{order.address.postalCode}</p>
+                        </Address>
+                      )}
+                      {order.useProfileAddress === "profileAddress" && (
+                        <Address>
+                          <p>{order.userProfileAddress.line1}</p>
+                          <p>{order.userProfileAddress.city}</p>
+                          <p>{order.userProfileAddress.postalCode}</p>
+                        </Address>
+                      )}
+                    </DeliveryAddress>
+                  )}
                   <p>
                     <Bold>Date:</Bold> {moment(order.date).format("ll")} @{" "}
                     {moment(order.date).format("LT")}
@@ -128,32 +164,40 @@ const OrderBox = styled.div`
     color: ${COLORS.highlight};
     font-weight: bold;
     text-transform: uppercase;
-    font-family: "Fredericka the Great", cursive;
   }
   .delivered {
     color: #28634f;
     font-weight: bold;
     text-transform: uppercase;
-    font-family: "Fredericka the Great", cursive;
   }
 
   .processing {
     color: #c96406;
     font-weight: bold;
     text-transform: uppercase;
-    font-family: "Fredericka the Great", cursive;
   }
 
   .shipped {
     color: #1384a1;
     font-weight: bold;
     text-transform: uppercase;
-    font-family: "Fredericka the Great", cursive;
   }
 `;
 
 const Bold = styled.span`
   font-weight: bold;
+`;
+
+const DeliveryAddress = styled.div`
+  display: flex;
+  justify-content: start;
+`;
+
+const Address = styled.div`
+  & > p {
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
 `;
 
 export default Orders;

@@ -78,8 +78,37 @@ const Archived = () => {
                       DATE: {moment(order.date).format("ll")} @{" "}
                       {moment(order.date).format("LT")}
                     </p>
+                    <p>DELIVERY OPTION: {order.deliveryMethod}</p>
                     <p>ORDER ID: {order._id}</p>
                     <p>CUSTOMER ID: {order.username}</p>
+                    {order.deliveryMethod === "delivery" && (
+                      <DeliveryAddress>
+                        <div>
+                          <p>DELIVERY ADDRESS:</p>
+                        </div>
+                        {order.useProfileAddress === "newAddress" && (
+                          <Address>
+                            <p>{order.address.line1}</p>
+                            <p>{order.address.city}</p>
+                            <p>{order.address.postalCode}</p>
+                          </Address>
+                        )}
+                        {order.useProfileAddress === "" && (
+                          <Address>
+                            <p>{order.address.line1}</p>
+                            <p>{order.address.city}</p>
+                            <p>{order.address.postalCode}</p>
+                          </Address>
+                        )}
+                        {order.useProfileAddress === "profileAddress" && (
+                          <Address>
+                            <p>{order.userProfileAddress.line1}</p>
+                            <p>{order.userProfileAddress.city}</p>
+                            <p>{order.userProfileAddress.postalCode}</p>
+                          </Address>
+                        )}
+                      </DeliveryAddress>
+                    )}
                     <p>TOTAL: {order.total}</p>
                     <Items>
                       <ItemsList>
@@ -224,6 +253,18 @@ const ActionButton = styled.button`
   cursor: pointer;
   :hover {
     color: ${COLORS.highlight2};
+  }
+`;
+
+const DeliveryAddress = styled.div`
+  display: flex;
+  justify-content: start;
+`;
+
+const Address = styled.div`
+  & > p {
+    margin-bottom: 10px;
+    margin-left: 10px;
   }
 `;
 
