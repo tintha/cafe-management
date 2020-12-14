@@ -58,7 +58,7 @@ const Header = () => {
       <Welcome>
         {user && (
           <>
-            <p>You are loggued in as {user}.</p>
+            <p>You are logged in as {user}.</p>
             <Logout onClick={(e) => handleLogout(e)}>SIGN OUT</Logout>
           </>
         )}

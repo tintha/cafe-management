@@ -186,6 +186,16 @@ const updateUser = async (req, res) => {
     },
   };
   try {
+    if (!firstName || !lastName || !email) {
+      throw new Error("First name, last name and email are required fields");
+    }
+    if (
+      (address.line1 && !address.city) ||
+      (address.line1 && !address.postalCode) ||
+      (address.city && !address.postalCode)
+    ) {
+      throw new Error("Incomplete address");
+    }
     const client = await MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db(APP_DB);
@@ -199,7 +209,7 @@ const updateUser = async (req, res) => {
   } catch (e) {
     res.status(400).json({
       status: 400,
-      data: "Unable to perform action",
+      message: e.message,
     });
   }
 };

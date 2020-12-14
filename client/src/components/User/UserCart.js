@@ -37,12 +37,30 @@ const Cart = () => {
     total: totalPrice.toFixed(2),
     date: new Date(),
     deliveryMethod: "",
+    useProfileAddress: "",
     address: {
       line1: "",
       city: "",
       postalCode: "",
     },
+    userProfileAddress: {
+      line1: "",
+      city: "",
+      postalCode: "",
+    },
   });
+
+  useEffect(() => {
+    if (user) {
+      const userAddress = {
+        ...newOrder.userProfileAddress,
+        line1: profile.address.line1,
+        city: profile.address.city,
+        postalCode: profile.address.postalCode,
+      };
+      setNewOrder({ ...newOrder, userProfileAddress: { ...userAddress } });
+    }
+  }, []);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -57,7 +75,6 @@ const Cart = () => {
     } else if (name === "useProfileAddress" && value === "newAddress") {
       setUseProfileAddress(false);
     }
-
     if (name === "line1" || name === "city" || name === "postalCode") {
       const newAddress = { ...newOrder.address, [name]: value };
       setNewOrder({ ...newOrder, address: { ...newAddress } });
@@ -101,9 +118,6 @@ const Cart = () => {
     history.push("/login");
   };
 
-  console.log(newOrder);
-  console.log(useProfileAddress);
-
   return (
     <Wrapper>
       {totalItems === 0 ? (
@@ -141,7 +155,7 @@ const Cart = () => {
           {user ? (
             <PaymentForm>
               <FieldBox>
-                <div className="radioContainer">
+                <RadioBox>
                   <div className="radios">
                     <DeliveryMethod
                       type="radio"
@@ -160,36 +174,48 @@ const Cart = () => {
                     />
                     <label htmlFor="delivery">Delivery</label>
                   </div>
-                </div>
+                </RadioBox>
               </FieldBox>
-
               {isDelivery && (
                 <>
                   {profile.address.line1 ? (
                     <>
                       <FieldBox>
-                        <div className="radioContainer">
-                          <DeliveryMethod
-                            type="radio"
-                            value="profileAddress"
-                            name="useProfileAddress"
-                            onChange={(e) => handleChange(e)}
-                          />
-                          <label htmlFor="profileAddress">
-                            Select this address: {profile.address.line1}
-                            {profile.address.city} {profile.address.postalCode}
-                          </label>
-
-                          <DeliveryMethod
-                            type="radio"
-                            value="newAddress"
-                            name="useProfileAddress"
-                            onChange={(e) => handleChange(e)}
-                          />
-                          <label htmlFor="newAddress">
-                            Enter a new address for this delivery
-                          </label>
-                        </div>
+                        <RadioBox>
+                          <ProfileAddressBox>
+                            <div>
+                              <DeliveryMethod
+                                type="radio"
+                                value="profileAddress"
+                                name="useProfileAddress"
+                                onChange={(e) => handleChange(e)}
+                              />
+                            </div>
+                            <div>
+                              <label htmlFor="profileAddress">
+                                Select this address:{" "}
+                                <p>{profile.address.line1}</p>
+                                <p>{profile.address.city}</p>
+                                <p>{profile.address.postalCode}</p>
+                              </label>
+                            </div>
+                          </ProfileAddressBox>
+                          <ProfileAddressBox>
+                            <div>
+                              <DeliveryMethod
+                                type="radio"
+                                value="newAddress"
+                                name="useProfileAddress"
+                                onChange={(e) => handleChange(e)}
+                              />
+                            </div>
+                            <div>
+                              <label htmlFor="newAddress">
+                                Enter a new address
+                              </label>
+                            </div>
+                          </ProfileAddressBox>
+                        </RadioBox>
                       </FieldBox>
                       {!useProfileAddress && profile.address.line1 && (
                         <>
@@ -462,7 +488,17 @@ const Button = styled.button`
     padding: 2px;
   }
 `;
-const DeliveryMethod = styled.input`
+const DeliveryMethod = styled.input``;
+
+const RadioBox = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   margin-bottom: 20px;
 `;
+
+const ProfileAddressBox = styled.div`
+  display: grid;
+  grid-template-columns: 20px auto;
+`;
+
 export default Cart;

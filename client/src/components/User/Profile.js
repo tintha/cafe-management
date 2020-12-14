@@ -50,11 +50,14 @@ const Profile = () => {
           <FieldBox>Last Name: {profile.lastName}</FieldBox>
           <FieldBox>Username: {user}</FieldBox>
           <FieldBox>
-            Address: {profile.address.line1}
-            <br></br>
-            {profile.address.city}
-            <br></br>
-            {profile.address.postalCode}
+            <AddressBox>
+              <div>Address:</div>
+              <div>
+                <p>{profile.address.line1}</p>
+                <p>{profile.address.city}</p>
+                <p>{profile.address.postalCode}</p>
+              </div>
+            </AddressBox>
           </FieldBox>
           <FieldBox>
             <Button onClick={() => history.push("/user/profile/edit")}>
@@ -124,6 +127,11 @@ const Button = styled.button`
     max-width: 100px;
     padding: 2px;
   }
+`;
+
+const AddressBox = styled.div`
+  display: grid;
+  grid-template-columns: 60px auto;
 `;
 
 export default Profile;

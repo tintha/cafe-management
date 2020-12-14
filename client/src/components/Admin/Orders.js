@@ -11,6 +11,7 @@ import { FaTrash, FaArchive } from "react-icons/fa";
 import { MdFiberNew, MdLocalShipping } from "react-icons/md";
 import { GiCardboardBox } from "react-icons/gi";
 import { HiClipboardCheck } from "react-icons/hi";
+import { IoBagHandleSharp } from "react-icons/io5";
 import Tooltip from "./Tooltip";
 
 const Orders = () => {
@@ -120,14 +121,49 @@ const Orders = () => {
                     {order.status === "shipped" && (
                       <p className="shipped">Out for delivery</p>
                     )}
+                    {order.status === "readyforpickup" && (
+                      <p className="shipped">Ready for pickup</p>
+                    )}
+                    <p className="bolder">
+                      DELIVERY OPTION: {order.deliveryMethod}
+                    </p>
                     <p>
                       DATE: {moment(order.date).format("ll")} @{" "}
                       {moment(order.date).format("LT")}
                     </p>
                     <p>ORDER ID: {order._id}</p>
                     <p>CUSTOMER ID: {order.username}</p>
+                    {order.deliveryMethod === "delivery" && (
+                      <DeliveryAddress>
+                        <div>
+                          <p>DELIVERY ADDRESS:</p>
+                        </div>
+                        {order.useProfileAddress === "newAddress" && (
+                          <Address>
+                            <p>{order.address.line1}</p>
+                            <p>{order.address.city}</p>
+                            <p>{order.address.postalCode}</p>
+                          </Address>
+                        )}
+                        {order.useProfileAddress === "" && (
+                          <Address>
+                            <p>{order.address.line1}</p>
+                            <p>{order.address.city}</p>
+                            <p>{order.address.postalCode}</p>
+                          </Address>
+                        )}
+                        {order.useProfileAddress === "profileAddress" && (
+                          <Address>
+                            <p>{order.userProfileAddress.line1}</p>
+                            <p>{order.userProfileAddress.city}</p>
+                            <p>{order.userProfileAddress.postalCode}</p>
+                          </Address>
+                        )}
+                      </DeliveryAddress>
+                    )}
                     <p>TOTAL: {order.total}</p>
                     <Items>
+                      <p>ITEMS ORDERED:</p>
                       <ItemsList>
                         {order.items.map((item) => {
                           return (
@@ -212,6 +248,38 @@ const Orders = () => {
                             }
                           >
                             <MdLocalShipping size="26" />
+                          </ActionButton>
+                        )}
+                      </Tooltip>
+                    </ActionSet>
+                    <ActionSet>
+                      <Tooltip action="Mark as ready for pickup">
+                        {order.status === "readyforpickup" ? (
+                          <ActionButton
+                            disabled
+                            onClick={(e) =>
+                              handleChangeOrder(
+                                e,
+                                order._id,
+                                "readyforpickup",
+                                false
+                              )
+                            }
+                          >
+                            <IoBagHandleSharp size="24" />
+                          </ActionButton>
+                        ) : (
+                          <ActionButton
+                            onClick={(e) =>
+                              handleChangeOrder(
+                                e,
+                                order._id,
+                                "readyforpickup",
+                                false
+                              )
+                            }
+                          >
+                            <IoBagHandleSharp size="24" />
                           </ActionButton>
                         )}
                       </Tooltip>
@@ -346,15 +414,21 @@ const SingleOrderBox = styled.div`
 const OrderDetails = styled.div`
   & > p {
     margin-bottom: 10px;
+    &.bolder {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
   }
 `;
 
 const Items = styled.div`
-  padding: 20px;
+  display: flex;
+  justify-content: start;
 `;
 
 const ItemsList = styled.ul`
   list-style-type: circle;
+  margin-left: 30px;
 `;
 
 const Buttons = styled.div`
@@ -403,6 +477,18 @@ const ActionButton = styled.button`
   :disabled {
     cursor: not-allowed;
     border-bottom: 2px solid ${COLORS.darkest};
+  }
+`;
+
+const DeliveryAddress = styled.div`
+  display: flex;
+  justify-content: start;
+`;
+
+const Address = styled.div`
+  & > p {
+    margin-bottom: 10px;
+    margin-left: 10px;
   }
 `;
 
