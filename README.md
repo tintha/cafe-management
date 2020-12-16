@@ -1,8 +1,10 @@
-# Final Solo Project
+# Coffee & Cupcakes café management web application
 
 Small restaurant or e-commerce management web application.
 
 Demo video: https://youtu.be/-apF2vS-Bks
+
+Technologies: React.js, Redux, Styled-components, CSS, Node.js, Express, MongoDB, React Icons, Tippy.js, React Toast Notifications
 
 ## Features
 
