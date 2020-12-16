@@ -2,6 +2,8 @@
 
 Small restaurant or e-commerce management web application.
 
+Demo video: https://youtu.be/-apF2vS-Bks
+
 ## Features
 
 - Customers can create accounts and login
