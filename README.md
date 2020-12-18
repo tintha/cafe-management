@@ -2,7 +2,7 @@
 
 Small restaurant or e-commerce management web application.
 
-Demo video: https://youtu.be/-apF2vS-Bks
+Demo video: https://youtu.be/SF8KbQZKMQg
 
 Technologies: React.js, Redux, Styled-components, CSS, Node.js, Express, MongoDB, React Icons, Tippy.js, React Toast Notifications
 
