@@ -77,7 +77,6 @@ const Header = () => {
                 <div onClick={(e) => handleClickCart(e)}>Cart</div>
               </Navlink>
             )}
-
             {user ? (
               <>
                 {userProfile.isAdmin || user === "admin" ? (
@@ -118,7 +117,6 @@ const Header = () => {
           </NavMenu>
         </SecondDiv>
       </Wrapper>
-
       <TinyCartContainer>
         {!userProfile.isAdmin && <TinyCart />}
       </TinyCartContainer>
@@ -131,7 +129,6 @@ const Wrapper = styled.header`
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
   width: 100%;
-
   z-index: 10;
 
   @media only screen and (min-width: 992px) {

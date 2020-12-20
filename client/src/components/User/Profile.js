@@ -42,7 +42,10 @@ const Profile = () => {
             </AddressBox>
           </FieldBox>
           <FieldBox>
-            <Button onClick={() => history.push("/user/profile/edit")}>
+            <Button
+              onClick={() => history.push("/user/profile/edit")}
+              aria-label="Edit profile"
+            >
               Edit
             </Button>
           </FieldBox>

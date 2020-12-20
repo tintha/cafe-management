@@ -81,9 +81,10 @@ const Register = () => {
         </LeftCol>
         <RightCol>
           <FieldBox>
-            <label>
+            <label htmlFor="firstname">
               *First Name
               <LoginInput
+                id="firstName"
                 type="text"
                 name="firstName"
                 value={newUser.firstName}
@@ -92,9 +93,10 @@ const Register = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="lastName">
               *Last Name
               <LoginInput
+                id="lastName"
                 type="text"
                 name="lastName"
                 value={newUser.lastName}
@@ -103,9 +105,10 @@ const Register = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="email">
               *Email
               <LoginInput
+                id="email"
                 type="text"
                 name="email"
                 value={newUser.email}
@@ -114,9 +117,10 @@ const Register = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="username">
               *Username
               <LoginInput
+                id="username"
                 type="text"
                 name="username"
                 value={newUser.username}
@@ -125,9 +129,10 @@ const Register = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="password">
               *Password
               <LoginInput
+                id="password"
                 type="password"
                 name="password"
                 value={newUser.password}

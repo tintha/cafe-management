@@ -75,8 +75,9 @@ const AddItem = () => {
     <Wrapper>
       <h2>Add a new item</h2>
       <FieldBox>
-        <p>Item Name:</p>
+        <label htmlFor="itemName">Item Name:</label>
         <Input
+          id="itemName"
           type="text"
           name="itemName"
           value={updateData.itemName}
@@ -84,8 +85,9 @@ const AddItem = () => {
         />
       </FieldBox>
       <FieldBox>
-        <p>Item description:</p>
+        <label htmlFor="description">Item description:</label>
         <Textarea
+          id="description"
           type="text"
           name="description"
           value={updateData.description}
@@ -95,6 +97,7 @@ const AddItem = () => {
       <FieldBox>
         <label htmlFor="categories">Choose a category:</label>
         <select
+          id="categories"
           value={updateData.category}
           onChange={(e) => handleChange(e)}
           name="category"
@@ -107,8 +110,9 @@ const AddItem = () => {
         </select>
       </FieldBox>
       <FieldBox>
-        <p>Price:</p>
+        <label htmlFor="price">Price:</label>
         <Input
+          id="price"
           type="text"
           name="price"
           value={updateData.price}
@@ -116,8 +120,9 @@ const AddItem = () => {
         />
       </FieldBox>
       <FieldBox>
-        <p>Image:</p>
+        <label htmlFor="image">Image:</label>
         <input
+          id="image"
           type="file"
           onChange={(e) => {
             uploadImage(e);

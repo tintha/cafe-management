@@ -129,21 +129,25 @@ const EditItem = () => {
       )}
       {itemData.itemName && itemData.description && (
         <>
-          <p>Item Name:</p>
+          <label htmlFor="itemName">Item Name:</label>
           <Input
+            id="itemName"
             type="text"
             name="itemName"
             value={updateData.itemName}
             onChange={handleChange}
           />
-          <p>Item description:</p>
+          <label htmlFor="description">Item description:</label>
           <Textarea
+            id="description"
             type="text"
             name="description"
             value={updateData.description}
             onChange={handleChange}
           />
+          <label htmlFor="category">Category</label>
           <select
+            id="category"
             value={updateData.category}
             onChange={(e) => handleChange(e)}
             name="category"
@@ -154,15 +158,17 @@ const EditItem = () => {
               </option>
             ))}
           </select>
-          <p>Price:</p>
+          <label htmlFor="price">Price:</label>
           <Input
+            id="price"
             type="text"
             name="price"
             value={updateData.price}
             onChange={handleChange}
           />
-          <p>Image:</p>
+          <label htmlFor="image">Image:</label>
           <input
+            id="image"
             type="file"
             onChange={(e) => {
               uploadImage(e);
@@ -174,7 +180,12 @@ const EditItem = () => {
           <Button onClick={(e) => handleUpdateItem(e, id)}>
             Save changes
           </Button>{" "}
-          <Button onClick={(e) => handleCancel(e)}>Cancel</Button>
+          <Button
+            onClick={(e) => handleCancel(e)}
+            aria-label="Cancel and go back"
+          >
+            Cancel
+          </Button>
         </>
       )}
     </Wrapper>

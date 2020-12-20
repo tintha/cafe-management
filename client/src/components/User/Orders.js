@@ -156,7 +156,6 @@ const OrderBox = styled.div`
   padding: 20px;
   margin-bottom: 10px;
   box-shadow: inset 0 0 20px #bfa984;
-
   & > p {
     margin-bottom: 10px;
   }

@@ -88,6 +88,7 @@ const MenuItems = () => {
                   </ImageDiv>
                   <Buttons>
                     <Button
+                      aria-label="Edit this item"
                       onClick={() =>
                         history.push(`/admin/menu/items/edit/${item._id}`)
                       }
@@ -95,6 +96,7 @@ const MenuItems = () => {
                       Edit
                     </Button>
                     <Button
+                      aria-label="Delete this item"
                       onClick={(e) =>
                         window.confirm(
                           "This action cannot be undone! Are you sure you wish to delete this item?"
