@@ -69,7 +69,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-const Main = styled.div`
+const Main = styled.main`
   min-height: 50vh;
 `;
 

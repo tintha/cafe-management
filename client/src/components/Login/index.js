@@ -86,6 +86,7 @@ const Login = () => {
               <label htmlFor="username">
                 *Username<br></br>
                 <LoginInput
+                  id="username"
                   type="text"
                   name="username"
                   value={username}
@@ -97,6 +98,7 @@ const Login = () => {
               <label htmlFor="password">
                 *Password<br></br>
                 <LoginInput
+                  id="password"
                   type="password"
                   name="password"
                   value={password}

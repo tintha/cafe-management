@@ -76,16 +76,17 @@ const EditProfile = () => {
 
   return (
     <Wrapper>
-      <H2>Edit your account information</H2>
+      <H1>Edit your account information</H1>
       {loadingStatus === "loading" && <Loading />}
       {loadingStatus === "error" && <p>An error occurred...</p>}
       {loadingStatus === "success" && (
         <>
           <p>Username: {user}</p>
           <FieldBox>
-            <label>
+            <label htmlFor="firstName">
               *First Name:{" "}
               <Input
+                id="firstName"
                 type="text"
                 name="firstName"
                 value={updatedProfile.firstName}
@@ -94,9 +95,10 @@ const EditProfile = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="lastName">
               *Last Name:
               <Input
+                id="lastName"
                 type="text"
                 name="lastName"
                 value={updatedProfile.lastName}
@@ -105,9 +107,10 @@ const EditProfile = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="email">
               *Email:
               <Input
+                id="email"
                 type="text"
                 name="email"
                 value={updatedProfile.email}
@@ -116,9 +119,10 @@ const EditProfile = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="address">
               Address:
               <Input
+                id="address"
                 type="text"
                 name="line1"
                 value={updatedProfile.address.line1}
@@ -127,9 +131,10 @@ const EditProfile = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="city">
               City:
               <Input
+                id="city"
                 type="text"
                 name="city"
                 value={updatedProfile.address.city}
@@ -138,9 +143,10 @@ const EditProfile = () => {
             </label>
           </FieldBox>
           <FieldBox>
-            <label>
+            <label htmlFor="postalCode">
               Postal Code:
               <Input
+                id="postalCode"
                 type="text"
                 name="postalCode"
                 value={updatedProfile.address.postalCode}
@@ -150,10 +156,18 @@ const EditProfile = () => {
           </FieldBox>
           <FieldBox>
             <Buttons>
-              <Button onClick={(e) => handleUpdateProfile(e)}>
+              <Button
+                onClick={(e) => handleUpdateProfile(e)}
+                aria-label="Save profile changes"
+              >
                 Save changes
               </Button>
-              <Button onClick={(e) => handleCancel(e)}>Cancel</Button>
+              <Button
+                onClick={(e) => handleCancel(e)}
+                aria-label="Cancel and go back to profile page"
+              >
+                Cancel
+              </Button>
             </Buttons>
           </FieldBox>
         </>
@@ -180,7 +194,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const H2 = styled.h2`
+const H1 = styled.h1`
   font-size: 1rem;
   font-weight: bold;
 `;

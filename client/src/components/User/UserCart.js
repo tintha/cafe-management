@@ -220,9 +220,10 @@ const Cart = () => {
                       {!useProfileAddress && profile.address.line1 && (
                         <>
                           <FieldBox>
-                            <label>
+                            <label htmlFor="address">
                               Address:
                               <Input
+                                id="address"
                                 type="text"
                                 name="line1"
                                 value={newOrder.address.line1}
@@ -231,9 +232,10 @@ const Cart = () => {
                             </label>
                           </FieldBox>
                           <FieldBox>
-                            <label>
+                            <label htmlFor="city">
                               City:
                               <Input
+                                id="city"
                                 type="text"
                                 name="city"
                                 value={newOrder.address.city}
@@ -242,9 +244,10 @@ const Cart = () => {
                             </label>
                           </FieldBox>
                           <FieldBox>
-                            <label>
+                            <label htmlFor="postalCode">
                               Postal Code:
                               <Input
+                                id="postalCode"
                                 type="text"
                                 name="postalCode"
                                 value={newOrder.address.postalCode}
@@ -258,9 +261,10 @@ const Cart = () => {
                   ) : (
                     <>
                       <FieldBox>
-                        <label>
+                        <label htmlFor="address">
                           Address:
                           <Input
+                            id="address"
                             type="text"
                             name="line1"
                             value={newOrder.address.line1}
@@ -269,9 +273,10 @@ const Cart = () => {
                         </label>
                       </FieldBox>
                       <FieldBox>
-                        <label>
+                        <label htmlFor="city">
                           City:
                           <Input
+                            id="city"
                             type="text"
                             name="city"
                             value={newOrder.address.city}
@@ -280,9 +285,10 @@ const Cart = () => {
                         </label>
                       </FieldBox>
                       <FieldBox>
-                        <label>
+                        <label htmlFor="postalCode">
                           Postal Code:
                           <Input
+                            id="postalCode"
                             type="text"
                             name="postalCode"
                             value={newOrder.address.postalCode}
@@ -296,12 +302,13 @@ const Cart = () => {
               )}
 
               <FieldBox>
-                <label>
+                <label htmlFor="creditCard">
                   <p>Credit card</p>
                   <FaCcVisa size="24" className="ccicons" />
                   <FaCcMastercard size="24" className="ccicons" />
                   <FaCcAmex size="24" className="ccicons" />
                   <Input
+                    id="creditCard"
                     type="text"
                     name="creditCard"
                     placeholder="1234 5678 9101 1213"
@@ -312,9 +319,10 @@ const Cart = () => {
               </FieldBox>
               <CreditCartSmall>
                 <FieldBox>
-                  <label>
+                  <label htmlFor="cvc">
                     <p>CVC</p>
                     <SmallInput
+                      id="cvc"
                       type="text"
                       name="cvc"
                       placeholder="123"
@@ -324,9 +332,10 @@ const Cart = () => {
                   </label>
                 </FieldBox>
                 <FieldBox>
-                  <label>
+                  <label htmlFor="expires">
                     <p>Expires</p>
                     <SmallInput
+                      id="expires"
                       type="text"
                       name="exp"
                       placeholder="mm/yy"

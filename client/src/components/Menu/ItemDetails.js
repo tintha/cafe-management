@@ -205,21 +205,23 @@ const ItemDetails = () => {
                   <p>You reviewed this product.</p>
                 ) : (
                   <>
-                    <label>
+                    <label htmlFor="displayName">
                       <p>
                         Display Name{" "}
                         {`(This name will be shown with your review)`}
                       </p>
                       <Input
+                        id="displayName"
                         type="text"
                         name="displayName"
                         value={review.displayName}
                         onChange={(e) => handleChange(e)}
                       />
                     </label>
-                    <label>
+                    <label htmlFor="review">
                       <p>Your review:</p>
                       <Textarea
+                        id="review"
                         type="text"
                         name="review"
                         value={review.review}
@@ -234,35 +236,35 @@ const ItemDetails = () => {
                         name="rating"
                         onChange={(e) => handleChange(e)}
                       />
-                      1
+                      <label htmlFor="1">1</label>
                       <input
                         type="radio"
                         value="2"
                         name="rating"
                         onChange={(e) => handleChange(e)}
                       />
-                      2
+                      <label htmlFor="2">2</label>
                       <input
                         type="radio"
                         value="3"
                         name="rating"
                         onChange={(e) => handleChange(e)}
                       />
-                      3
+                      <label htmlFor="3">3</label>
                       <input
                         type="radio"
                         value="4"
                         name="rating"
                         onChange={(e) => handleChange(e)}
                       />
-                      4
+                      <label htmlFor="4">4</label>
                       <input
                         type="radio"
                         value="5"
                         name="rating"
                         onChange={(e) => handleChange(e)}
                       />
-                      5
+                      <label htmlFor="5">5</label>
                     </div>
                     <Button onClick={(e) => handleAddReview(e)}>
                       Post Review

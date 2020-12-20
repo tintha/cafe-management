@@ -180,6 +180,7 @@ const Orders = () => {
                       <Tooltip action="Mark as new">
                         {order.status === "new" ? (
                           <ActionButton
+                            aria-label="Mark as new"
                             disabled
                             onClick={(e) =>
                               handleChangeOrder(e, order._id, "new", false)
@@ -189,6 +190,7 @@ const Orders = () => {
                           </ActionButton>
                         ) : (
                           <ActionButton
+                            aria-label="Mark as new"
                             onClick={(e) =>
                               handleChangeOrder(e, order._id, "new", false)
                             }
@@ -202,6 +204,7 @@ const Orders = () => {
                       <Tooltip action="Mark as processing">
                         {order.status === "processing" ? (
                           <ActionButton
+                            aria-label="Mark as processing"
                             disabled
                             onClick={(e) =>
                               handleChangeOrder(
@@ -216,6 +219,7 @@ const Orders = () => {
                           </ActionButton>
                         ) : (
                           <ActionButton
+                            aria-label="Mark as processing"
                             onClick={(e) =>
                               handleChangeOrder(
                                 e,
@@ -234,6 +238,7 @@ const Orders = () => {
                       <Tooltip action="Mark as out for delivery">
                         {order.status === "shipped" ? (
                           <ActionButton
+                            aria-label="Mark as shipped"
                             disabled
                             onClick={(e) =>
                               handleChangeOrder(e, order._id, "shipped", false)
@@ -243,6 +248,7 @@ const Orders = () => {
                           </ActionButton>
                         ) : (
                           <ActionButton
+                            aria-label="Mark as shipped"
                             onClick={(e) =>
                               handleChangeOrder(e, order._id, "shipped", false)
                             }
@@ -256,6 +262,7 @@ const Orders = () => {
                       <Tooltip action="Mark as ready for pickup">
                         {order.status === "readyforpickup" ? (
                           <ActionButton
+                            aria-label="Mark as ready for pickup"
                             disabled
                             onClick={(e) =>
                               handleChangeOrder(
@@ -270,6 +277,7 @@ const Orders = () => {
                           </ActionButton>
                         ) : (
                           <ActionButton
+                            aria-label="Mark as ready for pickup"
                             onClick={(e) =>
                               handleChangeOrder(
                                 e,
@@ -288,6 +296,7 @@ const Orders = () => {
                       <Tooltip action="Mark as delivered">
                         {order.status === "delivered" ? (
                           <ActionButton
+                            aria-label="Mark as delivered"
                             disabled
                             onClick={(e) =>
                               handleChangeOrder(
@@ -302,6 +311,7 @@ const Orders = () => {
                           </ActionButton>
                         ) : (
                           <ActionButton
+                            aria-label="Mark as delivered"
                             onClick={(e) =>
                               handleChangeOrder(
                                 e,
@@ -319,6 +329,7 @@ const Orders = () => {
                     <ActionSet>
                       <Tooltip action="Delete">
                         <ActionButton
+                          aria-label="Delete this order"
                           onClick={(e) =>
                             window.confirm(
                               "This action cannot be undone! Are you sure you wish to delete this order?"
@@ -332,6 +343,7 @@ const Orders = () => {
                     <ActionSet>
                       <Tooltip action="Archive">
                         <ActionButton
+                          aria-label="Archive this order"
                           onClick={(e) =>
                             handleChangeOrder(e, order._id, order.status, true)
                           }

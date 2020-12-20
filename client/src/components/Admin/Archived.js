@@ -126,6 +126,7 @@ const Archived = () => {
                     <ActionSet>
                       <Tooltip action="Delete">
                         <ActionButton
+                          aria-label="Delete order"
                           onClick={(e) =>
                             window.confirm(
                               "This action cannot be undone! Are you sure you wish to delete this order?"
